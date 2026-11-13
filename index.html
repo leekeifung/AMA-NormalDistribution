@@ -1375,6 +1375,2045 @@
       </div>
     </section>
 
+
+  <!-- =====================================================================
+         PART C (BASIC, INTERMEDIATE, DIFFICULT WORKED EXAMPLES) + OVERALL QUIZ
+         PASTE THIS ENTIRE BLOCK RIGHT BEFORE </main> IN YOUR LECTURE 11 HTML
+         ===================================================================== -->
+
+    <style>
+      /* Additional Styles for Part C Worked Examples & Overall Quiz */
+      .ex-subnav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1.25rem;
+        background: #f1f5f9;
+        padding: 0.55rem;
+        border-radius: 10px;
+      }
+      .ex-subbtn {
+        appearance: none;
+        border: 1px solid #cbd5e1;
+        background: #ffffff;
+        color: #334155;
+        font-weight: 600;
+        font-size: 0.86rem;
+        padding: 0.5rem 0.9rem;
+        border-radius: 7px;
+        cursor: pointer;
+        transition: all 0.15s ease;
+      }
+      .ex-subbtn:hover {
+        border-color: var(--polyu-red);
+        color: var(--polyu-red);
+      }
+      .ex-subbtn.active {
+        background: var(--polyu-red);
+        color: #ffffff;
+        border-color: var(--polyu-red);
+        box-shadow: var(--shadow-sm);
+      }
+      .ex-panel {
+        display: none;
+      }
+      .ex-panel.active {
+        display: block;
+        animation: fadeIn 0.2s ease-in-out;
+      }
+      .step-card {
+        border: 1px solid var(--border-color);
+        border-left: 4px solid var(--blue-accent);
+        border-radius: 8px;
+        background: #ffffff;
+        padding: 0.9rem 1.1rem;
+        margin-bottom: 0.75rem;
+        transition: all 0.2s ease;
+      }
+      .step-card.hidden-step {
+        display: none;
+      }
+      .step-badge {
+        display: inline-block;
+        background: var(--blue-light);
+        color: var(--blue-accent);
+        font-weight: 800;
+        font-size: 0.74rem;
+        padding: 0.12rem 0.5rem;
+        border-radius: 4px;
+        text-transform: uppercase;
+        margin-bottom: 0.35rem;
+      }
+      .pipeline-banner {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        align-items: center;
+        background: #f8fafc;
+        border: 1px dashed #94a3b8;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        font-size: 0.86rem;
+      }
+      .pipeline-stage {
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        padding: 0.35rem 0.7rem;
+        font-weight: 700;
+        color: #0f172a;
+      }
+      .pipeline-arrow {
+        color: var(--polyu-red);
+        font-weight: 800;
+        font-size: 1.1rem;
+      }
+
+      /* Quiz Specific Styles */
+      .quiz-qcard {
+        background: #ffffff;
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius);
+        padding: 1.25rem;
+        margin-bottom: 1.15rem;
+        box-shadow: var(--shadow-sm);
+      }
+      .quiz-qheader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #f1f5f9;
+        padding-bottom: 0.55rem;
+        margin-bottom: 0.8rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .quiz-opt-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 0.6rem;
+        margin-top: 0.85rem;
+      }
+      .quiz-opt-label {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+        padding: 0.65rem 0.85rem;
+        border: 2px solid var(--border-color);
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 0.92rem;
+        transition: all 0.15s ease;
+        background: #f8fafc;
+      }
+      .quiz-opt-label:hover {
+        border-color: #94a3b8;
+        background: #ffffff;
+      }
+      .quiz-opt-label.selected {
+        border-color: var(--polyu-red);
+        background: #fff1f2;
+        font-weight: 700;
+      }
+      .quiz-opt-label.correct-opt {
+        border-color: var(--green-accent);
+        background: var(--green-light);
+        color: #14532d;
+        font-weight: 700;
+      }
+      .quiz-opt-label.wrong-opt {
+        border-color: #dc2626;
+        background: #fee2e2;
+        color: #7f1d1d;
+      }
+      .quiz-sol-box {
+        margin-top: 0.9rem;
+        padding: 0.85rem 1rem;
+        border-radius: 8px;
+        background: #f0f9ff;
+        border: 1px solid #bae6fd;
+        font-size: 0.89rem;
+        display: none;
+      }
+    </style>
+
+    <!-- =====================================================================
+         PART C1: WORKED EXAMPLES — BASIC LEVEL (SLIDES 13–17 & 31)
+         ===================================================================== -->
+    <section id="sec-basic" class="tab-section">
+      <div class="section-banner">
+        <div>
+          <h2>Part C1: Worked Examples — Basic Level</h2>
+          <p>Step-by-step interactive walkthroughs of Exercises 3.1, 3.2, 3.3, 3.4, 3.5, and 6.1 from Lecture Notes 11, with live parameter sliders so you can test both the lecture numbers and custom variations.</p>
+        </div>
+        <span class="tab-badge badge-green" style="font-size:0.86rem; padding:0.4rem 0.8rem;">Slides 13–17 &amp; 31 • 4 Interactive Examples</span>
+      </div>
+
+      <!-- Sub-navigation for Basic Examples -->
+      <div class="ex-subnav">
+        <button class="ex-subbtn active" onclick="switchSubPanel('sec-basic', 'b-ex1', this)">
+          Ex 3.1 (Slide 13): Linear Transform $aX + b$
+        </button>
+        <button class="ex-subbtn" onclick="switchSubPanel('sec-basic', 'b-ex2', this)">
+          Ex 3.2–3.4 (Slides 14–16): Standard Normal $Z$ Table (11 Cases)
+        </button>
+        <button class="ex-subbtn" onclick="switchSubPanel('sec-basic', 'b-ex3', this)">
+          Ex 3.5 (Slide 17): Inverse $Z$-Table Quantiles
+        </button>
+        <button class="ex-subbtn" onclick="switchSubPanel('sec-basic', 'b-ex4', this)">
+          Ex 6.1 (Slide 31): Uniform$(-2, 8)$ Probabilities
+        </button>
+      </div>
+
+      <!-- BASIC EXAMPLE 1: EXERCISE 3.1 (SLIDE 13) -->
+      <div id="b-ex1" class="ex-panel active">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">📘 Exercise 3.1 (Slide 13): Linear Transformation of a Normal Random Variable</div>
+            <button class="btn btn-sm btn-gold" onclick="resetBasicEx1()">↺ Reset to Slide 13 ($X \sim N(2, 3^2)$, Find $\mathbb{E}[-3X], \text{Var}(-3X)$)</button>
+          </div>
+
+          <div class="beamer-box box-def">
+            <div class="beamer-box-title">
+              <span>Problem Statement (Parameterized from Slide 13)</span>
+              <span>Theorem 3.1 &amp; 3.2</span>
+            </div>
+            <div class="beamer-box-body" id="b1-problem-statement">
+              Suppose $X \sim N(2, 3^2)$. Find $\mathbb{E}[-3X]$ and $\text{Var}(-3X)$.
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">
+                <div class="control-group">
+                  <div class="control-label"><span>Mean $\mu$ of $X$:</span><span class="control-val" id="b1-mu-val">2</span></div>
+                  <input type="range" id="b1-mu" min="-10" max="15" step="1" value="2" oninput="updateBasicEx1()">
+                </div>
+                <div class="control-group">
+                  <div class="control-label"><span>Std Dev $\sigma$ of $X$:</span><span class="control-val" id="b1-sig-val">3</span></div>
+                  <input type="range" id="b1-sig" min="1" max="10" step="1" value="3" oninput="updateBasicEx1()">
+                </div>
+                <div class="control-group">
+                  <div class="control-label"><span>Multiplier $a$ in $Y = aX+b$:</span><span class="control-val" id="b1-a-val">-3</span></div>
+                  <input type="range" id="b1-a" min="-6" max="6" step="1" value="-3" oninput="updateBasicEx1()">
+                </div>
+                <div class="control-group">
+                  <div class="control-label"><span>Shift $b$ in $Y = aX+b$:</span><span class="control-val" id="b1-b-val">0</span></div>
+                  <input type="range" id="b1-b" min="-10" max="10" step="1" value="0" oninput="updateBasicEx1()">
+                </div>
+              </div>
+
+              <div style="display:flex; gap:0.5rem; margin-bottom:0.75rem;">
+                <button class="btn btn-sm btn-primary" onclick="revealNextStep('b1-steps')">👁️ Reveal Next Step</button>
+                <button class="btn btn-sm btn-secondary" onclick="revealAllSteps('b1-steps')">Show All Steps</button>
+                <button class="btn btn-sm btn-secondary" onclick="hideAllSteps('b1-steps')">Hide Steps</button>
+              </div>
+            </div>
+
+            <div id="b1-steps">
+              <!-- Populated by updateBasicEx1() -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BASIC EXAMPLE 2: EXERCISES 3.2, 3.3, 3.4 (SLIDES 14–16) -->
+      <div id="b-ex2" class="ex-panel">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">📘 Exercises 3.2, 3.3 &amp; 3.4 (Slides 14–16): Finding Standard Normal Probabilities $Z \sim N(0,1)$</div>
+            <span class="tab-badge badge-blue">All 11 Lecture Sub-Problems</span>
+          </div>
+
+          <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:0.85rem;">
+            Select any of the 11 worked problems from Slides 14–16 below (or customize the $z$-cutoffs) to see how the <strong>PolyU Upper-Tail Table</strong> $P = \Pr(Z > z)$ combined with symmetry and complements solves every case:
+          </p>
+
+          <div style="display:flex; gap:0.4rem; flex-wrap:wrap; margin-bottom:1rem;">
+            <button class="btn btn-sm btn-gold" onclick="loadBasicEx2Case('ex32')">Ex 3.2: P(Z &lt; 0.36)</button>
+            <button class="btn btn-sm btn-secondary" onclick="loadBasicEx2Case('ex33a')">Ex 3.3a: P(Z &lt; 0.3574)</button>
+            <button class="btn btn-sm btn-secondary" onclick="loadBasicEx2Case('ex33b')">Ex 3.3b: P(Z &lt; -0.36)</button>
+            <button class="btn btn-sm btn-secondary" onclick="loadBasicEx2Case('ex33c')">Ex 3.3c: P(Z &gt; 5)</button>
+            <button class="btn btn-sm btn-secondary" onclick="loadBasicEx2Case('ex34_1')">Ex 3.4(1): P(Z &lt; 0.92)</button>
+            <button class="btn btn-sm btn-secondary" onclick="loadBasicEx2Case('ex34_2')">Ex 3.4(2): P(Z &gt; 2.48)</button>
+            <button class="btn btn-sm btn-secondary" onclick="loadBasicEx2Case('ex34_3')">Ex 3.4(3): P(Z &lt; -1.62)</button>
+            <button class="btn btn-sm btn-secondary" onclick="loadBasicEx2Case('ex34_4')">Ex 3.4(4): P(0 ≤ Z ≤ 1.84)</button>
+            <button class="btn btn-sm btn-secondary" onclick="loadBasicEx2Case('ex34_5')">Ex 3.4(5): P(-2.19 ≤ Z ≤ 0)</button>
+            <button class="btn btn-sm btn-secondary" onclick="loadBasicEx2Case('ex34_6')">Ex 3.4(6): P(0.21 &lt; Z &lt; 0.95)</button>
+            <button class="btn btn-sm btn-secondary" onclick="loadBasicEx2Case('ex34_7')">Ex 3.4(7): P(-0.58 &lt; Z &lt; 1.36)</button>
+            <button class="btn btn-sm btn-secondary" onclick="loadBasicEx2Case('ex34_8')">Ex 3.4(8): P(Z &gt; -2.52)</button>
+          </div>
+
+          <div class="grid-2">
+            <div>
+              <div class="control-group">
+                <label class="control-label">Region Type:</label>
+                <select id="b2-mode" style="width:100%;" onchange="updateBasicEx2()">
+                  <option value="lt">Left Tail: P(Z &lt; z₁)</option>
+                  <option value="gt">Right Tail: P(Z &gt; z₁)</option>
+                  <option value="between">Interval: P(z₁ ≤ Z ≤ z₂)</option>
+                </select>
+              </div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">
+                <div class="control-group">
+                  <div class="control-label"><span>Cutoff $z_1$:</span><span class="control-val" id="b2-z1-val">0.36</span></div>
+                  <input type="number" id="b2-z1" value="0.36" step="0.01" min="-5.5" max="5.5" style="width:100%;" oninput="updateBasicEx2()">
+                </div>
+                <div class="control-group" id="b2-z2-group" style="display:none;">
+                  <div class="control-label"><span>Upper Cutoff $z_2$:</span><span class="control-val" id="b2-z2-val">1.84</span></div>
+                  <input type="number" id="b2-z2" value="1.84" step="0.01" min="-5.5" max="5.5" style="width:100%;" oninput="updateBasicEx2()">
+                </div>
+              </div>
+              <div id="b2-steps"></div>
+            </div>
+
+            <div>
+              <div class="chart-box">
+                <svg id="b2-svg" viewBox="0 0 540 240" style="width:100%; height:auto; display:block;"></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BASIC EXAMPLE 3: EXERCISE 3.5 (SLIDE 17) -->
+      <div id="b-ex3" class="ex-panel">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">📘 Exercise 3.5 (Slide 17): Finding Quantiles $a$ and $b$ from Given Probabilities</div>
+            <button class="btn btn-sm btn-gold" onclick="resetBasicEx3()">↺ Reset to Slide 17 ($P(Z \le a)=0.33,\; P(Z \ge b)=0.99$)</button>
+          </div>
+
+          <div class="grid-2">
+            <div>
+              <div class="control-group">
+                <div class="control-label">
+                  <span>Part (a) Target Left-Tail Probability $p_1 = P(Z \le a)$:</span>
+                  <span class="control-val" id="b3-p1-val">0.33</span>
+                </div>
+                <input type="range" id="b3-p1" min="0.01" max="0.99" step="0.01" value="0.33" oninput="updateBasicEx3()">
+              </div>
+
+              <div class="control-group">
+                <div class="control-label">
+                  <span>Part (b) Target Right-Tail Probability $p_2 = P(Z \ge b)$:</span>
+                  <span class="control-val" id="b3-p2-val">0.99</span>
+                </div>
+                <input type="range" id="b3-p2" min="0.01" max="0.99" step="0.01" value="0.99" oninput="updateBasicEx3()">
+              </div>
+            </div>
+
+            <div id="b3-steps">
+              <!-- Populated by updateBasicEx3() -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BASIC EXAMPLE 4: EXERCISE 6.1 (SLIDE 31) -->
+      <div id="b-ex4" class="ex-panel">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">📘 Exercise 6.1 (Slide 31): Continuous Uniform Distribution $\text{Uniform}(a, b)$</div>
+            <button class="btn btn-sm btn-gold" onclick="resetBasicEx4()">↺ Reset to Slide 31 ($X \sim \text{Uniform}(-2, 8)$)</button>
+          </div>
+
+          <div class="grid-2">
+            <div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">
+                <div class="control-group">
+                  <div class="control-label"><span>Support Lower $a$:</span><span class="control-val" id="b4-a-val">-2</span></div>
+                  <input type="number" id="b4-a" value="-2" step="1" style="width:100%;" oninput="updateBasicEx4()">
+                </div>
+                <div class="control-group">
+                  <div class="control-label"><span>Support Upper $b$ ($>a$):</span><span class="control-val" id="b4-b-val">8</span></div>
+                  <input type="number" id="b4-b" value="8" step="1" style="width:100%;" oninput="updateBasicEx4()">
+                </div>
+                <div class="control-group">
+                  <div class="control-label"><span>Query Lower $x_1$:</span><span class="control-val" id="b4-x1-val">1</span></div>
+                  <input type="number" id="b4-x1" value="1" step="1" style="width:100%;" oninput="updateBasicEx4()">
+                </div>
+                <div class="control-group">
+                  <div class="control-label"><span>Query Upper $x_2$:</span><span class="control-val" id="b4-x2-val">2</span></div>
+                  <input type="number" id="b4-x2" value="2" step="1" style="width:100%;" oninput="updateBasicEx4()">
+                </div>
+              </div>
+              <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.4rem;">
+                <button class="btn btn-sm btn-secondary" onclick="setBasicEx4Query(1, 2)">Slide 31 Part 1: P(1 ≤ X ≤ 2)</button>
+                <button class="btn btn-sm btn-secondary" onclick="setBasicEx4Query(1, 100)">Slide 31 Part 2: P(1 ≤ X ≤ 100)</button>
+                <button class="btn btn-sm btn-secondary" onclick="setBasicEx4Query(0, 0)">Slide 31 Part 3: P(X = 0)</button>
+              </div>
+            </div>
+
+            <div id="b4-steps"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =====================================================================
+         PART C2: WORKED EXAMPLES — INTERMEDIATE LEVEL (SLIDES 18, 25–28, 32, 34, 37)
+         ===================================================================== -->
+    <section id="sec-inter" class="tab-section">
+      <div class="section-banner">
+        <div>
+          <h2>Part C2: Worked Examples — Intermediate Level</h2>
+          <p>Interactive worked solutions for Standardizing $X \sim N(\mu, \sigma^2)$ (Ex 4.1), Normal Approximation to Binomial with Continuity Correction (Ex 5.2–5.5 &amp; Ex 7.2), and Uniform Conditional &amp; Moment Problems (Ex 6.2 &amp; Ex 6.4).</p>
+        </div>
+        <span class="tab-badge badge-amber" style="font-size:0.86rem; padding:0.4rem 0.8rem;">Slides 18, 25–28, 32, 34, 37 • 5 Examples</span>
+      </div>
+
+      <div class="ex-subnav">
+        <button class="ex-subbtn active" onclick="switchSubPanel('sec-inter', 'i-ex1', this)">
+          Ex 4.1 (Slide 18): Standardizing $X \sim N(25, 4^2)$
+        </button>
+        <button class="ex-subbtn" onclick="switchSubPanel('sec-inter', 'i-ex2', this)">
+          Ex 5.3 &amp; 5.4 (Slides 26–27): Binomial $\to$ Normal
+        </button>
+        <button class="ex-subbtn" onclick="switchSubPanel('sec-inter', 'i-ex3', this)">
+          Ex 5.5 (Slide 28): All 8 Continuity Correction Cases
+        </button>
+        <button class="ex-subbtn" onclick="switchSubPanel('sec-inter', 'i-ex4', this)">
+          Ex 7.2 (Slide 37): Parcel Mis-Delivery Word Problem
+        </button>
+        <button class="ex-subbtn" onclick="switchSubPanel('sec-inter', 'i-ex5', this)">
+          Ex 6.2 &amp; 6.4 (Slides 32 &amp; 34): Uniform Conditional &amp; Moments
+        </button>
+      </div>
+
+      <!-- INTERMEDIATE EXAMPLE 1: EXERCISE 4.1 (SLIDE 18) -->
+      <div id="i-ex1" class="ex-panel active">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">📙 Exercise 4.1 (Slide 18): Standardizing $X \sim N(\mu, \sigma^2)$ to Find Interval Area</div>
+            <button class="btn btn-sm btn-gold" onclick="resetInterEx1()">↺ Reset to Slide 18 ($\mu=25, \sigma=4, [18, 34]$)</button>
+          </div>
+
+          <div class="grid-2">
+            <div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">
+                <div class="control-group">
+                  <div class="control-label"><span>Mean $\mu$:</span><span class="control-val" id="i1-mu-val">25</span></div>
+                  <input type="number" id="i1-mu" value="25" step="1" style="width:100%;" oninput="updateInterEx1()">
+                </div>
+                <div class="control-group">
+                  <div class="control-label"><span>Std Dev $\sigma$:</span><span class="control-val" id="i1-sig-val">4</span></div>
+                  <input type="number" id="i1-sig" value="4" min="0.5" step="0.5" style="width:100%;" oninput="updateInterEx1()">
+                </div>
+                <div class="control-group">
+                  <div class="control-label"><span>Lower $x_1$:</span><span class="control-val" id="i1-x1-val">18</span></div>
+                  <input type="number" id="i1-x1" value="18" step="1" style="width:100%;" oninput="updateInterEx1()">
+                </div>
+                <div class="control-group">
+                  <div class="control-label"><span>Upper $x_2$:</span><span class="control-val" id="i1-x2-val">34</span></div>
+                  <input type="number" id="i1-x2" value="34" step="1" style="width:100%;" oninput="updateInterEx1()">
+                </div>
+              </div>
+              <div style="display:flex; gap:0.5rem; margin-top:0.5rem;">
+                <button class="btn btn-sm btn-primary" onclick="revealNextStep('i1-steps')">👁️ Reveal Next Step</button>
+                <button class="btn btn-sm btn-secondary" onclick="revealAllSteps('i1-steps')">Show All Steps</button>
+              </div>
+            </div>
+
+            <div id="i1-steps"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INTERMEDIATE EXAMPLE 2: EXERCISES 5.3 & 5.4 (SLIDES 26–27) -->
+      <div id="i-ex2" class="ex-panel">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">📙 Exercises 5.3 &amp; 5.4 (Slides 26–27): Normal Approximation to Binomial Intervals</div>
+            <div style="display:flex; gap:0.4rem;">
+              <button class="btn btn-sm btn-gold" onclick="setInterEx2Preset(10000, 0.4, 3000, 3900, 'le_le')">Slide 26 (Ex 5.3): n=10000, p=0.4, 3000 ≤ X ≤ 3900</button>
+              <button class="btn btn-sm btn-secondary" onclick="setInterEx2Preset(100, 0.4, 30, 39, 'le_lt')">Slide 27 (Ex 5.4): n=100, p=0.4, 30 ≤ X &lt; 39</button>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">
+                <div class="control-group">
+                  <div class="control-label"><span>Trials $n$:</span></div>
+                  <input type="number" id="i2-n" value="100" min="20" step="10" style="width:100%;" oninput="updateInterEx2()">
+                </div>
+                <div class="control-group">
+                  <div class="control-label"><span>Prob $p$:</span></div>
+                  <input type="number" id="i2-p" value="0.4" min="0.05" max="0.95" step="0.01" style="width:100%;" oninput="updateInterEx2()">
+                </div>
+                <div class="control-group">
+                  <div class="control-label"><span>Lower Integer $a$:</span></div>
+                  <input type="number" id="i2-a" value="30" step="1" style="width:100%;" oninput="updateInterEx2()">
+                </div>
+                <div class="control-group">
+                  <div class="control-label"><span>Upper Integer $b$:</span></div>
+                  <input type="number" id="i2-b" value="39" step="1" style="width:100%;" oninput="updateInterEx2()">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Inequality Signs:</label>
+                <select id="i2-ineq" style="width:100%;" onchange="updateInterEx2()">
+                  <option value="le_lt" selected>a ≤ X &lt; b (Slide 27 Ex 5.4: Left Inclusive, Right Strict)</option>
+                  <option value="le_le">a ≤ X ≤ b (Slide 26 Ex 5.3: Both Inclusive)</option>
+                  <option value="lt_lt">a &lt; X &lt; b (Both Strict)</option>
+                  <option value="lt_le">a &lt; X ≤ b (Left Strict, Right Inclusive)</option>
+                </select>
+              </div>
+            </div>
+
+            <div id="i2-steps"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INTERMEDIATE EXAMPLE 3: EXERCISE 5.5 (SLIDE 28 ALL 8 CASES) -->
+      <div id="i-ex3" class="ex-panel">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">📙 Exercise 5.5 (Slide 28): Complete 8-Part Continuity Correction Walkthrough ($X \sim \text{Binomial}(100, 0.36)$)</div>
+            <span class="tab-badge badge-purple">Slide 28 Master Table</span>
+          </div>
+
+          <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:0.9rem;">
+            For $X \sim \text{Binomial}(n = 100, p = 0.36)$, we check $np = 36 > 5$ and $n(1-p) = 64 > 5$, so $X \approx N(\mu = 36,\; \sigma^2 = 23.04)$ with $\sigma = \sqrt{23.04} = 4.8$. Click any of the 8 sub-problems on Slide 28 below to inspect its exact continuity correction and table lookup:
+          </p>
+
+          <div style="display:flex; gap:0.4rem; flex-wrap:wrap; margin-bottom:1rem;">
+            <button class="btn btn-sm btn-gold" onclick="showSlide28Sub(1)">1. P(X &gt; 51)</button>
+            <button class="btn btn-sm btn-secondary" onclick="showSlide28Sub(2)">2. P(X ≥ 51)</button>
+            <button class="btn btn-sm btn-secondary" onclick="showSlide28Sub(3)">3. P(X &lt; 45)</button>
+            <button class="btn btn-sm btn-secondary" onclick="showSlide28Sub(4)">4. P(X ≤ 45) &amp; P(X ≤ 51)</button>
+            <button class="btn btn-sm btn-secondary" onclick="showSlide28Sub(5)">5. P(30 &lt; X &lt; 40)</button>
+            <button class="btn btn-sm btn-secondary" onclick="showSlide28Sub(6)">6. P(30 &lt; X ≤ 40)</button>
+            <button class="btn btn-sm btn-secondary" onclick="showSlide28Sub(7)">7. P(30 ≤ X &lt; 40)</button>
+            <button class="btn btn-sm btn-secondary" onclick="showSlide28Sub(8)">8. P(30 ≤ X ≤ 40)</button>
+          </div>
+
+          <div id="i3-slide28-detail"></div>
+        </div>
+      </div>
+
+      <!-- INTERMEDIATE EXAMPLE 4: EXERCISE 7.2 (SLIDE 37) -->
+      <div id="i-ex4" class="ex-panel">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">📙 Exercise 7.2 (Slide 37): Parcel Mis-Delivery Word Problem</div>
+            <button class="btn btn-sm btn-gold" onclick="resetInterEx4()">↺ Reset to Slide 37 ($n=900, p=0.05, X \ge 50$)</button>
+          </div>
+
+          <div class="grid-2">
+            <div>
+              <div class="beamer-box box-def">
+                <div class="beamer-box-title"><span>Word Problem Statement (Slide 37)</span></div>
+                <div class="beamer-box-body" id="i4-prob-text"></div>
+              </div>
+              <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.65rem;">
+                <div class="control-group">
+                  <div class="control-label"><span>Parcels $n$:</span></div>
+                  <input type="number" id="i4-n" value="900" min="100" step="50" style="width:100%;" oninput="updateInterEx4()">
+                </div>
+                <div class="control-group">
+                  <div class="control-label"><span>Mis-delivery $p$:</span></div>
+                  <input type="number" id="i4-p" value="0.05" min="0.01" max="0.5" step="0.01" style="width:100%;" oninput="updateInterEx4()">
+                </div>
+                <div class="control-group">
+                  <div class="control-label"><span>At least $k$:</span></div>
+                  <input type="number" id="i4-k" value="50" step="1" style="width:100%;" oninput="updateInterEx4()">
+                </div>
+              </div>
+            </div>
+
+            <div id="i4-steps"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INTERMEDIATE EXAMPLE 5: EXERCISES 6.2 & 6.4 (SLIDES 32 & 34) -->
+      <div id="i-ex5" class="ex-panel">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">📙 Exercises 6.2 &amp; 6.4 (Slides 32 &amp; 34): Uniform Conditional Probability &amp; Solving for $(a, b)$</div>
+          </div>
+
+          <div class="grid-2">
+            <!-- Ex 6.2 -->
+            <div style="border-right:1px solid var(--border-color); padding-right:1rem;">
+              <h4 style="color:var(--polyu-red); margin-bottom:0.5rem;">Exercise 6.2 (Slide 32): Conditional Probability $P(X \ge c \mid X \le d)$</h4>
+              <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:0.65rem;">
+                For $X \sim \text{Uniform}(-2, 8)$, find $P(X \ge c \mid X \le d)$:
+              </p>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.65rem;">
+                <div class="control-group">
+                  <div class="control-label"><span>Lower $c$ in $A=\{X \ge c\}$:</span></div>
+                  <input type="number" id="i5-c" value="0" min="-2" max="7" step="0.5" style="width:100%;" oninput="updateInterEx5()">
+                </div>
+                <div class="control-group">
+                  <div class="control-label"><span>Upper $d$ in $B=\{X \le d\}$:</span></div>
+                  <input type="number" id="i5-d" value="5" min="-1" max="8" step="0.5" style="width:100%;" oninput="updateInterEx5()">
+                </div>
+              </div>
+              <div id="i5-ex62-sol"></div>
+            </div>
+
+            <!-- Ex 6.4 -->
+            <div>
+              <h4 style="color:var(--polyu-red); margin-bottom:0.5rem;">Exercise 6.4 (Slide 34): Recovering $a, b$ from $\mathbb{E}[X]$ and $\text{Var}(X)$</h4>
+              <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:0.65rem;">
+                Let $X \sim \text{Uniform}(a, b)$. Given $\mathbb{E}[X] = \mu$ and $\text{Var}(X) = \sigma^2$, find $a$ and $b$:
+              </p>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.65rem;">
+                <div class="control-group">
+                  <div class="control-label"><span>Given $\mathbb{E}[X] = \mu$:</span></div>
+                  <input type="number" id="i5-mu" value="3" step="0.5" style="width:100%;" oninput="updateInterEx5()">
+                </div>
+                <div class="control-group">
+                  <div class="control-label"><span>Given $\text{Var}(X) = \sigma^2$:</span></div>
+                  <input type="number" id="i5-var" value="3" min="0.25" step="0.25" style="width:100%;" oninput="updateInterEx5()">
+                </div>
+              </div>
+              <div id="i5-ex64-sol"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =====================================================================
+         PART C3: WORKED EXAMPLES — DIFFICULT LEVEL (SLIDES 19, 33, 36, 38–39)
+         ===================================================================== -->
+    <section id="sec-diff" class="tab-section">
+      <div class="section-banner">
+        <div>
+          <h2>Part C3: Worked Examples — Difficult Level (Multi-Stage &amp; Simultaneous Systems)</h2>
+          <p>Master the 4 most challenging exam-style problems in Lecture Notes 11: Simultaneous Quantile Equations (Ex 4.2), Poisson $\to$ Binomial $\to$ Normal (Ex 7.1), Binomial $\to$ Normal $\to$ Binomial (Ex 7.3), and Uniform $\to$ Binomial $\to$ Poisson (Ex 6.3).</p>
+        </div>
+        <span class="tab-badge badge-red" style="font-size:0.86rem; padding:0.4rem 0.8rem;">Slides 19, 33, 36, 38–39 • 4 Advanced Problems</span>
+      </div>
+
+      <div class="ex-subnav">
+        <button class="ex-subbtn active" onclick="switchSubPanel('sec-diff', 'd-ex1', this)">
+          Ex 4.2 (Slide 19): Simultaneous Equations for $\mu$ &amp; $\sigma^2$
+        </button>
+        <button class="ex-subbtn" onclick="switchSubPanel('sec-diff', 'd-ex2', this)">
+          Ex 7.1 (Slide 36): Poisson $\to$ Binomial $\to$ Normal
+        </button>
+        <button class="ex-subbtn" onclick="switchSubPanel('sec-diff', 'd-ex3', this)">
+          Ex 7.3 (Slides 38–39): Binomial $\to$ Normal $\to$ Binomial
+        </button>
+        <button class="ex-subbtn" onclick="switchSubPanel('sec-diff', 'd-ex4', this)">
+          Ex 6.3 (Slide 33): Uniform $\to$ Binomial $\to$ Poisson
+        </button>
+      </div>
+
+      <!-- DIFFICULT EXAMPLE 1: EXERCISE 4.2 (SLIDE 19) -->
+      <div id="d-ex1" class="ex-panel active">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">📕 Exercise 4.2 (Slide 19): Finding Unknown Mean $\mu$ and Variance $\sigma^2$ from Two Quantiles</div>
+            <button class="btn btn-sm btn-gold" onclick="resetDiffEx1()">↺ Reset to Slide 19 ($P(X<116)=0.2,\; P(X<328)=0.9$)</button>
+          </div>
+
+          <div class="pipeline-banner">
+            <span class="pipeline-stage">1. Standardize Both Quantiles</span>
+            <span class="pipeline-arrow">&rarr;</span>
+            <span class="pipeline-stage">2. Reverse $Z$-Table Lookup ($z_1, z_2$)</span>
+            <span class="pipeline-arrow">&rarr;</span>
+            <span class="pipeline-stage">3. Solve $2\times 2$ Linear System for $\mu, \sigma$</span>
+            <span class="pipeline-arrow">&rarr;</span>
+            <span class="pipeline-stage">4. Compute Variance $\sigma^2$</span>
+          </div>
+
+          <div class="grid-2">
+            <div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">
+                <div class="control-group">
+                  <div class="control-label"><span>First Value $x_1$:</span></div>
+                  <input type="number" id="d1-x1" value="116" step="1" style="width:100%;" oninput="updateDiffEx1()">
+                </div>
+                <div class="control-group">
+                  <div class="control-label"><span>Prob $p_1 = P(X < x_1)$:</span></div>
+                  <input type="number" id="d1-p1" value="0.20" min="0.01" max="0.49" step="0.01" style="width:100%;" oninput="updateDiffEx1()">
+                </div>
+                <div class="control-group">
+                  <div class="control-label"><span>Second Value $x_2$ ($>x_1$):</span></div>
+                  <input type="number" id="d1-x2" value="328" step="1" style="width:100%;" oninput="updateDiffEx1()">
+                </div>
+                <div class="control-group">
+                  <div class="control-label"><span>Prob $p_2 = P(X < x_2)$:</span></div>
+                  <input type="number" id="d1-p2" value="0.90" min="0.51" max="0.99" step="0.01" style="width:100%;" oninput="updateDiffEx1()">
+                </div>
+              </div>
+              <div style="display:flex; gap:0.5rem; margin-top:0.5rem;">
+                <button class="btn btn-sm btn-primary" onclick="revealNextStep('d1-steps')">👁️ Reveal Next Step</button>
+                <button class="btn btn-sm btn-secondary" onclick="revealAllSteps('d1-steps')">Show All Steps</button>
+                <button class="btn btn-sm btn-secondary" onclick="hideAllSteps('d1-steps')">Hide Steps</button>
+              </div>
+            </div>
+
+            <div id="d1-steps"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DIFFICULT EXAMPLE 2: EXERCISE 7.1 (SLIDE 36) -->
+      <div id="d-ex2" class="ex-panel">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">📕 Exercise 7.1 (Slide 36): Workplace Accidents (Poisson $\to$ Binomial $\to$ Normal with CC)</div>
+            <button class="btn btn-sm btn-gold" onclick="resetDiffEx2()">↺ Reset to Slide 36 ($\lambda_{\text{day}}=0.1,\; 7\text{ days},\; n=1000,\; Y \ge 160$)</button>
+          </div>
+
+          <div class="pipeline-banner">
+            <span class="pipeline-stage">Stage 1: 1 Workplace in $t$ Days<br>$X \sim \text{Pois}(\lambda t) \implies p = P(X \ge 2)$</span>
+            <span class="pipeline-arrow">&rarr;</span>
+            <span class="pipeline-stage">Stage 2: Across $n$ Workplaces<br>$Y \sim \text{Binomial}(n, p)$</span>
+            <span class="pipeline-arrow">&rarr;</span>
+            <span class="pipeline-stage">Stage 3: Normal Approx + CC<br>$V \sim N(np, np(1-p))$</span>
+          </div>
+
+          <div class="grid-2">
+            <div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">
+                <div class="control-group">
+                  <div class="control-label"><span>Daily Rate $\lambda_{\text{day}}$:</span></div>
+                  <input type="number" id="d2-rate" value="0.1" min="0.05" max="0.5" step="0.05" style="width:100%;" oninput="updateDiffEx2()">
+                </div>
+                <div class="control-group">
+                  <div class="control-label"><span>Days $t$:</span></div>
+                  <input type="number" id="d2-days" value="7" min="1" max="30" step="1" style="width:100%;" oninput="updateDiffEx2()">
+                </div>
+                <div class="control-group">
+                  <div class="control-label"><span>Workplaces $n$:</span></div>
+                  <input type="number" id="d2-n" value="1000" min="100" step="100" style="width:100%;" oninput="updateDiffEx2()">
+                </div>
+                <div class="control-group">
+                  <div class="control-label"><span>At least $k$ workplaces:</span></div>
+                  <input type="number" id="d2-k" value="160" step="1" style="width:100%;" oninput="updateDiffEx2()">
+                </div>
+              </div>
+              <div style="display:flex; gap:0.5rem; margin-top:0.5rem;">
+                <button class="btn btn-sm btn-primary" onclick="revealNextStep('d2-steps')">👁️ Reveal Next Step</button>
+                <button class="btn btn-sm btn-secondary" onclick="revealAllSteps('d2-steps')">Show All Steps</button>
+                <button class="btn btn-sm btn-secondary" onclick="hideAllSteps('d2-steps')">Hide Steps</button>
+              </div>
+            </div>
+
+            <div id="d2-steps"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DIFFICULT EXAMPLE 3: EXERCISE 7.3 (SLIDES 38–39) -->
+      <div id="d-ex3" class="ex-panel">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">📕 Exercise 7.3 (Slides 38–39): Exhibition Rooms &amp; Light Bulbs (Binomial $\to$ Normal $\to$ Exact Binomial)</div>
+            <button class="btn btn-sm btn-gold" onclick="resetDiffEx3()">↺ Reset to Slide 39 (10 rooms, 300 bulbs, $q=0.1$, $X \ge 268$, $Y = 5$)</button>
+          </div>
+
+          <div class="pipeline-banner">
+            <span class="pipeline-stage">Stage 1: Bulbs in 1 Room ($n=300$)<br>$X \sim B(300, 0.9) \approx V \sim N(270, 27)$</span>
+            <span class="pipeline-arrow">&rarr;</span>
+            <span class="pipeline-stage">Stage 2: Continuity Correction<br>$p_{\text{room}} = P(X \ge 268) \approx P(V > 267.5)$</span>
+            <span class="pipeline-arrow">&rarr;</span>
+            <span class="pipeline-stage">Stage 3: Across 10 Rooms (Small $N=10$)<br>Exact $Y \sim B(10, p_{\text{room}}),\; P(Y=5)$</span>
+          </div>
+
+          <div class="grid-2">
+            <div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">
+                <div class="control-group">
+                  <div class="control-label"><span>Bulbs per Room $n$:</span></div>
+                  <input type="number" id="d3-n" value="300" min="100" step="50" style="width:100%;" oninput="updateDiffEx3()">
+                </div>
+                <div class="control-group">
+                  <div class="control-label"><span>Burn-out Prob $q$:</span></div>
+                  <input type="number" id="d3-q" value="0.10" min="0.05" max="0.40" step="0.05" style="width:100%;" oninput="updateDiffEx3()">
+                </div>
+                <div class="control-group">
+                  <div class="control-label"><span>Min Working Bulbs $k$:</span></div>
+                  <input type="number" id="d3-k" value="268" step="1" style="width:100%;" oninput="updateDiffEx3()">
+                </div>
+                <div class="control-group">
+                  <div class="control-label"><span>Target Rooms $m$ (of 10):</span></div>
+                  <input type="number" id="d3-m" value="5" min="0" max="10" step="1" style="width:100%;" oninput="updateDiffEx3()">
+                </div>
+              </div>
+              <div style="display:flex; gap:0.5rem; margin-top:0.5rem;">
+                <button class="btn btn-sm btn-primary" onclick="revealNextStep('d3-steps')">👁️ Reveal Next Step</button>
+                <button class="btn btn-sm btn-secondary" onclick="revealAllSteps('d3-steps')">Show All Steps</button>
+                <button class="btn btn-sm btn-secondary" onclick="hideAllSteps('d3-steps')">Hide Steps</button>
+              </div>
+            </div>
+
+            <div id="d3-steps"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DIFFICULT EXAMPLE 4: EXERCISE 6.3 (SLIDE 33) -->
+      <div id="d-ex4" class="ex-panel">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">📕 Exercise 6.3 (Slide 33): 100 Independent Uniform Variables (Uniform $\to$ Binomial $\to$ Poisson)</div>
+            <button class="btn btn-sm btn-gold" onclick="resetDiffEx4()">↺ Reset to Slide 33 ($X_i \sim \text{Uniform}(-2,8),\; n=100,\; x_0=-1.8,\; N \le 3$)</button>
+          </div>
+
+          <div class="pipeline-banner">
+            <span class="pipeline-stage">Stage 1: Single $X_i \sim \text{Uniform}(-2, 8)$<br>$p = P(X_i < -1.8) = 0.02$</span>
+            <span class="pipeline-arrow">&rarr;</span>
+            <span class="pipeline-stage">Stage 2: Count $N \sim \text{Binomial}(100, 0.02)$<br>Since $np = 2 \le 7$ (rare event!)</span>
+            <span class="pipeline-arrow">&rarr;</span>
+            <span class="pipeline-stage">Stage 3: Poisson Approx<br>$N \approx \text{Poisson}(\lambda = 2),\; P(N \le 3)$</span>
+          </div>
+
+          <div class="grid-2">
+            <div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">
+                <div class="control-group">
+                  <div class="control-label"><span>Cutoff $x_0$ in $P(X_i < x_0)$:</span></div>
+                  <input type="number" id="d4-x0" value="-1.8" min="-1.95" max="-1.4" step="0.05" style="width:100%;" oninput="updateDiffEx4()">
+                </div>
+                <div class="control-group">
+                  <div class="control-label"><span>Max Count $k$ ($N \le k$):</span></div>
+                  <input type="number" id="d4-k" value="3" min="1" max="5" step="1" style="width:100%;" oninput="updateDiffEx4()">
+                </div>
+              </div>
+              <div class="beamer-box box-rem" style="margin-top:0.5rem;">
+                <div class="beamer-box-title"><span>Why Poisson Instead of Normal Here?</span></div>
+                <div class="beamer-box-body">
+                  Remember Theorem 5.1: Normal approximation requires $np > 5$ and $n(1-p) > 5$. Here $np = 100 \times 0.02 = 2 \le 5$, so we use the <strong>Poisson Approximation</strong> $N \sim \text{Poisson}(np)$ from Lecture 10!
+                </div>
+              </div>
+            </div>
+
+            <div id="d4-steps"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =====================================================================
+         OVERALL PARAMETERIZED QUIZ WITH PERSISTENT RESULTS STORAGE
+         ===================================================================== -->
+    <section id="sec-quiz" class="tab-section">
+      <div class="section-banner">
+        <div>
+          <h2>🏆 Overall Parameterized Quiz — Lecture Notes 11</h2>
+          <p>Generate unlimited randomized, parameterized exam questions covering Basic, Intermediate, and Difficult topics. Your quiz attempts and parameters are automatically saved to your browser's local storage and can be exported as CSV.</p>
+        </div>
+        <span class="tab-badge badge-gold" style="background:var(--polyu-gold); color:#1e293b; font-size:0.86rem; padding:0.4rem 0.8rem;">Parameterized &amp; Stored</span>
+      </div>
+
+      <!-- Quiz Configuration & Student Info Bar -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">⚙️ Quiz Configuration &amp; Parameter Generator</div>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="generateParameterizedQuiz()">🎲 Generate New Parameterized Quiz</button>
+            <button class="btn btn-gold" onclick="submitParameterizedQuiz()">✅ Submit &amp; Grade Quiz</button>
+          </div>
+        </div>
+
+        <div class="grid-3" style="margin-bottom:0;">
+          <div>
+            <label class="control-label">Student Name / PolyU ID (Optional):</label>
+            <input type="text" id="quiz-student-id" placeholder="e.g., CHAN Tai Man (24012345D)" style="width:100%; padding:0.48rem 0.7rem; border:1px solid #cbd5e1; border-radius:6px;">
+          </div>
+          <div>
+            <label class="control-label">Difficulty Filter:</label>
+            <select id="quiz-diff-filter" style="width:100%;" onchange="generateParameterizedQuiz()">
+              <option value="all" selected>All Levels (Basic + Intermediate + Difficult)</option>
+              <option value="Basic">Basic Level Only</option>
+              <option value="Intermediate">Intermediate Level Only</option>
+              <option value="Difficult">Difficult Level Only</option>
+            </select>
+          </div>
+          <div>
+            <label class="control-label">Number of Questions:</label>
+            <select id="quiz-count-select" style="width:100%;" onchange="generateParameterizedQuiz()">
+              <option value="6" selected>6 Questions (Balanced Set)</option>
+              <option value="8">8 Questions (Full Set)</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="quiz-live-banner" style="display:none; margin-top:1rem; padding:0.9rem 1.1rem; border-radius:8px; font-weight:700;"></div>
+      </div>
+
+      <!-- Dynamic Quiz Questions Container -->
+      <div id="quiz-questions-container"></div>
+
+      <!-- Persistent Stored Results History Card -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">📊 Stored Quiz Results &amp; Parameter Log (Saved in Browser LocalStorage)</div>
+          <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
+            <button class="btn btn-sm btn-secondary" onclick="exportQuizHistoryCSV()">📥 Download Results (CSV)</button>
+            <button class="btn btn-sm btn-secondary" onclick="clearQuizHistory()">🗑️ Clear Stored History</button>
+          </div>
+        </div>
+
+        <div style="overflow-x:auto;">
+          <table class="ref-table" id="quiz-history-table">
+            <thead>
+              <tr>
+                <th>Attempt #</th>
+                <th>Date &amp; Time</th>
+                <th>Student / ID</th>
+                <th>Difficulty</th>
+                <th>Score</th>
+                <th>Percentage</th>
+                <th>Parameter Seed &amp; Summary</th>
+              </tr>
+            </thead>
+            <tbody id="quiz-history-tbody">
+              <!-- Populated from localStorage -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         JAVASCRIPT FOR PART C WORKED EXAMPLES & PARAMETERIZED QUIZ
+         ===================================================================== -->
+    <script>
+      /* ---------------------------------------------------------------------
+         AUTO-INJECT TOP NAVIGATION TABS & SUB-PANEL SWITCHER
+         --------------------------------------------------------------------- */
+      function injectPartCNavTabs() {
+        const topNav = document.querySelector('.top-nav');
+        if (!topNav || document.getElementById('nav-btn-basic')) return;
+
+        const tabs = [
+          { id: 'sec-basic', btnId: 'nav-btn-basic', num: 'Part C1', label: 'Basic Examples', badge: 'Ex 3.1–3.5, 6.1', bClass: 'badge-green' },
+          { id: 'sec-inter', btnId: 'nav-btn-inter', num: 'Part C2', label: 'Intermediate Examples', badge: 'Ex 4.1, 5.3–5.5, 7.2', bClass: 'badge-amber' },
+          { id: 'sec-diff', btnId: 'nav-btn-diff', num: 'Part C3', label: 'Difficult Examples', badge: 'Ex 4.2, 6.3, 7.1, 7.3', bClass: 'badge-red' },
+          { id: 'sec-quiz', btnId: 'nav-btn-quiz', num: 'Quiz', label: 'Overall Quiz', badge: 'Parameterized + Stored', bClass: 'badge-blue' }
+        ];
+
+        tabs.forEach(t => {
+          const btn = document.createElement('button');
+          btn.className = 'nav-tab';
+          btn.id = t.btnId;
+          btn.setAttribute('onclick', `switchSection('${t.id}', this)`);
+          btn.innerHTML = `
+            <span class="tab-num">${t.num}</span>
+            ${t.label}
+            <span class="tab-badge ${t.bClass}">${t.badge}</span>
+          `;
+          topNav.appendChild(btn);
+        });
+      }
+
+      function switchSubPanel(sectionId, panelId, btnEl) {
+        const sec = document.getElementById(sectionId);
+        if (!sec) return;
+        sec.querySelectorAll('.ex-panel').forEach(p => p.classList.remove('active'));
+        sec.querySelectorAll('.ex-subbtn').forEach(b => b.classList.remove('active'));
+        const target = document.getElementById(panelId);
+        if (target) {
+          target.classList.add('active');
+          renderMath(target);
+        }
+        if (btnEl) btnEl.classList.add('active');
+      }
+
+      function revealNextStep(containerId) {
+        const c = document.getElementById(containerId);
+        if (!c) return;
+        const hidden = c.querySelector('.step-card.hidden-step');
+        if (hidden) {
+          hidden.classList.remove('hidden-step');
+          renderMath(hidden);
+        }
+      }
+
+      function revealAllSteps(containerId) {
+        const c = document.getElementById(containerId);
+        if (!c) return;
+        c.querySelectorAll('.step-card').forEach(s => s.classList.remove('hidden-step'));
+        renderMath(c);
+      }
+
+      function hideAllSteps(containerId) {
+        const c = document.getElementById(containerId);
+        if (!c) return;
+        c.querySelectorAll('.step-card').forEach((s, idx) => {
+          if (idx > 0) s.classList.add('hidden-step');
+        });
+      }
+
+      // Inverse Standard Normal Quantile rounded to 2 decimal places (matching PolyU Z-table)
+      function inversePolyUZ(probLeft) {
+        let bestZ = 0;
+        let minDiff = 999;
+        for (let zInt = -350; zInt <= 350; zInt++) {
+          const z = zInt / 100;
+          const cdf = polyUTableCDF(z);
+          const diff = Math.abs(cdf - probLeft);
+          if (diff < minDiff) {
+            minDiff = diff;
+            bestZ = z;
+          }
+        }
+        return bestZ;
+      }
+
+      /* ---------------------------------------------------------------------
+         PART C1: BASIC EXAMPLES LOGIC (EX 3.1, 3.2–3.4, 3.5, 6.1)
+         --------------------------------------------------------------------- */
+      function resetBasicEx1() {
+        document.getElementById('b1-mu').value = 2;
+        document.getElementById('b1-sig').value = 3;
+        document.getElementById('b1-a').value = -3;
+        document.getElementById('b1-b').value = 0;
+        updateBasicEx1();
+      }
+
+      function updateBasicEx1() {
+        const mu = parseInt(document.getElementById('b1-mu').value, 10);
+        const sig = parseInt(document.getElementById('b1-sig').value, 10);
+        const a = parseInt(document.getElementById('b1-a').value, 10);
+        const b = parseInt(document.getElementById('b1-b').value, 10);
+
+        setText('b1-mu-val', mu);
+        setText('b1-sig-val', sig);
+        setText('b1-a-val', a);
+        setText('b1-b-val', b);
+
+        const expr = b === 0 ? `${a}X` : `${a}X ${b > 0 ? '+ ' + b : '- ' + Math.abs(b)}`;
+        const newMean = a * mu + b;
+        const newStd = Math.abs(a) * sig;
+        const newVar = newStd * newStd;
+
+        setHTML('b1-problem-statement', `Suppose $X \\sim N(${mu},\\, ${sig}^2)$. Find $\\mathbb{E}[${expr}]$ and $\\text{Var}(${expr})$.`);
+
+        setHTML('b1-steps', `
+          <div class="step-card">
+            <span class="step-badge">Step 1 • Standardize X (Theorem 3.1)</span>
+            <div>Let $Z = \\dfrac{X - (${mu})}{${sig}}$. Then $Z \\sim N(0, 1)$ and we can write $X = ${sig}Z + (${mu})$.</div>
+          </div>
+          <div class="step-card">
+            <span class="step-badge">Step 2 • Express ${expr} in terms of Z</span>
+            <div>Substitute $X = ${sig}Z + (${mu})$:
+            $$${expr} = ${a}(${sig}Z + ${mu}) ${b >= 0 ? '+ ' + b : '- ' + Math.abs(b)} = ${a * sig}Z + (${newMean})$$</div>
+          </div>
+          <div class="step-card">
+            <span class="step-badge">Step 3 • Apply Symmetry &amp; Theorem 3.2</span>
+            <div>Since the standard normal distribution $N(0,1)$ is symmetric about $0$, $\\pm Z \\sim N(0,1)$. By Theorem 3.2 ($aX+b \\sim N(a\\mu+b,\\, a^2\\sigma^2)$):
+            $$${expr} \\sim N\\big(${newMean},\\; ${newStd}^2\\big) \\implies \\mathbf{\\mathbb{E}[${expr}] = ${newMean}}, \\quad \\mathbf{\\text{Var}(${expr}) = ${newVar}}$$</div>
+          </div>
+        `);
+      }
+
+      function loadBasicEx2Case(code) {
+        const map = {
+          ex32:   { mode: 'lt', z1: 0.36, z2: 1 },
+          ex33a:  { mode: 'lt', z1: 0.3574, z2: 1 },
+          ex33b:  { mode: 'lt', z1: -0.36, z2: 1 },
+          ex33c:  { mode: 'gt', z1: 5.00, z2: 1 },
+          ex34_1: { mode: 'lt', z1: 0.92, z2: 1 },
+          ex34_2: { mode: 'gt', z1: 2.48, z2: 1 },
+          ex34_3: { mode: 'lt', z1: -1.62, z2: 1 },
+          ex34_4: { mode: 'between', z1: 0.00, z2: 1.84 },
+          ex34_5: { mode: 'between', z1: -2.19, z2: 0.00 },
+          ex34_6: { mode: 'between', z1: 0.21, z2: 0.95 },
+          ex34_7: { mode: 'between', z1: -0.58, z2: 1.36 },
+          ex34_8: { mode: 'gt', z1: -2.52, z2: 1 }
+        };
+        const cfg = map[code];
+        if (!cfg) return;
+        document.getElementById('b2-mode').value = cfg.mode;
+        document.getElementById('b2-z1').value = cfg.z1;
+        document.getElementById('b2-z2').value = cfg.z2;
+        updateBasicEx2();
+      }
+
+      function updateBasicEx2() {
+        const mode = document.getElementById('b2-mode').value;
+        let z1Raw = parseFloat(document.getElementById('b2-z1').value) || 0;
+        let z2Raw = parseFloat(document.getElementById('b2-z2').value) || 1;
+        document.getElementById('b2-z2-group').style.display = mode === 'between' ? 'block' : 'none';
+
+        if (mode === 'between' && z2Raw < z1Raw) {
+          z2Raw = z1Raw;
+          document.getElementById('b2-z2').value = z2Raw;
+        }
+
+        const z1 = Math.round(z1Raw * 100) / 100;
+        const z2 = Math.round(z2Raw * 100) / 100;
+        setText('b2-z1-val', z1Raw);
+        setText('b2-z2-val', z2Raw);
+
+        let stepsHtml = '';
+        const roundNote = Math.abs(z1Raw - z1) > 0.0001
+          ? `<div class="step-card"><span class="step-badge">Rounding Note (Slide 15 Ex 3.3)</span><div>Since the table covers 2 decimal places, we round $${z1Raw} \\approx ${z1.toFixed(2)}$.</div></div>`
+          : '';
+
+        if (mode === 'lt') {
+          const p = polyUTableCDF(z1);
+          const pUp = polyUTableUpper(Math.abs(z1));
+          const formula = z1 >= 0
+            ? `P(Z < ${z1.toFixed(2)}) = 1 - P(Z > ${z1.toFixed(2)}) = 1 - ${fmtTableP(pUp)} = \\mathbf{${fmtTableP(p)}}`
+            : `P(Z < ${z1.toFixed(2)}) = P(Z > ${Math.abs(z1).toFixed(2)}) = \\mathbf{${fmtTableP(p)}} \\quad\\text{(by symmetry)}`;
+          stepsHtml = `
+            ${roundNote}
+            <div class="step-card">
+              <span class="step-badge">PolyU Upper-Tail Table Solution</span>
+              <div>$$${formula}$$</div>
+            </div>
+          `;
+        } else if (mode === 'gt') {
+          const p = 1 - polyUTableCDF(z1);
+          const pUp = polyUTableUpper(Math.abs(z1));
+          let formula = '';
+          if (z1 >= 4.0) {
+            formula = `\\text{Since } P(Z > 3.99) = 0.0000 \\text{ already (Slide 15)},\\quad P(Z > ${z1Raw}) = \\mathbf{0.0000}.`;
+          } else if (z1 >= 0) {
+            formula = `P(Z > ${z1.toFixed(2)}) = \\mathbf{${fmtTableP(p)}} \\quad\\text{(direct table lookup)}`;
+          } else {
+            formula = `P(Z > ${z1.toFixed(2)}) = 0.5 + [0.5 - P(Z > ${Math.abs(z1).toFixed(2)})] = 1 - ${fmtTableP(pUp)} = \\mathbf{${fmtTableP(p)}}`;
+          }
+          stepsHtml = `
+            ${roundNote}
+            <div class="step-card">
+              <span class="step-badge">PolyU Upper-Tail Table Solution</span>
+              <div>$$${formula}$$</div>
+            </div>
+          `;
+        } else {
+          const p = Math.max(0, polyUTableCDF(z2) - polyUTableCDF(z1));
+          let formula = '';
+          if (z1 === 0 && z2 > 0) {
+            const p2 = polyUTableUpper(z2);
+            formula = `P(0 \\le Z \\le ${z2.toFixed(2)}) = 0.5 - P(Z \\ge ${z2.toFixed(2)}) = 0.5 - ${fmtTableP(p2)} = \\mathbf{${fmtTableP(p)}}`;
+          } else if (z1 < 0 && z2 === 0) {
+            const p1 = polyUTableUpper(Math.abs(z1));
+            formula = `P(${z1.toFixed(2)} \\le Z \\le 0) = 0.5 - P(Z \\ge ${Math.abs(z1).toFixed(2)}) = 0.5 - ${fmtTableP(p1)} = \\mathbf{${fmtTableP(p)}}`;
+          } else if (z1 >= 0 && z2 >= 0) {
+            const p1 = polyUTableUpper(z1);
+            const p2 = polyUTableUpper(z2);
+            formula = `P(${z1.toFixed(2)} < Z < ${z2.toFixed(2)}) = P(Z > ${z1.toFixed(2)}) - P(Z > ${z2.toFixed(2)}) = ${fmtTableP(p1)} - ${fmtTableP(p2)} = \\mathbf{${fmtTableP(p)}}`;
+          } else if (z1 < 0 && z2 > 0) {
+            const p1 = polyUTableUpper(Math.abs(z1));
+            const p2 = polyUTableUpper(z2);
+            formula = `P(${z1.toFixed(2)} < Z < ${z2.toFixed(2)}) = (0.5 - P(Z > ${Math.abs(z1).toFixed(2)})) + (0.5 - P(Z > ${z2.toFixed(2)})) = 0.5 - ${fmtTableP(p1)} + 0.5 - ${fmtTableP(p2)} = \\mathbf{${fmtTableP(p)}}`;
+          } else {
+            formula = `P(${z1.toFixed(2)} \\le Z \\le ${z2.toFixed(2)}) = \\mathbf{${fmtTableP(p)}}`;
+          }
+          stepsHtml = `
+            <div class="step-card">
+              <span class="step-badge">Slide 16 Interval Algebra</span>
+              <div>$$${formula}$$</div>
+            </div>
+          `;
+        }
+        setHTML('b2-steps', stepsHtml);
+
+        // Draw SVG
+        const svg = document.getElementById('b2-svg');
+        const W = 540, H = 240, padL = 36, padR = 20, padT = 18, padB = 34;
+        const plotW = W - padL - padR, plotH = H - padT - padB;
+        const toX = z => padL + ((z + 3.8) / 7.6) * plotW;
+        const maxY = normalPDF(0, 0, 1) * 1.15;
+        const toY = y => padT + plotH - (y / maxY) * plotH;
+
+        const sL = mode === 'gt' ? Math.max(-3.8, z1) : (mode === 'between' ? Math.max(-3.8, z1) : -3.8);
+        const sH = mode === 'lt' ? Math.min(3.8, z1) : (mode === 'between' ? Math.min(3.8, z2) : 3.8);
+        let html = '';
+        if (sH > sL) {
+          let d = `M ${toX(sL)} ${padT + plotH} `;
+          for (let i = 0; i <= 70; i++) {
+            const zv = sL + (i / 70) * (sH - sL);
+            d += `L ${toX(zv)} ${toY(normalPDF(zv, 0, 1))} `;
+          }
+          d += `L ${toX(sH)} ${padT + plotH} Z`;
+          html += `<path d="${d}" fill="rgba(2, 132, 199, 0.28)"/>`;
+        }
+        let pts = '';
+        for (let i = 0; i <= 90; i++) {
+          const zv = -3.8 + (i / 90) * 7.6;
+          pts += `${toX(zv)},${toY(normalPDF(zv, 0, 1))} `;
+        }
+        html += `<line x1="${toX(0)}" y1="${padT}" x2="${toX(0)}" y2="${padT + plotH}" stroke="#94a3b8" stroke-dasharray="4,4"/>`;
+        html += `<polyline fill="none" stroke="#0284c7" stroke-width="2.4" points="${pts.trim()}"/>`;
+        html += `<line x1="${padL}" y1="${padT + plotH}" x2="${W - padR}" y2="${padT + plotH}" stroke="#0f172a" stroke-width="1.4"/>`;
+        [-3, -2, -1, 0, 1, 2, 3].forEach(z => {
+          html += `<text x="${toX(z)}" y="${padT + plotH + 18}" text-anchor="middle" font-size="11" fill="#334155">${z}</text>`;
+        });
+        svg.innerHTML = html;
+      }
+
+      function resetBasicEx3() {
+        document.getElementById('b3-p1').value = 0.33;
+        document.getElementById('b3-p2').value = 0.99;
+        updateBasicEx3();
+      }
+
+      function updateBasicEx3() {
+        const p1 = parseFloat(document.getElementById('b3-p1').value) || 0.33;
+        const p2 = parseFloat(document.getElementById('b3-p2').value) || 0.99;
+        setText('b3-p1-val', p1.toFixed(2));
+        setText('b3-p2-val', p2.toFixed(2));
+
+        const a = inversePolyUZ(p1);
+        const b = inversePolyUZ(1 - p2);
+
+        setHTML('b3-steps', `
+          <div class="step-card">
+            <span class="step-badge">Part 1 • Find $a$ such that $P(Z \\le a) = ${p1.toFixed(2)}$</span>
+            <div>${p1 < 0.5
+              ? `Since $P(Z \\le a) = ${p1.toFixed(2)} < 0.5$, $a$ lies to the <strong>left of $0$</strong> ($a < 0$). By symmetry, $P(Z \\ge -a) = ${p1.toFixed(2)}$. Looking up upper-tail probability $${p1.toFixed(2)}$ in the table gives $-a \\approx ${Math.abs(a).toFixed(2)} \\implies \\mathbf{a = ${a.toFixed(2)}}$.`
+              : `Since $P(Z \\le a) = ${p1.toFixed(2)} \\ge 0.5$, $a \\ge 0$ and the upper tail is $P(Z > a) = 1 - ${p1.toFixed(2)} = ${(1-p1).toFixed(2)}$. Looking up $${(1-p1).toFixed(2)}$ in the table gives $\\mathbf{a = ${a.toFixed(2)}}$.`
+            }</div>
+          </div>
+          <div class="step-card">
+            <span class="step-badge">Part 2 • Find $b$ such that $P(Z \\ge b) = ${p2.toFixed(2)}$</span>
+            <div>${p2 > 0.5
+              ? `Since the upper-tail area $P(Z \\ge b) = ${p2.toFixed(2)} > 0.5$, $b$ must be <strong>negative</strong> ($b < 0$). The left tail is $P(Z < b) = 1 - ${p2.toFixed(2)} = ${(1-p2).toFixed(2)}$, so by symmetry $P(Z > -b) = ${(1-p2).toFixed(2)}$. Looking up $${(1-p2).toFixed(2)}$ in the table (Row <code>${Math.floor(Math.abs(b)*10)/10}</code>) gives $-b \\approx ${Math.abs(b).toFixed(2)} \\implies \\mathbf{b = ${b.toFixed(2)}}$.`
+              : `Since $P(Z \\ge b) = ${p2.toFixed(2)} \\le 0.5$, $b \\ge 0$. Direct table lookup of upper-tail area $${p2.toFixed(2)}$ gives $\\mathbf{b = ${b.toFixed(2)}}$.`
+            }</div>
+          </div>
+        `);
+      }
+
+      function resetBasicEx4() {
+        document.getElementById('b4-a').value = -2;
+        document.getElementById('b4-b').value = 8;
+        document.getElementById('b4-x1').value = 1;
+        document.getElementById('b4-x2').value = 2;
+        updateBasicEx4();
+      }
+
+      function setBasicEx4Query(x1, x2) {
+        document.getElementById('b4-x1').value = x1;
+        document.getElementById('b4-x2').value = x2;
+        updateBasicEx4();
+      }
+
+      function updateBasicEx4() {
+        const a = parseFloat(document.getElementById('b4-a').value) || -2;
+        let b = parseFloat(document.getElementById('b4-b').value) || 8;
+        if (b <= a) { b = a + 1; document.getElementById('b4-b').value = b; }
+        const x1 = parseFloat(document.getElementById('b4-x1').value) || 0;
+        const x2 = parseFloat(document.getElementById('b4-x2').value) || 0;
+
+        setText('b4-a-val', a);
+        setText('b4-b-val', b);
+        setText('b4-x1-val', x1);
+        setText('b4-x2-val', x2);
+
+        const len = b - a;
+        const effLow = Math.max(a, Math.min(b, x1));
+        const effHigh = Math.max(a, Math.min(b, x2));
+        const overlap = Math.max(0, effHigh - effLow);
+        const prob = overlap / len;
+
+        setHTML('b4-steps', `
+          <div class="step-card">
+            <span class="step-badge">Step 1 • Probability Density Function (Slide 29 &amp; 31)</span>
+            <div>$$f(x) = \\begin{cases} \\dfrac{1}{${b} - (${a})} = \\dfrac{1}{${len}}, & ${a} \\le x \\le ${b}, \\\\ 0, & \\text{otherwise.} \\end{cases}$$</div>
+          </div>
+          <div class="step-card">
+            <span class="step-badge">Step 2 • Area of Rectangle on Support $[${a}, ${b}]$</span>
+            <div>${x1 === x2
+              ? `Since $X$ is a continuous random variable, the probability at a single point has width $0$: $$P(X = ${x1}) = \\mathbf{0}.$$`
+              : `Intersecting $[${x1},\\, ${x2}]$ with the support $[${a},\\, ${b}]$ gives $[${effLow},\\, ${effHigh}]$:
+                 $$P(${x1} \\le X \\le ${x2}) = P(${effLow} \\le X \\le ${effHigh}) = \\frac{${effHigh} - (${effLow})}{${len}} = \\frac{${overlap}}{${len}} = \\mathbf{${prob.toFixed(4)}}$$`
+            }</div>
+          </div>
+        `);
+      }
+
+      /* ---------------------------------------------------------------------
+         PART C2: INTERMEDIATE EXAMPLES LOGIC (EX 4.1, 5.3–5.4, 5.5, 7.2, 6.2 & 6.4)
+         --------------------------------------------------------------------- */
+      function resetInterEx1() {
+        document.getElementById('i1-mu').value = 25;
+        document.getElementById('i1-sig').value = 4;
+        document.getElementById('i1-x1').value = 18;
+        document.getElementById('i1-x2').value = 34;
+        updateInterEx1();
+      }
+
+      function updateInterEx1() {
+        const mu = parseFloat(document.getElementById('i1-mu').value) || 25;
+        const sig = Math.max(0.1, parseFloat(document.getElementById('i1-sig').value) || 4);
+        const x1 = parseFloat(document.getElementById('i1-x1').value) || 18;
+        const x2 = parseFloat(document.getElementById('i1-x2').value) || 34;
+
+        setText('i1-mu-val', mu);
+        setText('i1-sig-val', sig);
+        setText('i1-x1-val', x1);
+        setText('i1-x2-val', x2);
+
+        const z1 = Math.round(((x1 - mu) / sig) * 100) / 100;
+        const z2 = Math.round(((x2 - mu) / sig) * 100) / 100;
+        const prob = Math.max(0, polyUTableCDF(z2) - polyUTableCDF(z1));
+
+        setHTML('i1-steps', `
+          <div class="step-card">
+            <span class="step-badge">Step 1 • Define Standard Normal Variable Z (Slide 18)</span>
+            <div>We have $X \\sim N(${mu},\\, ${sig}^2)$. Let $Z = \\dfrac{X - ${mu}}{${sig}} \\sim N(0, 1)$.</div>
+          </div>
+          <div class="step-card">
+            <span class="step-badge">Step 2 • Standardize the Endpoints</span>
+            <div>$$P(${x1} \\le X \\le ${x2}) = P\\left(\\frac{${x1} - ${mu}}{${sig}} \\le \\frac{X - ${mu}}{${sig}} \\le \\frac{${x2} - ${mu}}{${sig}}\\right) = P(${z1.toFixed(2)} \\le Z \\le ${z2.toFixed(2)})$$</div>
+          </div>
+          <div class="step-card">
+            <span class="step-badge">Step 3 • Evaluate Using PolyU Standard Normal Table</span>
+            <div>$$= 1 - P(Z \\ge ${z2.toFixed(2)}) - P(Z \\le ${z1.toFixed(2)}) = \\mathbf{${fmtTableP(prob)}}$$</div>
+          </div>
+        `);
+      }
+
+      function setInterEx2Preset(n, p, a, b, ineq) {
+        document.getElementById('i2-n').value = n;
+        document.getElementById('i2-p').value = p;
+        document.getElementById('i2-a').value = a;
+        document.getElementById('i2-b').value = b;
+        document.getElementById('i2-ineq').value = ineq;
+        updateInterEx2();
+      }
+
+      function updateInterEx2() {
+        const n = parseInt(document.getElementById('i2-n').value, 10) || 100;
+        const p = parseFloat(document.getElementById('i2-p').value) || 0.4;
+        const a = parseInt(document.getElementById('i2-a').value, 10) || 30;
+        const b = parseInt(document.getElementById('i2-b').value, 10) || 39;
+        const ineq = document.getElementById('i2-ineq').value;
+
+        const mu = n * p;
+        const variance = n * p * (1 - p);
+        const sig = Math.sqrt(variance);
+
+        let v1 = a - 0.5, v2 = b + 0.5, sym = `${a} \\le X \\le ${b}`;
+        if (ineq === 'le_lt') { v1 = a - 0.5; v2 = b - 0.5; sym = `${a} \\le X < ${b}`; }
+        else if (ineq === 'lt_lt') { v1 = a + 0.5; v2 = b - 0.5; sym = `${a} < X < ${b}`; }
+        else if (ineq === 'lt_le') { v1 = a + 0.5; v2 = b + 0.5; sym = `${a} < X \\le ${b}`; }
+
+        const z1 = Math.round(((v1 - mu) / sig) * 100) / 100;
+        const z2 = Math.round(((v2 - mu) / sig) * 100) / 100;
+        const prob = Math.max(0, polyUTableCDF(z2) - polyUTableCDF(z1));
+
+        setHTML('i2-steps', `
+          <div class="step-card">
+            <span class="step-badge">Step 1 • Check Theorem 5.1 Conditions</span>
+            <div>We have $np = ${mu.toFixed(1)} > 5$ and $n(1-p) = ${(n*(1-p)).toFixed(1)} > 5$, so we approximate $X$ by $V \\sim N(${mu.toFixed(1)},\\, ${variance.toFixed(2)})$.</div>
+          </div>
+          <div class="step-card">
+            <span class="step-badge">Step 2 • Apply Continuity Correction &amp; Standardize</span>
+            <div>$$P(${sym}) \\approx P(${v1.toFixed(1)} \\le V \\le ${v2.toFixed(1)}) = P\\left(\\frac{${v1.toFixed(1)} - ${mu.toFixed(1)}}{\\sqrt{${variance.toFixed(2)}}} \\le Z \\le \\frac{${v2.toFixed(1)} - ${mu.toFixed(1)}}{\\sqrt{${variance.toFixed(2)}}}\\right)$$</div>
+          </div>
+          <div class="step-card">
+            <span class="step-badge">Step 3 • Table Evaluation</span>
+            <div>$$\\approx P(${z1.toFixed(2)} \\le Z \\le ${z2.toFixed(2)}) = \\mathbf{${fmtTableP(prob)}}$$</div>
+          </div>
+        `);
+      }
+
+      function showSlide28Sub(num) {
+        const items = {
+          1: {
+            title: '1. Evaluate $P(X > 51)$',
+            body: `Since $X > 51$ is <strong>strict</strong>, bar $51$ is excluded and the first included integer is $52$. By continuity correction:
+                   $$P(X > 51) = P(X \\ge 51.5) = P\\left(\\frac{X - \\mu}{\\sigma} \\ge \\frac{51.5 - 36}{\\sqrt{23.04}}\\right) = P(Z \\ge 3.23) = \\mathbf{0.00062}.$$`
+          },
+          2: {
+            title: '2. Evaluate $P(X \\ge 51)$',
+            body: `Since $X \\ge 51$ is <strong>inclusive</strong>, bar $51$ ($[50.5, 51.5]$) is included:
+                   $$P(X \\ge 51) = P(X \\ge 50.5) = P\\left(\\frac{X - \\mu}{\\sigma} \\ge \\frac{50.5 - 36}{\\sqrt{23.04}}\\right) = P(Z \\ge 3.02) = \\mathbf{0.00126}.$$`
+          },
+          3: {
+            title: '3. Evaluate $P(X < 45)$',
+            body: `Since $X < 45$ is <strong>strict</strong>, bar $45$ is excluded (last included integer is $44$):
+                   $$P(X < 45) = P(X \\le 44.5) = P\\left(Z \\le \\frac{44.5 - 36}{4.8}\\right) = P(Z \\le 1.77) = 1 - 0.0384 = \\mathbf{0.9616}.$$`
+          },
+          4: {
+            title: '4. Evaluate $P(X \\le 45)$ [and $P(X \\le 51)$]',
+            body: `• <strong>In Solution 5.5(4) ($P(X \\le 45)$):</strong> Bar $45$ is included, so we go up to $45.5$:
+                   $$P(X \\le 45) = P(X \\le 45.5) = P\\left(Z \\le \\frac{45.5 - 36}{4.8}\\right) = P(Z \\le 1.98) = 1 - 0.0239 = \\mathbf{0.9761}.$$
+                   • <strong>If evaluating $P(X \\le 51)$:</strong> Bar $51$ is included ($51.5$), so $P(X \\le 51) = 1 - P(X > 51) = 1 - 0.00062 = \\mathbf{0.99938}$.`
+          },
+          5: {
+            title: '5. Evaluate $P(30 < X < 40)$ (Both Endpoints Strict)',
+            body: `Both $30$ and $40$ are excluded, so we include bars $31$ through $39$, spanning $[30.5,\\, 39.5]$:
+                   $$P(30 < X < 40) = P(30.5 \\le X \\le 39.5) = P\\left(\\frac{30.5-36}{4.8} \\le Z \\le \\frac{39.5-36}{4.8}\\right) = P(-1.15 \\le Z \\le 0.73) = 1 - 0.1251 - 0.2327 = \\mathbf{0.6422}.$$`
+          },
+          6: {
+            title: '6. Evaluate $P(30 < X \\le 40)$ (Left Strict, Right Inclusive)',
+            body: `Bar $30$ is excluded ($30.5$) while bar $40$ is included ($40.5$):
+                   $$P(30 < X \\le 40) = P(30.5 \\le X \\le 40.5) = P(-1.15 \\le Z \\le 0.94) = 1 - 0.1251 - 0.1736 = \\mathbf{0.7013}.$$`
+          },
+          7: {
+            title: '7. Evaluate $P(30 \\le X < 40)$ (Left Inclusive, Right Strict)',
+            body: `Bar $30$ is included ($29.5$) while bar $40$ is excluded ($39.5$):
+                   $$P(30 \\le X < 40) = P(29.5 \\le X \\le 39.5) = P(-1.35 \\le Z \\le 0.73) = 1 - 0.0885 - 0.2327 = \\mathbf{0.6788}.$$`
+          },
+          8: {
+            title: '8. Evaluate $P(30 \\le X \\le 40)$ (Both Endpoints Inclusive)',
+            body: `Both $30$ and $40$ are included, spanning $[29.5,\\, 40.5]$:
+                   $$P(30 \\le X \\le 40) = P(29.5 \\le X \\le 40.5) = P(-1.35 \\le Z \\le 0.94) = 1 - 0.0885 - 0.1736 = \\mathbf{0.7379}.$$`
+          }
+        };
+        const it = items[num];
+        setHTML('i3-slide28-detail', `
+          <div class="beamer-box box-sol" style="margin-bottom:0;">
+            <div class="beamer-box-title"><span>Slide 28 — Solution 5.5 (${it.title})</span><span>$\mu = 36,\; \sigma = \sqrt{23.04} = 4.8$</span></div>
+            <div class="beamer-box-body">${it.body}</div>
+          </div>
+        `);
+      }
+
+      function resetInterEx4() {
+        document.getElementById('i4-n').value = 900;
+        document.getElementById('i4-p').value = 0.05;
+        document.getElementById('i4-k').value = 50;
+        updateInterEx4();
+      }
+
+      function updateInterEx4() {
+        const n = parseInt(document.getElementById('i4-n').value, 10) || 900;
+        const p = parseFloat(document.getElementById('i4-p').value) || 0.05;
+        const k = parseInt(document.getElementById('i4-k').value, 10) || 50;
+
+        const mu = n * p;
+        const variance = n * p * (1 - p);
+        const sig = Math.sqrt(variance);
+        const vCut = k - 0.5;
+        const z = Math.round(((vCut - mu) / sig) * 100) / 100;
+        const prob = 1 - polyUTableCDF(z);
+
+        setHTML('i4-prob-text', `It is known that $${(p*100).toFixed(0)}\\%$ of the parcels processed by company $Y$ will be mis-delivered. Among $${n}$ randomly chosen cases, what is the (approximate) probability that at least $${k}$ of them are cases of mis-delivery?`);
+
+        setHTML('i4-steps', `
+          <div class="step-card">
+            <span class="step-badge">Step 1 • Binomial Model &amp; Normal Approximation</span>
+            <div>Let $X$ be the number of mis-deliveries. Then $X \\sim B(${n},\\, ${p})$. Since $np = ${mu.toFixed(1)} > 5$ and $n(1-p) = ${(n*(1-p)).toFixed(1)} > 5$, we approximate $X$ by $Y \\sim N(${mu.toFixed(1)},\\, ${variance.toFixed(2)})$.</div>
+          </div>
+          <div class="step-card">
+            <span class="step-badge">Step 2 • Continuity Correction ($X \\ge ${k} \\to Y > ${vCut.toFixed(1)}$)</span>
+            <div>$$P(X \\ge ${k}) \\approx P(Y > ${vCut.toFixed(1)}) = P\\left(\\frac{Y - ${mu.toFixed(1)}}{\\sqrt{${variance.toFixed(2)}}} > \\frac{${(vCut - mu).toFixed(1)}}{\\sqrt{${variance.toFixed(2)}}}\\right) = P(Z > ${z.toFixed(2)}) = \\mathbf{${fmtTableP(prob)}}$$</div>
+          </div>
+        `);
+      }
+
+      function updateInterEx5() {
+        const c = parseFloat(document.getElementById('i5-c').value) || 0;
+        const d = parseFloat(document.getElementById('i5-d').value) || 5;
+        const pB = Math.max(0.01, (Math.min(8, d) - (-2)) / 10);
+        const pAB = Math.max(0, (Math.min(8, d) - Math.max(-2, c)) / 10);
+        const cond = pAB / pB;
+
+        setHTML('i5-ex62-sol', `
+          <div class="step-card" style="margin-bottom:0;">
+            <span class="step-badge">Solution 6.2 (Slide 32)</span>
+            <div>Let $A = \\{X \\ge ${c}\\}$ and $B = \\{X \\le ${d}\\}$ on $[-2, 8]$:
+            $$P(B) = \\frac{${d} - (-2)}{10} = ${pB.toFixed(2)}, \\qquad P(A \\cap B) = P(${c} \\le X \\le ${d}) = \\frac{${d} - (${c})}{10} = ${pAB.toFixed(2)}$$
+            $$P(X \\ge ${c} \\mid X \\le ${d}) = \\frac{P(A \\cap B)}{P(B)} = \\frac{${pAB.toFixed(2)}}{${pB.toFixed(2)}} = \\mathbf{${cond.toFixed(4)}} \\;${c===0 && d===5 ? '(= 5/7)' : ''}$$</div>
+          </div>
+        `);
+
+        const mu = parseFloat(document.getElementById('i5-mu').value) || 3;
+        const v = Math.max(0.1, parseFloat(document.getElementById('i5-var').value) || 3);
+        const span = Math.sqrt(12 * v);
+        const a = mu - span / 2;
+        const b = mu + span / 2;
+
+        setHTML('i5-ex64-sol', `
+          <div class="step-card" style="margin-bottom:0;">
+            <span class="step-badge">Solution 6.4 (Slide 34)</span>
+            <div>By Theorem 6.1:
+            $$\\begin{cases} \\dfrac{a+b}{2} = ${mu} \\implies a + b = ${2*mu} \\\\ \\dfrac{(b-a)^2}{12} = ${v} \\implies b - a = \\sqrt{${12*v}} = ${Number(span.toFixed(3))} \\end{cases}$$
+            Since $b > a$, solving the linear system gives $\\mathbf{a = ${Number(a.toFixed(3))}}$ and $\\mathbf{b = ${Number(b.toFixed(3))}}$.</div>
+          </div>
+        `);
+      }
+
+      /* ---------------------------------------------------------------------
+         PART C3: DIFFICULT EXAMPLES LOGIC (EX 4.2, 7.1, 7.3, 6.3)
+         --------------------------------------------------------------------- */
+      function resetDiffEx1() {
+        document.getElementById('d1-x1').value = 116;
+        document.getElementById('d1-p1').value = 0.20;
+        document.getElementById('d1-x2').value = 328;
+        document.getElementById('d1-p2').value = 0.90;
+        updateDiffEx1();
+      }
+
+      function updateDiffEx1() {
+        const x1 = parseFloat(document.getElementById('d1-x1').value) || 116;
+        const p1 = parseFloat(document.getElementById('d1-p1').value) || 0.20;
+        const x2 = parseFloat(document.getElementById('d1-x2').value) || 328;
+        const p2 = parseFloat(document.getElementById('d1-p2').value) || 0.90;
+
+        const z1 = inversePolyUZ(p1);
+        const z2 = inversePolyUZ(p2);
+        const sig = (x2 - x1) / (z2 - z1);
+        const mu = x1 - z1 * sig;
+        const variance = sig * sig;
+
+        setHTML('d1-steps', `
+          <div class="step-card">
+            <span class="step-badge">Step 1 • Standardize First Equation $P(X < ${x1}) = ${p1.toFixed(2)}$</span>
+            <div>Let $Z = \\dfrac{X - \\mu}{\\sigma} \\sim N(0,1)$. From $P\\left(Z < \\dfrac{${x1} - \\mu}{\\sigma}\\right) = ${p1.toFixed(2)}$, checking the standard normal table gives:
+            $$\\frac{${x1} - \\mu}{\\sigma} = ${z1.toFixed(2)} \\implies ${x1} - \\mu = ${z1.toFixed(2)}\\sigma \\quad\\text{(Equation 1)}$$</div>
+          </div>
+          <div class="step-card">
+            <span class="step-badge">Step 2 • Standardize Second Equation $P(X < ${x2}) = ${p2.toFixed(2)}$</span>
+            <div>From $P\\left(Z < \\dfrac{${x2} - \\mu}{\\sigma}\\right) = ${p2.toFixed(2)} \\implies P\\left(Z > \\dfrac{${x2} - \\mu}{\\sigma}\\right) = ${(1-p2).toFixed(2)}$, the table gives:
+            $$\\frac{${x2} - \\mu}{\\sigma} = ${z2.toFixed(2)} \\implies ${x2} - \\mu = ${z2.toFixed(2)}\\sigma \\quad\\text{(Equation 2)}$$</div>
+          </div>
+          <div class="step-card">
+            <span class="step-badge">Step 3 • Subtract Equation 1 from Equation 2 &amp; Find $\\mu, \\sigma^2$</span>
+            <div>$$(${x2} - ${x1}) = (${z2.toFixed(2)} - (${z1.toFixed(2)}))\\sigma \\implies ${x2 - x1} = ${(z2 - z1).toFixed(2)}\\sigma \\implies \\sigma = \\mathbf{${Number(sig.toFixed(2))}}$$
+            Substitute $\\sigma = ${Number(sig.toFixed(2))}$ back to obtain:
+            $$\\mathbf{\\mu = ${Number(mu.toFixed(2))}}, \\qquad \\mathbf{\\text{Var}(X) = \\sigma^2 = ${Number(variance.toFixed(2))}}$$</div>
+          </div>
+        `);
+      }
+
+      function resetDiffEx2() {
+        document.getElementById('d2-rate').value = 0.1;
+        document.getElementById('d2-days').value = 7;
+        document.getElementById('d2-n').value = 1000;
+        document.getElementById('d2-k').value = 160;
+        updateDiffEx2();
+      }
+
+      function updateDiffEx2() {
+        const rate = parseFloat(document.getElementById('d2-rate').value) || 0.1;
+        const days = parseInt(document.getElementById('d2-days').value, 10) || 7;
+        const n = parseInt(document.getElementById('d2-n').value, 10) || 1000;
+        const k = parseInt(document.getElementById('d2-k').value, 10) || 160;
+
+        const lam = parseFloat((rate * days).toFixed(4));
+        const pRaw = 1 - Math.exp(-lam) * (1 + lam);
+        const p = parseFloat(pRaw.toFixed(4));
+        const mu = parseFloat((n * p).toFixed(4));
+        const variance = parseFloat((n * p * (1 - p)).toFixed(4));
+        const sig = Math.sqrt(variance);
+        const vCut = k - 0.5;
+        const z = Math.round(((vCut - mu) / sig) * 100) / 100;
+        const prob = 1 - polyUTableCDF(z);
+
+        setHTML('d2-steps', `
+          <div class="step-card">
+            <span class="step-badge">Stage 1 • Poisson Model Within 1 Workplace Over ${days} Days</span>
+            <div>Let $X$ be the number of accidents in ${days} days in a single workplace. Then $X \\sim \\text{Pois}(${rate} \\times ${days} = ${lam})$:
+            $$p = P(X \\ge 2) = 1 - P(X=0) - P(X=1) = 1 - e^{-${lam}}(1 + ${lam}) = \\mathbf{${p.toFixed(4)}}$$</div>
+          </div>
+          <div class="step-card">
+            <span class="step-badge">Stage 2 • Binomial Model Across ${n} Workplaces</span>
+            <div>Let $Y$ be the number of workplaces (out of ${n}$) with at least 2 accidents. Then $Y \\sim B(${n},\\, ${p.toFixed(4)})$.
+            Since $np = ${mu} > 5$ and $n(1-p) = ${(n - mu).toFixed(2)} > 5$, we approximate $Y$ by $V \\sim N(${mu},\\, ${variance})$.</div>
+          </div>
+          <div class="step-card">
+            <span class="step-badge">Stage 3 • Continuity Correction &amp; Standardization</span>
+            <div>$$P(Y \\ge ${k}) \\approx P(V > ${vCut.toFixed(1)}) = P\\left(\\frac{V - ${mu}}{\\sqrt{${variance}}} > \\frac{${vCut.toFixed(1)} - ${mu}}{\\sqrt{${variance}}}\\right) = P(Z > ${z.toFixed(2)}) = \\mathbf{${fmtTableP(prob)}}$$</div>
+          </div>
+        `);
+      }
+
+      function resetDiffEx3() {
+        document.getElementById('d3-n').value = 300;
+        document.getElementById('d3-q').value = 0.10;
+        document.getElementById('d3-k').value = 268;
+        document.getElementById('d3-m').value = 5;
+        updateDiffEx3();
+      }
+
+      function updateDiffEx3() {
+        const n = parseInt(document.getElementById('d3-n').value, 10) || 300;
+        const q = parseFloat(document.getElementById('d3-q').value) || 0.10;
+        const p = parseFloat((1 - q).toFixed(4));
+        const k = parseInt(document.getElementById('d3-k').value, 10) || 268;
+        const m = parseInt(document.getElementById('d3-m').value, 10) || 5;
+
+        const mu = n * p;
+        const variance = n * p * q;
+        const sig = Math.sqrt(variance);
+        const vCut = k - 0.5;
+        const z = Math.round(((vCut - mu) / sig) * 100) / 100;
+        const pRoom = parseFloat((1 - polyUTableCDF(z)).toFixed(4));
+        const finalProb = binomialPMF(10, pRoom, m);
+
+        setHTML('d3-steps', `
+          <div class="step-card">
+            <span class="step-badge">Stage 1 • Working Light Bulbs in 1 Room (Binomial $\\to$ Normal)</span>
+            <div>Let $X$ be the number of working light bulbs in a room when the exhibition ends. Since burn-out probability is $${q}$, working probability is $p = 1 - ${q} = ${p}$, so $X \\sim B(${n},\\, ${p})$.
+            Since $np = ${mu} > 5$ and $n(1-p) = ${(n*q).toFixed(1)} > 5$, approximate $X$ by $V \\sim N(${mu},\\, ${variance.toFixed(1)})$.</div>
+          </div>
+          <div class="step-card">
+            <span class="step-badge">Stage 2 • Continuity Correction for 1 Room ($X \\ge ${k}$)</span>
+            <div>$$P(X \\ge ${k}) \\approx P(V > ${vCut.toFixed(1)}) = P\\left(\\frac{V - ${mu}}{\\sqrt{${variance.toFixed(1)}}} > \\frac{${vCut.toFixed(1)} - ${mu}}{\\sqrt{${variance.toFixed(1)}}}\\right) = P(Z > ${z.toFixed(2)}) = \\mathbf{${pRoom.toFixed(4)}}$$</div>
+          </div>
+          <div class="step-card">
+            <span class="step-badge">Stage 3 • Exact Binomial Across the 10 Exhibition Rooms</span>
+            <div>Let $Y$ be the number of rooms (out of $10$) with at least ${k} working bulbs. Then $Y \\sim B(10,\\, ${pRoom.toFixed(4)})$:
+            $$P(Y = ${m}) = \\binom{10}{${m}}(${pRoom.toFixed(4)})^{${m}}(1 - ${pRoom.toFixed(4)})^{${10 - m}} = \\mathbf{${finalProb.toFixed(4)}}$$</div>
+          </div>
+        `);
+      }
+
+      function resetDiffEx4() {
+        document.getElementById('d4-x0').value = -1.8;
+        document.getElementById('d4-k').value = 3;
+        updateDiffEx4();
+      }
+
+      function updateDiffEx4() {
+        const x0 = parseFloat(document.getElementById('d4-x0').value) || -1.8;
+        const k = parseInt(document.getElementById('d4-k').value, 10) || 3;
+        const p = parseFloat(((x0 - (-2)) / 10).toFixed(4));
+        const lam = parseFloat((100 * p).toFixed(2));
+
+        let sumTerms = 0;
+        let latexTerms = [];
+        let fact = 1;
+        for (let i = 0; i <= k; i++) {
+          if (i > 0) fact *= i;
+          sumTerms += Math.pow(lam, i) / fact;
+          latexTerms.push(`\\frac{${lam}^${i}}{${i}!}`);
+        }
+        const prob = Math.exp(-lam) * sumTerms;
+
+        setHTML('d4-steps', `
+          <div class="step-card">
+            <span class="step-badge">Stage 1 • Probability for Each $X_i \\sim \\text{Uniform}(-2, 8)$</span>
+            <div>$$p = P(X_i < ${x0}) = \\frac{${x0} - (-2)}{8 - (-2)} = \\frac{${(x0 + 2).toFixed(2)}}{10} = \\mathbf{${p}}$$</div>
+          </div>
+          <div class="step-card">
+            <span class="step-badge">Stage 2 • Binomial Count $N \\sim \\text{Binomial}(100, ${p})$</span>
+            <div>Let $N$ be the number of random variables among $X_1, \\dots, X_{100}$ that are less than $${x0}$. Since $100 \\times ${p} = ${lam} \\le 7$, approximately $N \\sim \\text{Poisson}(${lam})$.</div>
+          </div>
+          <div class="step-card">
+            <span class="step-badge">Stage 3 • Evaluate $P(N \\le ${k})$ via Poisson Formula</span>
+            <div>$$P(N \\le ${k}) \\approx e^{-${lam}}\\left(${latexTerms.join(' + ')}\\right) = \\mathbf{${prob.toFixed(4)}}$$</div>
+          </div>
+        `);
+      }
+
+      /* ---------------------------------------------------------------------
+         OVERALL PARAMETERIZED QUIZ ENGINE + LOCALSTORAGE PERSISTENCE
+         --------------------------------------------------------------------- */
+      let currentQuizQuestions = [];
+      let currentQuizSeed = '';
+      const QUIZ_STORAGE_KEY = 'ama1110_lec11_quiz_history';
+
+      function makeChoices(correctStr, distractors) {
+        const unique = [correctStr];
+        distractors.forEach(d => {
+          if (!unique.includes(d) && unique.length < 4) unique.push(d);
+        });
+        while (unique.length < 4) {
+          const fake = (Math.random() * 0.8 + 0.05).toFixed(4);
+          if (!unique.includes(fake)) unique.push(fake);
+        }
+        return unique.sort(() => Math.random() - 0.5);
+      }
+
+      function buildQuizQuestionPool() {
+        const pool = [];
+
+        // Q1 (Basic): Linear transformation E[aX+b] and Var(aX+b) (Ex 3.1)
+        {
+          const mu = [2, 3, -2, 5][Math.floor(Math.random() * 4)];
+          const sig = [2, 3, 4, 5][Math.floor(Math.random() * 4)];
+          const a = [-4, -3, -2, 3][Math.floor(Math.random() * 4)];
+          const eVal = a * mu;
+          const vVal = (a * a) * (sig * sig);
+          const ans = `E = ${eVal}, Var = ${vVal}`;
+          pool.push({
+            level: 'Basic',
+            topic: 'Linear Transformation (Ex 3.1)',
+            paramTag: `X~N(${mu},${sig}²), ${a}X`,
+            prompt: `Suppose $X \\sim N(${mu},\\, ${sig}^2)$. Find $\\mathbb{E}[${a}X]$ and $\\text{Var}(${a}X)$.`,
+            answer: ans,
+            choices: makeChoices(ans, [
+              `E = ${eVal}, Var = ${a * sig * sig}`,
+              `E = ${eVal}, Var = ${Math.abs(a) * sig}`,
+              `E = ${Math.abs(eVal)}, Var = ${vVal}`
+            ]),
+            solution: `By Theorem 3.2, $${a}X \\sim N(${a}\\times ${mu},\\; (${a})^2 \\times ${sig}^2) = N(${eVal},\\, ${vVal})$. Thus $\\mathbb{E}[${a}X] = ${eVal}$ and $\\text{Var}(${a}X) = ${vVal}$.`
+          });
+        }
+
+        // Q2 (Basic): Standard Normal interval probability (Ex 3.4)
+        {
+          const z1 = [-0.58, -0.84, -1.15, -0.44][Math.floor(Math.random() * 4)];
+          const z2 = [1.36, 1.28, 0.95, 1.62][Math.floor(Math.random() * 4)];
+          const p = (polyUTableCDF(z2) - polyUTableCDF(z1)).toFixed(4);
+          const w1 = (polyUTableUpper(Math.abs(z1)) + polyUTableUpper(z2)).toFixed(4);
+          const w2 = Math.abs(polyUTableUpper(Math.abs(z1)) - polyUTableUpper(z2)).toFixed(4);
+          pool.push({
+            level: 'Basic',
+            topic: 'Standard Normal Table (Ex 3.4)',
+            paramTag: `P(${z1} < Z < ${z2})`,
+            prompt: `Suppose $Z \\sim N(0, 1)$. Using the Standard Normal Table, find $P(${z1.toFixed(2)} < Z < ${z2.toFixed(2)})$.`,
+            answer: p,
+            choices: makeChoices(p, [w1, w2, (1 - parseFloat(p)).toFixed(4)]),
+            solution: `Using Slide 16 Ex 3.4(7): $P(${z1.toFixed(2)} < Z < ${z2.toFixed(2)}) = (0.5 - P(Z > ${Math.abs(z1).toFixed(2)})) + (0.5 - P(Z > ${z2.toFixed(2)})) = 1 - ${fmtTableP(polyUTableUpper(Math.abs(z1)))} - ${fmtTableP(polyUTableUpper(z2))} = \\mathbf{${p}}$.`
+          });
+        }
+
+        // Q3 (Basic): Inverse Standard Normal Quantile (Ex 3.5)
+        {
+          const items = [
+            { p: 0.33, z: '-0.44', tail: 'le' },
+            { p: 0.20, z: '-0.84', tail: 'le' },
+            { p: 0.99, z: '-2.33', tail: 'ge' },
+            { p: 0.90, z: '-1.28', tail: 'ge' }
+          ];
+          const it = items[Math.floor(Math.random() * items.length)];
+          const sym = it.tail === 'le' ? `P(Z \\le a) = ${it.p.toFixed(2)}` : `P(Z \\ge a) = ${it.p.toFixed(2)}`;
+          pool.push({
+            level: 'Basic',
+            topic: 'Inverse Z-Table Lookup (Ex 3.5)',
+            paramTag: sym.replace(/\\/g, ''),
+            prompt: `Let $Z \\sim N(0, 1)$. Find the constant $a$ (to 2 decimal places) such that $${sym}$.`,
+            answer: it.z,
+            choices: makeChoices(it.z, [it.z.replace('-', '+'), '-0.67', '-1.96']),
+            solution: `By symmetry of $N(0,1)$ and reverse lookup on the PolyU Upper-Tail Standard Normal Table (Slide 17), $a = \\mathbf{${it.z}}$.`
+          });
+        }
+
+        // Q4 (Intermediate): Standardizing X ~ N(mu, sigma^2) (Ex 4.1)
+        {
+          const mu = [25, 40, 50][Math.floor(Math.random() * 3)];
+          const sig = [4, 5, 8][Math.floor(Math.random() * 3)];
+          const zL = -1.5, zR = 2.0;
+          const x1 = mu + zL * sig;
+          const x2 = mu + zR * sig;
+          const p = (polyUTableCDF(zR) - polyUTableCDF(zL)).toFixed(4);
+          pool.push({
+            level: 'Intermediate',
+            topic: 'Standardizing Normal Variable (Ex 4.1)',
+            paramTag: `N(${mu},${sig}²), [${x1},${x2}]`,
+            prompt: `Let $X$ be normally distributed with mean $\\mu = ${mu}$ and standard deviation $\\sigma = ${sig}$. Find $P(${x1} \\le X \\le ${x2})$.`,
+            answer: p,
+            choices: makeChoices(p, [
+              (1 - parseFloat(p)).toFixed(4),
+              (polyUTableCDF(zR) - 0.5).toFixed(4),
+              (polyUTableUpper(1.5) + polyUTableUpper(2.0)).toFixed(4)
+            ]),
+            solution: `Standardizing gives $Z = \\frac{X - ${mu}}{${sig}} \\sim N(0,1)$. Thus $P(${x1} \\le X \\le ${x2}) = P(-1.50 \\le Z \\le 2.00) = 1 - P(Z > 2.00) - P(Z > 1.50) = 1 - 0.0228 - 0.0668 = \\mathbf{${p}}$.`
+          });
+        }
+
+        // Q5 (Intermediate): Continuity Correction Identification (Ex 5.5)
+        {
+          const n = 100, p = 0.36;
+          const k1 = 30, k2 = 40;
+          const cases = [
+            { q: `P(${k1} < X < ${k2})`, ans: `P(30.5 ≤ V ≤ 39.5)`, why: `Both 30 and 40 are excluded (strict <), so we shrink inward to [30.5, 39.5].` },
+            { q: `P(${k1} < X \\le ${k2})`, ans: `P(30.5 ≤ V ≤ 40.5)`, why: `30 is excluded (30.5) and 40 is included (40.5).` },
+            { q: `P(${k1} \\le X < ${k2})`, ans: `P(29.5 ≤ V ≤ 39.5)`, why: `30 is included (29.5) and 40 is excluded (39.5).` },
+            { q: `P(${k1} \\le X \\le ${k2})`, ans: `P(29.5 ≤ V ≤ 40.5)`, why: `Both 30 and 40 are included, so we expand outward to [29.5, 40.5].` }
+          ];
+          const c = cases[Math.floor(Math.random() * cases.length)];
+          pool.push({
+            level: 'Intermediate',
+            topic: 'Continuity Correction Rule (Ex 5.5)',
+            paramTag: c.q.replace(/\\/g, ''),
+            prompt: `Suppose $X \\sim \\text{Binomial}(${n}, ${p})$ is approximated by $V \\sim N(36, 23.04)$. Which continuity-corrected normal probability corresponds to $${c.q}$?`,
+            answer: c.ans,
+            choices: [
+              `P(30.5 ≤ V ≤ 39.5)`,
+              `P(30.5 ≤ V ≤ 40.5)`,
+              `P(29.5 ≤ V ≤ 39.5)`,
+              `P(29.5 ≤ V ≤ 40.5)`
+            ],
+            solution: `${c.why} Therefore $${c.q} \\approx \\mathbf{${c.ans}}$.`
+          });
+        }
+
+        // Q6 (Intermediate): Normal Approximation Calculation (Ex 7.2)
+        {
+          const n = 400, p = 0.20; // mu = 80, var = 64, sd = 8
+          const k = [88, 90, 92][Math.floor(Math.random() * 3)];
+          const vCut = k - 0.5;
+          const z = Math.round(((vCut - 80) / 8) * 100) / 100;
+          const prob = (1 - polyUTableCDF(z)).toFixed(4);
+          const noCC = (1 - polyUTableCDF(Math.round(((k - 80) / 8) * 100) / 100)).toFixed(4);
+          const wrongCC = (1 - polyUTableCDF(Math.round(((k + 0.5 - 80) / 8) * 100) / 100)).toFixed(4);
+          pool.push({
+            level: 'Intermediate',
+            topic: 'Normal Approx. to Binomial (Ex 7.2)',
+            paramTag: `B(400,0.2), P(X≥${k})`,
+            prompt: `Let $X \\sim \\text{Binomial}(n = 400, p = 0.20)$. Using the normal approximation with continuity correction, evaluate $P(X \\ge ${k})$.`,
+            answer: prob,
+            choices: makeChoices(prob, [noCC, wrongCC, (1 - parseFloat(prob)).toFixed(4)]),
+            solution: `Here $np = 80 > 5$ and $np(1-p) = 64 > 5$, so $V \\sim N(80, 8^2)$. Since $X = ${k}$ is included in $X \\ge ${k}$, continuity correction gives $P(V \\ge ${vCut.toFixed(1)}) = P\\left(Z \\ge \\frac{${vCut.toFixed(1)} - 80}{8}\\right) = P(Z \\ge ${z.toFixed(2)}) = \\mathbf{${prob}}$.`
+          });
+        }
+
+        // Q7 (Difficult): Simultaneous Quantiles for Mean & Variance (Ex 4.2)
+        {
+          const trueMu = [150, 200, 250][Math.floor(Math.random() * 3)];
+          const trueSig = [50, 100][Math.floor(Math.random() * 2)];
+          const x1 = trueMu - 0.84 * trueSig;
+          const x2 = trueMu + 1.28 * trueSig;
+          const ans = `Mean = ${trueMu}, Variance = ${trueSig * trueSig}`;
+          pool.push({
+            level: 'Difficult',
+            topic: 'Simultaneous Normal Quantiles (Ex 4.2)',
+            paramTag: `P(X<${x1})=0.2, P(X<${x2})=0.9`,
+            prompt: `Suppose $X \\sim N(\\mu, \\sigma^2)$ satisfies $P(X < ${x1}) = 0.2$ and $P(X < ${x2}) = 0.9$. Determine the mean $\\mu$ and variance $\\sigma^2$ of $X$.`,
+            answer: ans,
+            choices: makeChoices(ans, [
+              `Mean = ${trueMu}, Variance = ${trueSig}`,
+              `Mean = ${trueMu + 20}, Variance = ${trueSig * trueSig}`,
+              `Mean = ${trueSig}, Variance = ${trueMu * trueMu}`
+            ]),
+            solution: `From the table, $P(Z < -0.84) = 0.2$ and $P(Z < 1.28) = 0.9$. Solving $\\begin{cases} ${x1} - \\mu = -0.84\\sigma \\\\ ${x2} - \\mu = 1.28\\sigma \\end{cases}$ gives $2.12\\sigma = ${x2 - x1} \\implies \\sigma = ${trueSig}$ and $\\mu = ${trueMu}$. Hence $\\text{Var}(X) = \\sigma^2 = \\mathbf{${trueSig * trueSig}}$.`
+          });
+        }
+
+        // Q8 (Difficult): Two-Stage Exhibition Light Bulbs / Rooms Problem (Ex 7.3)
+        {
+          const m = [4, 5, 6][Math.floor(Math.random() * 3)];
+          const pRoom = 0.6844;
+          const prob = binomialPMF(10, pRoom, m).toFixed(4);
+          pool.push({
+            level: 'Difficult',
+            topic: 'Multi-Stage Binomial → Normal → Binomial (Ex 7.3)',
+            paramTag: `10 rooms, 300 bulbs, Y=${m}`,
+            prompt: `In each of 10 exhibition rooms, 300 light bulbs are installed, each burning out independently with probability $0.1$. Using normal approximation for each room, find the approximate probability that in <strong>exactly ${m} rooms</strong>, there are at least 268 working light bulbs.`,
+            answer: prob,
+            choices: makeChoices(prob, [
+              pRoom.toFixed(4),
+              binomialPMF(10, 0.6985, m).toFixed(4),
+              (parseFloat(prob) * 0.5).toFixed(4)
+            ]),
+            solution: `Stage 1 (One room): $X \\sim B(300, 0.9) \\approx V \\sim N(270, 27)$. With continuity correction, $p_{\\text{room}} = P(X \\ge 268) \\approx P(V > 267.5) = P(Z > -0.48) = 0.6844$. Stage 2 (Across 10 rooms): $Y \\sim B(10, 0.6844)$, so $P(Y = ${m}) = \\binom{10}{${m}}(0.6844)^{${m}}(0.3156)^{${10 - m}} = \\mathbf{${prob}}$.`
+          });
+        }
+
+        return pool;
+      }
+
+      function generateParameterizedQuiz() {
+        const diffFilter = document.getElementById('quiz-diff-filter').value;
+        const count = parseInt(document.getElementById('quiz-count-select').value, 10) || 6;
+        const fullPool = buildQuizQuestionPool();
+
+        let filtered = diffFilter === 'all'
+          ? fullPool
+          : fullPool.filter(q => q.level === diffFilter);
+
+        // If filter has fewer items than count, top up with additional freshly generated pools
+        while (filtered.length < count) {
+          const extra = buildQuizQuestionPool().filter(q => diffFilter === 'all' || q.level === diffFilter);
+          filtered = filtered.concat(extra);
+        }
+
+        currentQuizQuestions = filtered.slice(0, count);
+        currentQuizSeed = 'SEED-' + Math.random().toString(36).substring(2, 7).toUpperCase();
+
+        const banner = document.getElementById('quiz-live-banner');
+        banner.style.display = 'none';
+
+        let html = '';
+        currentQuizQuestions.forEach((q, idx) => {
+          const badgeClass = q.level === 'Basic' ? 'badge-green' : (q.level === 'Intermediate' ? 'badge-amber' : 'badge-red');
+          let optsHtml = '<div class="quiz-opt-grid">';
+          q.choices.forEach((ch, cIdx) => {
+            optsHtml += `
+              <label class="quiz-opt-label" id="qopt-${idx}-${cIdx}" onclick="selectQuizOption(${idx}, ${cIdx})">
+                <input type="radio" name="quiz-q-${idx}" value="${cIdx}" style="accent-color:var(--polyu-red);">
+                <span>${ch}</span>
+              </label>
+            `;
+          });
+          optsHtml += '</div>';
+
+          html += `
+            <div class="quiz-qcard" id="qcard-${idx}">
+              <div class="quiz-qheader">
+                <div style="font-weight:800; color:#0f172a;">Question ${idx + 1} • ${q.topic}</div>
+                <div style="display:flex; gap:0.4rem; align-items:center;">
+                  <span class="tab-badge ${badgeClass}">${q.level}</span>
+                  <span style="font-family:monospace; font-size:0.76rem; color:var(--text-muted);">[${q.paramTag}]</span>
+                </div>
+              </div>
+              <div style="font-size:0.96rem;">${q.prompt}</div>
+              ${optsHtml}
+              <div class="quiz-sol-box" id="qsol-${idx}">
+                <strong>Step-by-Step Solution:</strong> ${q.solution}
+              </div>
+            </div>
+          `;
+        });
+
+        setHTML('quiz-questions-container', html);
+      }
+
+      function selectQuizOption(qIdx, cIdx) {
+        const card = document.getElementById(`qcard-${qIdx}`);
+        if (!card) return;
+        card.querySelectorAll('.quiz-opt-label').forEach(l => l.classList.remove('selected'));
+        const lbl = document.getElementById(`qopt-${qIdx}-${cIdx}`);
+        if (lbl) {
+          lbl.classList.add('selected');
+          const radio = lbl.querySelector('input[type="radio"]');
+          if (radio) radio.checked = true;
+        }
+      }
+
+      function submitParameterizedQuiz() {
+        if (!currentQuizQuestions.length) return;
+        let correctCount = 0;
+        const paramSummary = [];
+
+        currentQuizQuestions.forEach((q, idx) => {
+          const checked = document.querySelector(`input[name="quiz-q-${idx}"]:checked`);
+          const chosenIdx = checked ? parseInt(checked.value, 10) : -1;
+          const chosenVal = chosenIdx >= 0 ? q.choices[chosenIdx] : 'No Answer';
+          const isRight = (chosenVal === q.answer);
+          if (isRight) correctCount++;
+
+          paramSummary.push(`Q${idx+1}(${q.paramTag}): ${isRight ? '✓' : '✗'}`);
+
+          q.choices.forEach((ch, cIdx) => {
+            const lbl = document.getElementById(`qopt-${idx}-${cIdx}`);
+            if (!lbl) return;
+            lbl.classList.remove('correct-opt', 'wrong-opt');
+            if (ch === q.answer) lbl.classList.add('correct-opt');
+            else if (cIdx === chosenIdx && !isRight) lbl.classList.add('wrong-opt');
+          });
+
+          const solBox = document.getElementById(`qsol-${idx}`);
+          if (solBox) {
+            solBox.style.display = 'block';
+            renderMath(solBox);
+          }
+        });
+
+        const total = currentQuizQuestions.length;
+        const pct = Math.round((correctCount / total) * 100);
+        const studentId = (document.getElementById('quiz-student-id').value || 'Anonymous Student').trim();
+        const diffFilter = document.getElementById('quiz-diff-filter').value;
+
+        const banner = document.getElementById('quiz-live-banner');
+        banner.style.display = 'block';
+        banner.style.background = pct >= 70 ? '#dcfce7' : '#fef3c7';
+        banner.style.color = pct >= 70 ? '#15803d' : '#b45309';
+        banner.style.border = pct >= 70 ? '1px solid #86efac' : '1px solid #fde68a';
+        banner.innerHTML = `🎯 Quiz Graded &amp; Saved! Score: ${correctCount} / ${total} (${pct}%) • Parameter Seed: ${currentQuizSeed}`;
+
+        saveQuizAttempt({
+          timestamp: new Date().toLocaleString(),
+          student: studentId,
+          difficulty: diffFilter,
+          score: `${correctCount}/${total}`,
+          pct: `${pct}%`,
+          params: `${currentQuizSeed} | ${paramSummary.join('; ')}`
+        });
+      }
+
+      function getQuizHistory() {
+        try {
+          const raw = localStorage.getItem(QUIZ_STORAGE_KEY);
+          return raw ? JSON.parse(raw) : [];
+        } catch (e) {
+          return [];
+        }
+      }
+
+      function saveQuizAttempt(record) {
+        const hist = getQuizHistory();
+        hist.unshift(record);
+        try {
+          localStorage.setItem(QUIZ_STORAGE_KEY, JSON.stringify(hist.slice(0, 50)));
+        } catch (e) {}
+        renderQuizHistoryTable();
+      }
+
+      function renderQuizHistoryTable() {
+        const tbody = document.getElementById('quiz-history-tbody');
+        if (!tbody) return;
+        const hist = getQuizHistory();
+        if (!hist.length) {
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:var(--text-muted);">No quiz attempts stored yet. Complete and submit a parameterized quiz above!</td></tr>`;
+          return;
+        }
+        tbody.innerHTML = hist.map((r, i) => `
+          <tr>
+            <td><strong>#${hist.length - i}</strong></td>
+            <td>${r.timestamp}</td>
+            <td>${r.student}</td>
+            <td><span class="tab-badge badge-blue">${r.difficulty}</span></td>
+            <td><strong>${r.score}</strong></td>
+            <td style="color:var(--polyu-red); font-weight:800;">${r.pct}</td>
+            <td style="font-family:monospace; font-size:0.78rem;">${r.params}</td>
+          </tr>
+        `).join('');
+      }
+
+      function exportQuizHistoryCSV() {
+        const hist = getQuizHistory();
+        if (!hist.length) {
+          alert('No stored quiz attempts to export yet!');
+          return;
+        }
+        const rows = [['Attempt', 'Timestamp', 'Student', 'Difficulty', 'Score', 'Percentage', 'Parameters']];
+        hist.forEach((r, idx) => {
+          rows.push([
+            hist.length - idx,
+            `"${r.timestamp}"`,
+            `"${r.student.replace(/"/g, '""')}"`,
+            r.difficulty,
+            r.score,
+            r.pct,
+            `"${r.params.replace(/"/g, '""')}"`
+          ]);
+        });
+        const csvContent = 'data:text/csv;charset=utf-8,' + rows.map(e => e.join(',')).join('\n');
+        const link = document.createElement('a');
+        link.setAttribute('href', encodeURI(csvContent));
+        link.setAttribute('download', 'AMA1110_Lecture11_Quiz_Results.csv');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+
+      function clearQuizHistory() {
+        try {
+          localStorage.removeItem(QUIZ_STORAGE_KEY);
+        } catch (e) {}
+        renderQuizHistoryTable();
+      }
+
+      /* Initialize all Part C Worked Examples & Quiz on Load */
+      window.addEventListener('DOMContentLoaded', () => {
+        injectPartCNavTabs();
+        updateBasicEx1();
+        updateBasicEx2();
+        updateBasicEx3();
+        updateBasicEx4();
+        updateInterEx1();
+        updateInterEx2();
+        showSlide28Sub(1);
+        updateInterEx4();
+        updateInterEx5();
+        updateDiffEx1();
+        updateDiffEx2();
+        updateDiffEx3();
+        updateDiffEx4();
+        generateParameterizedQuiz();
+        renderQuizHistoryTable();
+      });
+    </script>
+  
   </main>
 
   <footer>
