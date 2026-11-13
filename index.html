@@ -1,0 +1,2348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AMA1110 Lecture 11 (Parts A & B): Normal Distribution, Standardization & Binomial Approximation | Dr. Charles Lee (PolyU)</title>
+
+  <!-- KaTeX for crisp LaTeX mathematical rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+
+  <style>
+    :root {
+      --polyu-red: #9e1b32;
+      --polyu-red-dark: #7a1224;
+      --polyu-gold: #f5c242;
+      --polyu-gold-light: #fef9c3;
+      --bg-main: #f8fafc;
+      --bg-card: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --border-color: #e2e8f0;
+      --blue-accent: #0284c7;
+      --blue-light: #e0f2fe;
+      --green-accent: #15803d;
+      --green-light: #dcfce7;
+      --amber-accent: #b45309;
+      --amber-light: #fef3c7;
+      --purple-accent: #6d28d9;
+      --purple-light: #ede9fe;
+      --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.08);
+      --shadow-md: 0 6px 18px rgba(15, 23, 42, 0.08);
+      --radius: 10px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding-bottom: 60px;
+    }
+
+    /* Beamer Top Gold Bar (Matching Lecture Notes 11) */
+    .beamer-strip {
+      display: flex;
+      height: 8px;
+      width: 100%;
+    }
+    .beamer-strip-left { flex: 1; background: #f0b323; }
+    .beamer-strip-right { flex: 1; background: #f7ce68; }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, var(--polyu-red-dark) 0%, var(--polyu-red) 100%);
+      color: white;
+      padding: 1.5rem 2rem;
+      box-shadow: var(--shadow-md);
+    }
+    .header-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+    .course-badge {
+      display: inline-block;
+      background: var(--polyu-gold);
+      color: #1e293b;
+      font-weight: 800;
+      font-size: 0.78rem;
+      padding: 0.2rem 0.65rem;
+      border-radius: 99px;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.4rem;
+      text-transform: uppercase;
+    }
+    .header-title h1 {
+      font-size: 1.55rem;
+      font-weight: 800;
+      margin-bottom: 0.2rem;
+    }
+    .header-title p {
+      font-size: 0.94rem;
+      color: #f1f5f9;
+      opacity: 0.95;
+    }
+    .instructor-card {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 0.75rem 1.1rem;
+      border-radius: var(--radius);
+      font-size: 0.84rem;
+      backdrop-filter: blur(6px);
+      text-align: right;
+    }
+    .instructor-card strong {
+      font-size: 0.98rem;
+      color: var(--polyu-gold);
+      display: block;
+    }
+
+    /* Sticky Top Navigation */
+    .top-nav-wrapper {
+      background: #ffffff;
+      border-bottom: 2px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    .top-nav {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      overflow-x: auto;
+      padding: 0 1rem;
+      gap: 0.35rem;
+    }
+    .nav-tab {
+      appearance: none;
+      background: transparent;
+      border: none;
+      border-bottom: 4px solid transparent;
+      padding: 0.95rem 1.15rem;
+      font-size: 0.94rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+    }
+    .nav-tab:hover {
+      color: var(--polyu-red);
+      background: #fff5f7;
+    }
+    .nav-tab.active {
+      color: var(--polyu-red);
+      border-bottom-color: var(--polyu-red);
+      background: #fff1f2;
+      font-weight: 700;
+    }
+    .tab-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.1rem 0.5rem;
+      border-radius: 99px;
+      background: #e2e8f0;
+      color: #334155;
+      font-size: 0.76rem;
+      font-weight: 800;
+    }
+    .nav-tab.active .tab-num {
+      background: var(--polyu-red);
+      color: white;
+    }
+    .tab-badge {
+      font-size: 0.72rem;
+      padding: 0.12rem 0.48rem;
+      border-radius: 4px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .badge-red { background: #ffe4e6; color: #9f1239; }
+    .badge-blue { background: var(--blue-light); color: var(--blue-accent); }
+    .badge-green { background: var(--green-light); color: var(--green-accent); }
+    .badge-amber { background: var(--amber-light); color: var(--amber-accent); }
+    .badge-purple { background: var(--purple-light); color: var(--purple-accent); }
+
+    /* Main Content Layout */
+    main {
+      max-width: 1280px;
+      margin: 1.6rem auto;
+      padding: 0 1.25rem;
+    }
+    .tab-section {
+      display: none;
+      animation: fadeIn 0.25s ease-in-out;
+    }
+    .tab-section.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-banner {
+      background: white;
+      border-left: 6px solid var(--polyu-red);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .section-banner h2 {
+      font-size: 1.35rem;
+      color: var(--polyu-red-dark);
+      margin-bottom: 0.25rem;
+    }
+    .section-banner p {
+      color: var(--text-muted);
+      font-size: 0.94rem;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 1.4rem;
+      margin-bottom: 1.4rem;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 1.4rem;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 1.5rem;
+    }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.65rem;
+      border-bottom: 2px solid #f1f5f9;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .card-title {
+      font-size: 1.14rem;
+      font-weight: 700;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Beamer Boxes (Definitions, Theorems, Remarks) */
+    .beamer-box {
+      border-radius: 8px;
+      margin-bottom: 1.15rem;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      background: #ffffff;
+    }
+    .beamer-box-title {
+      padding: 0.5rem 1rem;
+      font-weight: 700;
+      font-size: 0.92rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .beamer-box-body {
+      padding: 0.95rem 1.2rem;
+      font-size: 0.94rem;
+    }
+    .box-def { border-color: #f9a8d4; }
+    .box-def .beamer-box-title { background: #fbcfe8; color: #831843; }
+
+    .box-thm { border-color: #94a3b8; }
+    .box-thm .beamer-box-title { background: #64748b; color: #ffffff; }
+
+    .box-rem { border-color: #b91c1c; }
+    .box-rem .beamer-box-title { background: #991b1b; color: #ffffff; }
+
+    .box-sol { border-color: #38bdf8; }
+    .box-sol .beamer-box-title { background: #0284c7; color: #ffffff; }
+
+    /* Real-World Story Cards */
+    .rw-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-top: 4px solid var(--polyu-red);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .rw-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+    .rw-card.theme-blue { border-top-color: var(--blue-accent); }
+    .rw-card.theme-purple { border-top-color: var(--purple-accent); }
+    .rw-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.5rem;
+    }
+    .rw-icon {
+      font-size: 1.75rem;
+      line-height: 1;
+    }
+    .rw-math-box {
+      margin-top: 0.9rem;
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 8px;
+      padding: 0.7rem 0.85rem;
+      font-size: 0.86rem;
+    }
+
+    /* Buttons & Controls */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.5rem 0.95rem;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn-primary { background: var(--polyu-red); color: white; }
+    .btn-primary:hover { background: var(--polyu-red-dark); }
+    .btn-secondary { background: #f1f5f9; color: #334155; border-color: #cbd5e1; }
+    .btn-secondary:hover { background: #e2e8f0; }
+    .btn-gold { background: var(--polyu-gold); color: #1e293b; font-weight: 700; }
+    .btn-gold:hover { background: #eab308; }
+    .btn-sm { padding: 0.32rem 0.68rem; font-size: 0.8rem; }
+
+    .control-group { margin-bottom: 0.9rem; }
+    .control-label {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 600;
+      font-size: 0.88rem;
+      margin-bottom: 0.25rem;
+    }
+    .control-val {
+      color: var(--polyu-red);
+      font-weight: 700;
+      font-family: monospace;
+      font-size: 0.96rem;
+    }
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--polyu-red);
+      cursor: pointer;
+    }
+    select, input[type="number"] {
+      padding: 0.45rem 0.7rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      background: white;
+      color: var(--text-main);
+    }
+
+    /* 5-Case Continuity Correction Cards */
+    .cc-case-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(195px, 1fr));
+      gap: 0.65rem;
+      margin-bottom: 1.2rem;
+    }
+    .cc-case-btn {
+      background: #f8fafc;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.75rem 0.85rem;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .cc-case-btn:hover {
+      border-color: #94a3b8;
+      background: #ffffff;
+    }
+    .cc-case-btn.active {
+      border-color: var(--polyu-red);
+      background: #fff1f2;
+      box-shadow: var(--shadow-sm);
+    }
+    .cc-case-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--polyu-red);
+      margin-bottom: 0.25rem;
+    }
+    .cc-case-main {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .cc-case-sub {
+      font-size: 0.79rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    /* Stat Metric Boxes */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
+      gap: 0.7rem;
+      margin: 0.85rem 0;
+    }
+    .stat-box {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.6rem 0.7rem;
+      text-align: center;
+    }
+    .stat-box .stat-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .stat-box .stat-value {
+      font-size: 1.12rem;
+      font-weight: 800;
+      color: var(--polyu-red);
+      margin-top: 0.15rem;
+    }
+
+    /* SVG Containers */
+    .chart-box {
+      width: 100%;
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.75rem;
+    }
+    .chart-legend {
+      display: flex;
+      gap: 1.1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      font-size: 0.82rem;
+      margin-top: 0.5rem;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.38rem;
+      font-weight: 600;
+    }
+    .legend-swatch {
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+    }
+
+    /* Tables */
+    table.ref-table, table.z-matrix {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+    }
+    table.ref-table th, table.ref-table td {
+      padding: 0.6rem 0.8rem;
+      border-bottom: 1px solid var(--border-color);
+      text-align: left;
+    }
+    table.ref-table th {
+      background: #f1f5f9;
+      font-weight: 700;
+      color: #334155;
+    }
+    table.z-matrix th, table.z-matrix td {
+      padding: 0.35rem 0.45rem;
+      border: 1px solid #e2e8f0;
+      text-align: center;
+      font-family: monospace;
+      font-size: 0.82rem;
+    }
+    table.z-matrix th {
+      background: #f1f5f9;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .z-cell-highlight {
+      background: var(--polyu-red) !important;
+      color: #ffffff !important;
+      font-weight: 800 !important;
+      box-shadow: 0 0 0 2px #f5c242;
+    }
+    .z-rowcol-highlight {
+      background: #ffe4e6 !important;
+      font-weight: 700;
+    }
+
+    footer {
+      max-width: 1280px;
+      margin: 2rem auto 0;
+      padding: 1rem 1.25rem;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 768px) {
+      .instructor-card { text-align: left; width: 100%; }
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Beamer Top Gold Strip -->
+  <div class="beamer-strip">
+    <div class="beamer-strip-left"></div>
+    <div class="beamer-strip-right"></div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="header-container">
+      <div class="header-title">
+        <span class="course-badge">The Hong Kong Polytechnic University • AMA1110</span>
+        <h1>Basic Mathematics I: Calculus and Probability &amp; Statistics</h1>
+        <p>Lecture Notes 11 (Parts A &amp; B) — Interactive Introduction: Normal Distribution, Standardization &amp; Binomial Approximation</p>
+      </div>
+      <div class="instructor-card">
+        <strong>Dr. LEE Kei Fung, Charles</strong>
+        Subject Leader &amp; Lecturer (AMA1110)<br>
+        PolyU AMA DELO • Assistant Program Leader • Academic Advisor<br>
+        <span style="color:#fde68a;">Consultation Hours: Friday 08:30–10:20 (TU715)</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Top Navigation -->
+  <div class="top-nav-wrapper">
+    <nav class="top-nav" aria-label="Module Sections">
+      <button class="nav-tab active" onclick="switchSection('sec-partA', this)">
+        <span class="tab-num">Part A</span>
+        Extra Real-World Examples
+        <span class="tab-badge badge-red">9 Scenarios</span>
+      </button>
+      <button class="nav-tab" onclick="switchSection('sec-partB-norm', this)">
+        <span class="tab-num">Part B1</span>
+        Normal &amp; Standardization ($X \leftrightarrow Z$)
+        <span class="tab-badge badge-blue">Interactive Lab + Z-Table</span>
+      </button>
+      <button class="nav-tab" onclick="switchSection('sec-partB-cc', this)">
+        <span class="tab-num">Part B2</span>
+        Normal Approx. to Binomial (The 5 Cases)
+        <span class="tab-badge badge-purple">Continuity Correction Studio</span>
+      </button>
+    </nav>
+  </div>
+
+  <main>
+
+    <!-- =====================================================================
+         PART A: EXTRA REALISTIC REAL-WORLD EXAMPLES AS INTRODUCTION
+         ===================================================================== -->
+    <section id="sec-partA" class="tab-section active">
+      <div class="section-banner">
+        <div>
+          <h2>Part A: Extra Realistic World Examples — Why Study Normal, Standardization &amp; Continuity Correction?</h2>
+          <p>Before diving into formulas, explore 9 realistic Hong Kong, engineering, and business scenarios that motivate the three core topics of Lecture Notes 11.</p>
+        </div>
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+          <button class="btn btn-primary" onclick="switchSection('sec-partB-cc', document.querySelectorAll('.nav-tab')[2])">
+            Jump to 5-Case Continuity Correction Studio &rarr;
+          </button>
+        </div>
+      </div>
+
+      <!-- TOPIC 1: THE NORMAL DISTRIBUTION -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span>🔔 Topic 1: The Normal Distribution $X \sim N(\mu, \sigma^2)$ in the Real World</span>
+          </div>
+          <span class="tab-badge badge-red">Slides 3–11 Motivation</span>
+        </div>
+
+        <p style="margin-bottom:1rem; font-size:0.94rem; color:var(--text-muted);">
+          In Lecture Notes 11 (§11.2.1), we learn that continuous random variables—such as physical measurements, temperatures, and machine outputs—are modeled by a bell-shaped probability density function $f(x)$ symmetric about its mean $\mu$, where the area under $y = f(x)$ over $[a, b]$ gives the probability $P(a \le X \le b) = \int_a^b f(x)\,dx$.
+        </p>
+
+        <div class="grid-3">
+          <!-- Example A1 -->
+          <div class="rw-card">
+            <div>
+              <div class="rw-header">
+                <span class="tab-badge badge-red">Example A1 • Smart Retail</span>
+                <span class="rw-icon">☕</span>
+              </div>
+              <h3 style="font-size:1.04rem; margin-bottom:0.4rem;">PolyU Campus Automated Espresso Dispenser</h3>
+              <p style="font-size:0.89rem; color:var(--text-muted);">
+                An automated coffee machine at a PolyU catering outlet dispenses hot americanos into <strong>250 mL</strong> paper cups. Due to slight water-pressure fluctuations, the actual liquid volume $X$ dispensed per cup is a continuous random variable following $X \sim N(\mu = 242\text{ mL},\, \sigma^2 = 4^2\text{ mL}^2)$.
+              </p>
+              <p style="font-size:0.89rem; color:var(--text-muted); margin-top:0.45rem;">
+                <strong>Practical Question:</strong> What is the probability that a cup overflows ($X > 250\text{ mL}$), and what if the technician recalibrates the mean $\mu$?
+              </p>
+            </div>
+            <div class="rw-math-box">
+              <div><strong>Mathematical Model:</strong> $X \sim N(242, 4^2)$</div>
+              <div>$$P(X > 250) = P\left(Z > \frac{250 - 242}{4}\right) = P(Z > 2.00) = \mathbf{0.0228}$$</div>
+              <div style="margin-top:0.35rem; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:0.78rem; color:var(--polyu-red); font-weight:700;">Only 2.28% of cups overflow!</span>
+                <button class="btn btn-sm btn-secondary" onclick="openScenarioInNormLab(242, 4, 'gt', 250, 255)">Simulate in Lab &rarr;</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Example A2 -->
+          <div class="rw-card">
+            <div>
+              <div class="rw-header">
+                <span class="tab-badge badge-red">Example A2 • Climate &amp; Energy</span>
+                <span class="rw-icon">🌡️</span>
+              </div>
+              <h3 style="font-size:1.04rem; margin-bottom:0.4rem;">Hong Kong Observatory Mid-November Temperature</h3>
+              <p style="font-size:0.89rem; color:var(--text-muted);">
+                Historical meteorological records at the Hong Kong Observatory (Tsim Sha Tsui) show that the daily afternoon maximum temperature $X$ in mid-November follows a normal distribution with mean $\mu = 25.0^\circ\text{C}$ and standard deviation $\sigma = 2.0^\circ\text{C}$, i.e., $X \sim N(25.0, 2.0^2)$.
+              </p>
+              <p style="font-size:0.89rem; color:var(--text-muted); margin-top:0.45rem;">
+                <strong>Practical Question:</strong> CLP Power engineers want to know the probability that tomorrow's peak temperature stays in the comfortable range $[22.0^\circ\text{C},\, 28.0^\circ\text{C}]$.
+              </p>
+            </div>
+            <div class="rw-math-box">
+              <div><strong>Mathematical Model:</strong> $X \sim N(25.0, 2.0^2)$</div>
+              <div>$$P(22 \le X \le 28) = P(-1.50 \le Z \le 1.50) = 1 - 2(0.0668) = \mathbf{0.8664}$$</div>
+              <div style="margin-top:0.35rem; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:0.78rem; color:var(--polyu-red); font-weight:700;">86.64% chance of mild weather</span>
+                <button class="btn btn-sm btn-secondary" onclick="openScenarioInNormLab(25, 2, 'between', 22, 28)">Simulate in Lab &rarr;</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Example A3 -->
+          <div class="rw-card">
+            <div>
+              <div class="rw-header">
+                <span class="tab-badge badge-red">Example A3 • Precision Engineering</span>
+                <span class="rw-icon">🔩</span>
+              </div>
+              <h3 style="font-size:1.04rem; margin-bottom:0.4rem;">High-Speed Railway Bolt Diameter Quality Control</h3>
+              <p style="font-size:0.89rem; color:var(--text-muted);">
+                A precision CNC lathe manufactures titanium bolts for railway tracks with target diameter $\mu = 12.00\text{ mm}$ and standard deviation $\sigma = 0.02\text{ mm}$, so $X \sim N(12.00, 0.02^2)$. Any bolt outside $[11.95\text{ mm},\, 12.05\text{ mm}]$ is scrapped as defective.
+              </p>
+              <p style="font-size:0.89rem; color:var(--text-muted); margin-top:0.45rem;">
+                <strong>Practical Question:</strong> What proportion of bolts pass quality inspection?
+              </p>
+            </div>
+            <div class="rw-math-box">
+              <div><strong>Mathematical Model:</strong> $X \sim N(12.00, 0.02^2)$</div>
+              <div>$$P(11.95 \le X \le 12.05) = P(-2.50 \le Z \le 2.50) = 1 - 2(0.00621) = \mathbf{0.9876}$$</div>
+              <div style="margin-top:0.35rem; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:0.78rem; color:var(--polyu-red); font-weight:700;">98.76% yield rate</span>
+                <button class="btn btn-sm btn-secondary" onclick="openScenarioInNormLab(12, 0.02, 'between', 11.95, 12.05)">Simulate in Lab &rarr;</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOPIC 2: STANDARDIZING A NORMAL RANDOM VARIABLE -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span>📏 Topic 2: Standardizing a Normal Random Variable ($Z = \frac{X - \mu}{\sigma} \sim N(0, 1)$)</span>
+          </div>
+          <span class="tab-badge badge-blue">Slides 12–19 Motivation</span>
+        </div>
+
+        <p style="margin-bottom:1rem; font-size:0.94rem; color:var(--text-muted);">
+          Why do we standardize $X \sim N(\mu, \sigma^2)$ into $Z = \frac{X-\mu}{\sigma} \sim N(0,1)$? First, it allows us to use a <strong>single Standard Normal Table</strong> for any $(\mu, \sigma)$ in the universe (Theorem 3.1). Second, $Z$-scores measure <em>how many standard deviations</em> an outcome lies above or below the mean—allowing fair comparisons across completely different distributions!
+        </p>
+
+        <div class="grid-3">
+          <!-- Example A4 (With Interactive Mini Commute Comparator) -->
+          <div class="rw-card theme-blue">
+            <div>
+              <div class="rw-header">
+                <span class="tab-badge badge-blue">Example A4 • Commute Decision</span>
+                <span class="rw-icon">🚌</span>
+              </div>
+              <h3 style="font-size:1.04rem; margin-bottom:0.4rem;">Cross-Harbour Tunnel vs. Western Harbour Crossing</h3>
+              <p style="font-size:0.89rem; color:var(--text-muted);">
+                You have an <strong>AMA1110 quiz at PolyU</strong> in $T$ minutes!
+                <br>• <strong>Route A (Hung Hom Cross-Harbour Tunnel):</strong> Shorter average time $\mu_A = 28\text{ min}$, but heavy congestion variance $\sigma_A = 6\text{ min}$ ($X_A \sim N(28, 6^2)$).
+                <br>• <strong>Route B (Western Harbour Crossing):</strong> Longer average time $\mu_B = 31\text{ min}$, but smooth traffic $\sigma_B = 2\text{ min}$ ($X_B \sim N(31, 2^2)$).
+              </p>
+              <div style="margin-top:0.55rem; background:#eff6ff; padding:0.5rem 0.65rem; border-radius:6px;">
+                <label style="font-size:0.8rem; font-weight:700; color:#1e40af; display:flex; justify-content:space-between;">
+                  <span>Time Until Exam ($T$ mins):</span>
+                  <span id="commute-t-val">35 min</span>
+                </label>
+                <input type="range" id="commute-t-slider" min="25" max="40" step="1" value="35" oninput="updateCommuteScenario()">
+              </div>
+            </div>
+            <div class="rw-math-box" id="commute-result-box">
+              <!-- Populated dynamically by updateCommuteScenario() -->
+            </div>
+          </div>
+
+          <!-- Example A5 -->
+          <div class="rw-card theme-blue">
+            <div>
+              <div class="rw-header">
+                <span class="tab-badge badge-blue">Example A5 • Academic Advising</span>
+                <span class="rw-icon">🎓</span>
+              </div>
+              <h3 style="font-size:1.04rem; margin-bottom:0.4rem;">Comparing Scores Across Two Exam Papers</h3>
+              <p style="font-size:0.89rem; color:var(--text-muted);">
+                As Academic Advisor &amp; DELO, suppose two students apply for a scholarship from different cohorts:
+                <br>• <strong>Alice</strong> scored $X_1 = 82$ in a cohort where marks followed $N(70, 10^2)$.
+                <br>• <strong>Bob</strong> scored $X_2 = 78$ in a harder cohort where marks followed $N(64, 7^2)$.
+              </p>
+              <p style="font-size:0.89rem; color:var(--text-muted); margin-top:0.45rem;">
+                <strong>Standardization Insight:</strong> Who performed better relative to their peers?
+              </p>
+            </div>
+            <div class="rw-math-box">
+              <div>• Alice's $Z$-score: $z_1 = \frac{82 - 70}{10} = \mathbf{+1.20}$ (Top $11.51\%$)</div>
+              <div>• Bob's $Z$-score: $z_2 = \frac{78 - 64}{7} = \mathbf{+2.00}$ (Top $2.28\%$)</div>
+              <div style="margin-top:0.3rem; font-size:0.8rem; color:var(--blue-accent); font-weight:700;">
+                Bob ($Z = +2.00$) outperformed 97.72% of his cohort!
+              </div>
+            </div>
+          </div>
+
+          <!-- Example A6 -->
+          <div class="rw-card theme-blue">
+            <div>
+              <div class="rw-header">
+                <span class="tab-badge badge-blue">Example A6 • Inverse Quantiles (Ex 3.5 &amp; 4.2)</span>
+                <span class="rw-icon">🔋</span>
+              </div>
+              <h3 style="font-size:1.04rem; margin-bottom:0.4rem;">EV Battery Warranty Period Engineering</h3>
+              <p style="font-size:0.89rem; color:var(--text-muted);">
+                An electric vehicle (EV) battery pack's service life before dropping below 80% capacity follows $X \sim N(\mu = 9.5\text{ years},\, \sigma^2 = 1.2^2\text{ years}^2)$. The manufacturer wants to guarantee a free replacement warranty period of $w$ years such that <strong>only 1% of batteries</strong> fail before $w$ ($P(X \le w) = 0.01$).
+              </p>
+            </div>
+            <div class="rw-math-box">
+              <div><strong>Reverse Table Lookup (Slide 17, Ex 3.5):</strong></div>
+              <div>From $P(Z \le b) = 0.01 \iff P(Z \ge -b) = 0.01$, table gives $b = -2.33$:</div>
+              <div>$$\frac{w - 9.5}{1.2} = -2.33 \implies w = 9.5 - 2.33(1.2) = \mathbf{6.70\text{ years}}$$</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOPIC 3: NORMAL DISTRIBUTION APPROXIMATING BINOMIAL DISTRIBUTION -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span>📊 Topic 3: Normal Distribution Approximating Binomial Distribution (with Continuity Correction)</span>
+          </div>
+          <span class="tab-badge badge-purple">Slides 20–28 &amp; 35–39 Motivation</span>
+        </div>
+
+        <p style="margin-bottom:1rem; font-size:0.94rem; color:var(--text-muted);">
+          When $X \sim \text{Binomial}(n, p)$ has large $n$ (such as $n = 100$, $900$, or $10,000$), computing exact sums $\sum \binom{n}{i} p^i (1-p)^{n-i}$ by hand is computationally prohibitive (Slide 20). Whenever $\mathbf{np > 5}$ and $\mathbf{n(1-p) > 5}$ (Theorem 5.1), $X$ is closely approximated by $V \sim N(\mu = np,\, \sigma^2 = np(1-p))$ with a $\mathbf{\pm 0.5}$ <strong>Continuity Correction</strong> to bridge discrete integers and continuous intervals.
+        </p>
+
+        <div class="grid-3">
+          <!-- Example A7 -->
+          <div class="rw-card theme-purple">
+            <div>
+              <div class="rw-header">
+                <span class="tab-badge badge-purple">Example A7 • Public Policy Poll (Ex 5.1–5.3)</span>
+                <span class="rw-icon">🗳️</span>
+              </div>
+              <h3 style="font-size:1.04rem; margin-bottom:0.4rem;">Large-Scale Survey of $n = 10,000$ Residents</h3>
+              <p style="font-size:0.89rem; color:var(--text-muted);">
+                Suppose $p = 40\%$ of citizens support a new harbourfront pedestrian boardwalk. A university polling center surveys $n = 10,000$ randomly chosen citizens. Let $X \sim \text{Binomial}(10000, 0.4)$ be the number of supporters.
+              </p>
+              <p style="font-size:0.89rem; color:var(--text-muted); margin-top:0.45rem;">
+                <strong>Why Normal Approximation?</strong> Summing 901 terms $\sum_{i=3000}^{3900} \binom{10000}{i} 0.4^i 0.6^{10000-i}$ overflows a pocket calculator, whereas $V \sim N(4000, 2400)$ solves it in two lines!
+              </p>
+            </div>
+            <div class="rw-math-box">
+              <div><strong>With Continuity Correction ($[3000, 3900] \to [2999.5, 3900.5]$):</strong></div>
+              <div>$$P(2999.5 \le V \le 3900.5) = P(-20.42 \le Z \le -2.03) = \mathbf{0.0212}$$</div>
+              <div style="font-size:0.78rem; color:var(--green-accent); font-weight:700;">Exact R software sum (Slide 25): 0.02101496!</div>
+            </div>
+          </div>
+
+          <!-- Example A8 -->
+          <div class="rw-card theme-purple">
+            <div>
+              <div class="rw-header">
+                <span class="tab-badge badge-purple">Example A8 • Aviation Operations</span>
+                <span class="rw-icon">✈️</span>
+              </div>
+              <h3 style="font-size:1.04rem; margin-bottom:0.4rem;">HKIA Widebody Flight Overbooking Risk</h3>
+              <p style="font-size:0.89rem; color:var(--text-muted);">
+                An airline at Hong Kong International Airport sells $n = 400$ tickets for a <strong>370-seat</strong> Airbus A350 because historical data shows each ticketed passenger independently shows up with probability $p = 0.90$.
+              </p>
+              <p style="font-size:0.89rem; color:var(--text-muted); margin-top:0.45rem;">
+                <strong>Why $+0.5$ Continuity Correction Matters:</strong> The flight is overbooked only if <strong>strictly more than 370</strong> passengers show up ($P(X > 370)$). Since $X = 370$ is safe, we exclude bar 370 and start at $\mathbf{370.5}$!
+              </p>
+            </div>
+            <div class="rw-math-box">
+              <div>$np = 360 > 5,\; np(1-p) = 36 > 5 \implies V \sim N(360, 6^2)$</div>
+              <div>$$P(X > 370) \approx P(V \ge 370.5) = P\left(Z \ge \frac{370.5 - 360}{6}\right) = P(Z \ge 1.75) = \mathbf{0.0401}$$</div>
+              <div style="margin-top:0.35rem; text-align:right;">
+                <button class="btn btn-sm btn-secondary" onclick="openScenarioInCCStudio(400, 0.90, 'gt', 370, 370)">Inspect in CC Studio &rarr;</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Example A9 -->
+          <div class="rw-card theme-purple">
+            <div>
+              <div class="rw-header">
+                <span class="tab-badge badge-purple">Example A9 • Logistics SLA Audit (Ex 7.2)</span>
+                <span class="rw-icon">📦</span>
+              </div>
+              <h3 style="font-size:1.04rem; margin-bottom:0.4rem;">Regional Sorting Hub Parcel Mis-Delivery</h3>
+              <p style="font-size:0.89rem; color:var(--text-muted);">
+                In automated e-commerce parcel sorting (Slide 37, Ex 7.2), $p = 5\%$ of parcels require manual re-routing due to damaged barcodes. Among $n = 900$ randomly audited parcels, management wants the probability that <strong>at least 50</strong> parcels ($X \ge 50$) are mis-delivered.
+              </p>
+              <p style="font-size:0.89rem; color:var(--text-muted); margin-top:0.45rem;">
+                <strong>Why $-0.5$ Continuity Correction Matters:</strong> Because $X = 50$ is <strong>included</strong> in $X \ge 50$, we include the entire bar $[49.5, 50.5]$ by starting at $\mathbf{49.5}$!
+              </p>
+            </div>
+            <div class="rw-math-box">
+              <div>$np = 45 > 5,\; np(1-p) = 42.75 > 5 \implies Y \sim N(45, 42.75)$</div>
+              <div>$$P(X \ge 50) \approx P(Y > 49.5) = P\left(Z > \frac{4.5}{\sqrt{42.75}}\right) = P(Z > 0.69) = \mathbf{0.2451}$$</div>
+              <div style="margin-top:0.35rem; text-align:right;">
+                <button class="btn btn-sm btn-secondary" onclick="openScenarioInCCStudio(900, 0.05, 'ge_b', 50, 50)">Inspect in CC Studio &rarr;</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =====================================================================
+         PART B1: INTERACTIVE NORMAL & STANDARDIZATION LAB + POLYU Z-TABLE
+         ===================================================================== -->
+    <section id="sec-partB-norm" class="tab-section">
+      <div class="section-banner">
+        <div>
+          <h2>Part B1: Interactive Normal Distribution &amp; Standardization ($X \leftrightarrow Z$) Laboratory</h2>
+          <p>Visualize how $\mu$ and $\sigma$ shape the bell curve (Slide 10), standardize any $X \sim N(\mu, \sigma^2)$ to $Z \sim N(0,1)$, and see live lookups on the PolyU Upper-Tail Standard Normal Table.</p>
+        </div>
+        <span class="tab-badge badge-blue" style="font-size:0.88rem; padding:0.4rem 0.8rem;">Slides 8–19 Interactive</span>
+      </div>
+
+      <!-- Key Definitions & Theorems from Slides 9 & 12 -->
+      <div class="grid-2">
+        <div class="beamer-box box-def">
+          <div class="beamer-box-title">
+            <span>Definition 2.1 &amp; Theorem 2.1: Normal Distribution $N(\mu, \sigma^2)$</span>
+            <span>Slide 9</span>
+          </div>
+          <div class="beamer-box-body">
+            We say $X$ has a normal distribution $N(\mu, \sigma^2)$ with parameters $\sigma > 0$ and $\mu$ if its density function for $-\infty < x < \infty$ is:
+            $$f(x) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left\{-\frac{(x-\mu)^2}{2\sigma^2}\right\}$$
+            Furthermore, $\mathbb{E}[X] = \mu$, $\text{Var}(X) = \sigma^2$, and the curve is symmetric about $x = \mu$ with total area $\int_{-\infty}^{\infty} f(x)\,dx = 1$.
+          </div>
+        </div>
+
+        <div class="beamer-box box-thm">
+          <div class="beamer-box-title">
+            <span>Definition 3.1 &amp; Theorems 3.1–3.2: Standardization</span>
+            <span>Slide 12</span>
+          </div>
+          <div class="beamer-box-body">
+            The normal distribution $N(0, 1)$ (mean $0$, variance $1$) is the <strong>standard normal distribution</strong>:
+            $$X \sim N(\mu, \sigma^2) \iff Z = \frac{X - \mu}{\sigma} \sim N(0, 1)$$
+            $$Z \sim N(0, 1) \iff \sigma Z + \mu \sim N(\mu, \sigma^2), \qquad aX + b \sim N(a\mu + b,\, a^2\sigma^2)$$
+          </div>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE DUAL-AXIS NORMAL & STANDARDIZATION EXPLORER -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">🔬 Interactive Dual-Axis Standardization Explorer ($X \sim N(\mu, \sigma^2) \longrightarrow Z = \frac{X-\mu}{\sigma} \sim N(0,1)$)</div>
+          <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+            <button class="btn btn-sm btn-secondary" onclick="setNormLabPreset(0, 1, 'lt', 0.36, 1)">Slide 14 (Ex 3.2): Z &lt; 0.36</button>
+            <button class="btn btn-sm btn-secondary" onclick="setNormLabPreset(0, 1, 'lt', -1.62, 1)">Slide 16: Z &lt; -1.62</button>
+            <button class="btn btn-sm btn-secondary" onclick="setNormLabPreset(0, 1, 'between', 0.21, 0.95)">Slide 16: 0.21 &lt; Z &lt; 0.95</button>
+            <button class="btn btn-sm btn-secondary" onclick="setNormLabPreset(0, 1, 'between', -0.58, 1.36)">Slide 16: -0.58 &lt; Z &lt; 1.36</button>
+            <button class="btn btn-sm btn-gold" onclick="setNormLabPreset(25, 4, 'between', 18, 34)">Slide 18 (Ex 4.1): X ~ N(25, 4²), [18, 34]</button>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <!-- Controls & Step-by-Step PolyU Table Algebra -->
+          <div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.85rem;">
+              <div class="control-group">
+                <div class="control-label">
+                  <span>Mean ($\mu$):</span>
+                  <span class="control-val" id="nlab-mu-val">25.00</span>
+                </div>
+                <input type="range" id="nlab-mu-slider" min="-50" max="260" step="0.5" value="25" oninput="updateNormLab()">
+              </div>
+
+              <div class="control-group">
+                <div class="control-label">
+                  <span>Std Dev ($\sigma > 0$):</span>
+                  <span class="control-val" id="nlab-sig-val">4.00</span>
+                </div>
+                <input type="range" id="nlab-sig-slider" min="0.02" max="50" step="0.02" value="4" oninput="updateNormLab()">
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label">Probability Query Type:</label>
+              <select id="nlab-mode" style="width:100%;" onchange="updateNormLab()">
+                <option value="between" selected>Interval Probability: P(a ≤ X ≤ b)</option>
+                <option value="lt">Left-Tail Probability: P(X ≤ a)</option>
+                <option value="gt">Right-Tail Probability: P(X ≥ a)</option>
+              </select>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.85rem;">
+              <div class="control-group">
+                <div class="control-label">
+                  <span id="nlab-a-label">Lower Bound ($a$):</span>
+                  <span class="control-val" id="nlab-a-val">18.00</span>
+                </div>
+                <input type="range" id="nlab-a-slider" min="-100" max="400" step="0.05" value="18" oninput="updateNormLab()">
+              </div>
+
+              <div class="control-group" id="nlab-b-group">
+                <div class="control-label">
+                  <span>Upper Bound ($b$):</span>
+                  <span class="control-val" id="nlab-b-val">34.00</span>
+                </div>
+                <input type="range" id="nlab-b-slider" min="-100" max="400" step="0.05" value="34" oninput="updateNormLab()">
+              </div>
+            </div>
+
+            <div class="stat-grid">
+              <div class="stat-box">
+                <div class="stat-label">Variance $\sigma^2$</div>
+                <div class="stat-value" id="nlab-stat-var">16.00</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-label">$z_a = \frac{a-\mu}{\sigma}$</div>
+                <div class="stat-value" id="nlab-stat-za">-1.75</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-label">$z_b = \frac{b-\mu}{\sigma}$</div>
+                <div class="stat-value" id="nlab-stat-zb">+2.25</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-label">Probability</div>
+                <div class="stat-value" id="nlab-stat-prob" style="color:var(--blue-accent);">0.9477</div>
+              </div>
+            </div>
+
+            <div class="beamer-box box-sol" style="margin-bottom:0;">
+              <div class="beamer-box-title">
+                <span>Step-by-Step Standardization &amp; PolyU Upper-Tail Table Algebra</span>
+                <span>Slide 14–18 Method</span>
+              </div>
+              <div class="beamer-box-body" id="nlab-math-readout">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Dual-Axis SVG Bell Curve -->
+          <div>
+            <div class="chart-box">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.35rem; font-size:0.84rem;">
+                <strong style="color:var(--polyu-red);">🔔 Synchronized $X$-Axis &amp; Standardized $Z$-Axis Curve</strong>
+                <label style="font-size:0.8rem; display:flex; align-items:center; gap:0.35rem; cursor:pointer;">
+                  <input type="checkbox" id="nlab-show-slide10" onchange="updateNormLab()"> Overlay Slide 10 Reference Curves
+                </label>
+              </div>
+              <svg id="nlab-svg" viewBox="0 0 600 325" style="width:100%; height:auto; display:block;"></svg>
+              <div class="chart-legend">
+                <div class="legend-item">
+                  <span class="legend-swatch" style="background:rgba(158, 27, 50, 0.28); border:2px solid #9e1b32;"></span> Shaded Area $= P = \int_a^b f(x)\,dx$
+                </div>
+                <div class="legend-item">
+                  <span style="font-family:monospace; font-size:0.8rem; color:#0284c7;">Top Axis: Original $X \sim N(\mu,\sigma^2)$ • Bottom Axis: Standardized $Z \sim N(0,1)$</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE POLYU UPPER-TAIL STANDARD NORMAL TABLE EXPLORER (SLIDES 14 & 17) -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">📋 Interactive PolyU Standard Normal Table Explorer: $P = \Pr(Z > z)$ (Slides 14 &amp; 17)</div>
+          <div style="display:flex; gap:0.5rem; align-items:center;">
+            <label style="font-size:0.85rem; font-weight:700;">Highlight $z =$</label>
+            <input type="number" id="ztable-input" value="0.36" min="0.00" max="3.09" step="0.01" style="width:85px;" oninput="highlightZTableFromInput()">
+          </div>
+        </div>
+
+        <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:0.85rem;">
+          Unlike cumulative $\Phi(z) = P(Z \le z)$ tables found in some textbooks, the <strong>PolyU AMA1110 Standard Normal Table (Slides 14 &amp; 17)</strong> gives the <strong>upper-tail area</strong> $P = \Pr(Z > z)$ for $z \ge 0$. Click any cell below or adjust the slider above to see how $P(Z > z)$, $P(Z < z)$, and $P(Z < -z)$ are obtained!
+        </p>
+
+        <div id="ztable-live-explanation" style="background:#fff1f2; border:1px solid #fecdd3; border-radius:8px; padding:0.75rem 1rem; margin-bottom:0.9rem; font-size:0.9rem;">
+        </div>
+
+        <div style="overflow-x:auto; max-height:340px; overflow-y:auto; border:1px solid var(--border-color); border-radius:8px;">
+          <table class="z-matrix" id="polyu-z-matrix">
+            <!-- Generated dynamically by buildPolyUZMatrix() -->
+          </table>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =====================================================================
+         PART B2: INTERACTIVE PRESENTATION OF NORMAL APPROXIMATING BINOMIAL
+                  (THE 5 CONTINUITY CORRECTION CASES + ANIMATION + BAR CHART)
+         ===================================================================== -->
+    <section id="sec-partB-cc" class="tab-section">
+      <div class="section-banner">
+        <div>
+          <h2>Part B2: Interactive Studio — Normal Distribution Approximating Binomial Distribution</h2>
+          <p>Play the $\text{Binomial}(80, p)$ animation (Slides 21–22), inspect the Bar-Chart Approximation (Slide 24), and master all 5 Continuity Correction cases ($P(X=a)$, $P(a \le X)$, $P(a < X)$, $P(X \ge b)$, $P(X > b)$) plus intervals.</p>
+        </div>
+        <span class="tab-badge badge-purple" style="font-size:0.88rem; padding:0.4rem 0.8rem;">Slides 20–28 Interactive Studio</span>
+      </div>
+
+      <!-- STEP 1: SLIDES 21-22 BINOMIAL(80, p) INTERACTIVE ANIMATION PLAYER -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">🎬 1. Interactive Animation of $\text{Binomial}(80, p)$ vs. Normal $N(np,\, np(1-p))$ (Slides 21–22)</div>
+          <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
+            <button class="btn btn-sm btn-primary" id="anim-play-btn" onclick="toggleBinomAnimation()">▶ Play Animation</button>
+            <button class="btn btn-sm btn-secondary" onclick="setAnimP(0.02)">p = 0.02 (Skewed Right)</button>
+            <button class="btn btn-sm btn-gold" onclick="setAnimP(0.30)">Slide 22: Binomial(80, 0.3) vs N(24, 16.8)</button>
+            <button class="btn btn-sm btn-secondary" onclick="setAnimP(0.60)">Slide 21: Binomial(80, 0.6)</button>
+            <button class="btn btn-sm btn-secondary" onclick="setAnimP(0.98)">p = 0.98 (Skewed Left)</button>
+          </div>
+        </div>
+
+        <div class="grid-2" style="align-items:center;">
+          <div>
+            <div class="beamer-box box-thm">
+              <div class="beamer-box-title">
+                <span>Theorem 5.1: Normal Distribution Approximating Binomial Distribution</span>
+                <span>Slide 23</span>
+              </div>
+              <div class="beamer-box-body">
+                Let $X \sim \text{Binomial}(n, p)$ with $n$ very large such that $\mathbf{np > 5}$ and $\mathbf{n(1-p) > 5}$. Then approximately:
+                $$X \sim N\big(\mu = np,\; \sigma^2 = np(1-p)\big)$$
+                where $np(1-p)$ is the variance and $\sigma = \sqrt{np(1-p)}$ is the standard deviation.
+              </div>
+            </div>
+
+            <div class="control-group">
+              <div class="control-label">
+                <span>Success Probability $p$ (for $n = 80$):</span>
+                <span class="control-val" id="anim-p-val">0.30</span>
+              </div>
+              <input type="range" id="anim-p-slider" min="0.01" max="0.99" step="0.01" value="0.30" oninput="updateAnimPlot()">
+            </div>
+
+            <div id="anim-condition-box" style="padding:0.7rem 0.95rem; border-radius:8px; font-size:0.88rem; font-weight:600;">
+            </div>
+          </div>
+
+          <div>
+            <div class="chart-box">
+              <div style="text-align:center; font-weight:700; font-size:0.9rem; margin-bottom:0.3rem;" id="anim-chart-title">
+                red dots: Binomial(80, 0.30); black line: N(24.0, 16.80)
+              </div>
+              <svg id="anim-svg" viewBox="0 0 580 230" style="width:100%; height:auto; display:block;"></svg>
+              <div class="chart-legend">
+                <div class="legend-item">
+                  <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#dc2626;"></span> Red Dots &amp; Blue Sticks: Exact $\text{Binomial}(80, p)$
+                </div>
+                <div class="legend-item">
+                  <span style="display:inline-block; width:18px; height:3px; background:#0f172a;"></span> Black Curve: Normal $N(np, np(1-p))$
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2: THE 5 CONTINUITY CORRECTION CASES INTERACTIVE STUDIO -->
+      <div class="card" id="cc-studio-card">
+        <div class="card-header">
+          <div class="card-title">🎯 2. How to Deal with the 5 Cases with Continuity Correction ($\pm 0.5$) — Interactive Studio</div>
+          <span class="tab-badge badge-purple">Slides 24–28 Core Concept</span>
+        </div>
+
+        <p style="margin-bottom:0.9rem; font-size:0.94rem;">
+          Why do we add or subtract $0.5$ when approximating a discrete Binomial random variable $X$ by a continuous Normal random variable $V \sim N(np, np(1-p))$ (or standardized $Z$)?
+          As shown on <strong>Slide 24 ("Approximating a Bar Chart")</strong>, each discrete integer $k$ is represented by a rectangle of width $1$ centered at $k$, spanning from $\mathbf{k - \frac{1}{2}}$ to $\mathbf{k + \frac{1}{2}}$.
+          Click each of the <strong>5 Cases</strong> (and the <strong>Interval Cases</strong>) below to see the exact bar-chart geometry!
+        </p>
+
+        <!-- Clickable Selector for the 5 Core Cases + Side-by-Side + Intervals -->
+        <div class="cc-case-grid">
+          <button class="cc-case-btn active" id="cc-btn-eq" onclick="selectCCMode('eq')">
+            <div class="cc-case-top"><span>Case 1: Exact Value</span><span>Include Bar a</span></div>
+            <div class="cc-case-main">$P(X = a)$</div>
+            <div class="cc-case-sub">$\to P(a - 0.5 \le V \le a + 0.5)$</div>
+          </button>
+
+          <button class="cc-case-btn" id="cc-btn-ge_a" onclick="selectCCMode('ge_a')">
+            <div class="cc-case-top"><span>Case 2: $P(a \le X)$</span><span>Include Bar a</span></div>
+            <div class="cc-case-main">$P(a \le X)$ [At Least $a$]</div>
+            <div class="cc-case-sub">$\to P(V \ge a - 0.5)$</div>
+          </button>
+
+          <button class="cc-case-btn" id="cc-btn-gt_a" onclick="selectCCMode('gt_a')">
+            <div class="cc-case-top"><span>Case 3: $P(a < X)$</span><span>Exclude Bar a</span></div>
+            <div class="cc-case-main">$P(a < X)$ [Strictly $> a$]</div>
+            <div class="cc-case-sub">$\to P(V \ge a + 0.5)$</div>
+          </button>
+
+          <button class="cc-case-btn" id="cc-btn-ge_b" onclick="selectCCMode('ge_b')">
+            <div class="cc-case-top"><span>Case 4: $P(X \ge b)$ / $P(X \le b)$</span><span>Inclusive ($\ge, \le$)</span></div>
+            <div class="cc-case-main">$P(X \ge b)$ or $P(X \le b)$</div>
+            <div class="cc-case-sub">$\ge b \to b-0.5 \;\text{ | }\; \le b \to b+0.5$</div>
+          </button>
+
+          <button class="cc-case-btn" id="cc-btn-gt_b" onclick="selectCCMode('gt_b')">
+            <div class="cc-case-top"><span>Case 5: $P(X > b)$ / $P(X < b)$</span><span>Strict ($>, <$)</span></div>
+            <div class="cc-case-main">$P(X > b)$ or $P(X < b)$</div>
+            <div class="cc-case-sub">$> b \to b+0.5 \;\text{ | }\; < b \to b-0.5$</div>
+          </button>
+
+          <button class="cc-case-btn" id="cc-btn-interval" onclick="selectCCMode('interval')">
+            <div class="cc-case-top"><span>Slide 24 &amp; 28: Intervals</span><span>4 Combinations</span></div>
+            <div class="cc-case-main">$P(a \lessgtr X \lessgtr b)$</div>
+            <div class="cc-case-sub">$\to P(a \pm 0.5 \le V \le b \pm 0.5)$</div>
+          </button>
+        </div>
+
+        <!-- Quick Presets from Slide 28 Exercise 5.5 -->
+        <div style="display:flex; gap:0.4rem; flex-wrap:wrap; margin-bottom:1.1rem; align-items:center;">
+          <span style="font-size:0.82rem; font-weight:700; color:var(--text-muted);">Slide 28 (Ex 5.5, $n=100, p=0.36$) Presets:</span>
+          <button class="btn btn-sm btn-secondary" onclick="loadCCStudioPreset(100, 0.36, 'gt_a', 51, 51)">1. P(X &gt; 51) → 51.5</button>
+          <button class="btn btn-sm btn-secondary" onclick="loadCCStudioPreset(100, 0.36, 'ge_a', 51, 51)">2. P(X ≥ 51) → 50.5</button>
+          <button class="btn btn-sm btn-secondary" onclick="loadCCStudioPreset(100, 0.36, 'lt_b', 45, 45)">3. P(X &lt; 45) → 44.5</button>
+          <button class="btn btn-sm btn-secondary" onclick="loadCCStudioPreset(100, 0.36, 'le_b', 45, 45)">4. P(X ≤ 45) → 45.5</button>
+          <button class="btn btn-sm btn-secondary" onclick="loadCCStudioPreset(100, 0.36, 'int_lt_lt', 30, 40)">5. P(30 &lt; X &lt; 40)</button>
+          <button class="btn btn-sm btn-secondary" onclick="loadCCStudioPreset(100, 0.36, 'int_lt_le', 30, 40)">6. P(30 &lt; X ≤ 40)</button>
+          <button class="btn btn-sm btn-secondary" onclick="loadCCStudioPreset(100, 0.36, 'int_le_lt', 30, 40)">7. P(30 ≤ X &lt; 40)</button>
+          <button class="btn btn-sm btn-secondary" onclick="loadCCStudioPreset(100, 0.36, 'int_le_le', 30, 40)">8. P(30 ≤ X ≤ 40)</button>
+          <button class="btn btn-sm btn-gold" onclick="loadCCStudioPreset(100, 0.36, 'eq', 36, 36)">Single Bar: P(X = 36)</button>
+        </div>
+
+        <div class="grid-2">
+          <!-- Left Column: Sliders & Decision Logic -->
+          <div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.85rem;">
+              <div class="control-group">
+                <div class="control-label">
+                  <span>Trials ($n$):</span>
+                  <span class="control-val" id="cc-n-val">100</span>
+                </div>
+                <input type="range" id="cc-n-slider" min="20" max="1000" step="10" value="100" oninput="updateCCStudio()">
+              </div>
+
+              <div class="control-group">
+                <div class="control-label">
+                  <span>Probability ($p$):</span>
+                  <span class="control-val" id="cc-p-val">0.36</span>
+                </div>
+                <input type="range" id="cc-p-slider" min="0.05" max="0.95" step="0.01" value="0.36" oninput="updateCCStudio()">
+              </div>
+            </div>
+
+            <!-- Sub-selector for Case 4, Case 5, or Interval -->
+            <div class="control-group" id="cc-tail-dir-row" style="display:none;">
+              <label class="control-label">Tail Direction for Boundary $b$:</label>
+              <select id="cc-tail-dir" style="width:100%;" onchange="updateCCStudio()">
+                <option value="upper">Upper Tail: P(X ≥ b) or P(X &gt; b)</option>
+                <option value="lower">Lower Tail: P(X ≤ b) or P(X &lt; b)</option>
+              </select>
+            </div>
+
+            <div class="control-group" id="cc-int-subtype-row" style="display:none;">
+              <label class="control-label">Interval Inequality Type (Slide 28, Ex 5.5 #5–8):</label>
+              <select id="cc-int-subtype" style="width:100%;" onchange="updateCCStudio()">
+                <option value="lt_lt">5. Both Strict: P(a &lt; X &lt; b) → P(a + 0.5 ≤ V ≤ b - 0.5)</option>
+                <option value="lt_le">6. Left Strict, Right Inclusive: P(a &lt; X ≤ b) → P(a + 0.5 ≤ V ≤ b + 0.5)</option>
+                <option value="le_lt">7. Left Inclusive, Right Strict: P(a ≤ X &lt; b) → P(a - 0.5 ≤ V ≤ b - 0.5)</option>
+                <option value="le_le" selected>8. Both Inclusive: P(a ≤ X ≤ b) → P(a - 0.5 ≤ V ≤ b + 0.5)</option>
+              </select>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.85rem;">
+              <div class="control-group">
+                <div class="control-label">
+                  <span id="cc-a-label">Target Integer ($a$):</span>
+                  <span class="control-val" id="cc-a-val">36</span>
+                </div>
+                <input type="range" id="cc-a-slider" min="0" max="100" step="1" value="36" oninput="updateCCStudio()">
+              </div>
+
+              <div class="control-group" id="cc-b-group" style="display:none;">
+                <div class="control-label">
+                  <span>Upper Integer ($b$):</span>
+                  <span class="control-val" id="cc-b-val">40</span>
+                </div>
+                <input type="range" id="cc-b-slider" min="0" max="100" step="1" value="40" oninput="updateCCStudio()">
+              </div>
+            </div>
+
+            <!-- 2-Step Visual Rule Box -->
+            <div class="beamer-box box-sol" style="margin-bottom:0;">
+              <div class="beamer-box-title">
+                <span>Step-by-Step Continuity Correction &amp; Standardization</span>
+                <span id="cc-active-badge">Case 1: P(X = a)</span>
+              </div>
+              <div class="beamer-box-body" id="cc-math-breakdown">
+                <!-- Populated dynamically by updateCCStudio() -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Slide 24 Bar-Chart Close-up Microscope + Global Curve -->
+          <div>
+            <div class="chart-box" style="margin-bottom:0.9rem;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.35rem; font-size:0.84rem;">
+                <strong style="color:var(--polyu-red);">🔍 Slide 24 Microscope: Boundary Bar $[k - \frac{1}{2},\, k + \frac{1}{2}]$</strong>
+                <span id="cc-bar-pill" class="tab-badge badge-green">Bar Included ✓</span>
+              </div>
+              <svg id="cc-zoom-svg" viewBox="0 0 580 235" style="width:100%; height:auto; display:block;"></svg>
+            </div>
+
+            <div class="chart-box">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.3rem; font-size:0.84rem;">
+                <strong>📈 Full Distribution: $\text{Binomial}(n,p)$ Histogram vs. Normal $N(np, np(1-p))$</strong>
+              </div>
+              <svg id="cc-global-svg" viewBox="0 0 580 205" style="width:100%; height:auto; display:block;"></svg>
+              <div class="chart-legend">
+                <div class="legend-item">
+                  <span class="legend-swatch" style="background:rgba(158, 27, 50, 0.35); border:1.5px solid #9e1b32;"></span> Included Discrete Bars
+                </div>
+                <div class="legend-item">
+                  <span class="legend-swatch" style="background:rgba(2, 132, 199, 0.26); border:2px solid #0284c7;"></span> Continuous Normal Integral (with $\pm 0.5$ CC)
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Complete Master Reference Table of the 5 Cases + Intervals -->
+        <div style="margin-top:1.35rem;">
+          <div style="font-weight:700; font-size:0.94rem; margin-bottom:0.5rem; color:#0f172a;">
+            📐 Master Summary Table: How to Deal with All 5 Single-Value/One-Sided Cases &amp; 4 Interval Cases
+          </div>
+          <div style="overflow-x:auto;">
+            <table class="ref-table">
+              <thead>
+                <tr>
+                  <th>Case</th>
+                  <th>Discrete Binomial Probability ($X$)</th>
+                  <th>Boundary Integer Decision</th>
+                  <th>Continuity-Corrected Normal ($V \sim N(\mu, \sigma^2)$)</th>
+                  <th>Standardized $Z \sim N(0,1)$ ($\mu=np,\; \sigma=\sqrt{np(1-p)}$)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Case 1</strong></td>
+                  <td>$P(X = a)$</td>
+                  <td><span class="tab-badge badge-green">Include bar $a$ ($[a-0.5, a+0.5]$)</span></td>
+                  <td>$P(a - 0.5 \le V \le a + 0.5)$</td>
+                  <td>$P\left(\frac{(a - 0.5) - \mu}{\sigma} \le Z \le \frac{(a + 0.5) - \mu}{\sigma}\right)$</td>
+                </tr>
+                <tr>
+                  <td><strong>Case 2</strong></td>
+                  <td>$P(a \le X)$ &nbsp;[or $P(X \ge b)$]</td>
+                  <td><span class="tab-badge badge-green">Include bar $a$ (start at left edge $a-0.5$)</span></td>
+                  <td>$P(V \ge a - 0.5)$</td>
+                  <td>$P\left(Z \ge \frac{(a - 0.5) - \mu}{\sigma}\right)$</td>
+                </tr>
+                <tr>
+                  <td><strong>Case 3</strong></td>
+                  <td>$P(a < X)$ &nbsp;[or $P(X > b)$]</td>
+                  <td><span class="tab-badge badge-red">Exclude bar $a$ (start at right edge $a+0.5$)</span></td>
+                  <td>$P(V \ge a + 0.5)$</td>
+                  <td>$P\left(Z \ge \frac{(a + 0.5) - \mu}{\sigma}\right)$</td>
+                </tr>
+                <tr>
+                  <td><strong>Case 4</strong></td>
+                  <td>$P(X \le b)$ &nbsp;[At most $b$]</td>
+                  <td><span class="tab-badge badge-green">Include bar $b$ (end at right edge $b+0.5$)</span></td>
+                  <td>$P(V \le b + 0.5)$</td>
+                  <td>$P\left(Z \le \frac{(b + 0.5) - \mu}{\sigma}\right)$</td>
+                </tr>
+                <tr>
+                  <td><strong>Case 5</strong></td>
+                  <td>$P(X < b)$ &nbsp;[Strictly less than $b$]</td>
+                  <td><span class="tab-badge badge-red">Exclude bar $b$ (end at left edge $b-0.5$)</span></td>
+                  <td>$P(V \le b - 0.5)$</td>
+                  <td>$P\left(Z \le \frac{(b - 0.5) - \mu}{\sigma}\right)$</td>
+                </tr>
+                <tr>
+                  <td><strong>Intervals<br>(Slide 28)</strong></td>
+                  <td>
+                    • $P(a < X < b)$<br>
+                    • $P(a < X \le b)$<br>
+                    • $P(a \le X < b)$<br>
+                    • $P(a \le X \le b)$
+                  </td>
+                  <td><span class="tab-badge badge-purple">Check each endpoint independently</span></td>
+                  <td>
+                    • $P(a + 0.5 \le V \le b - 0.5)$<br>
+                    • $P(a + 0.5 \le V \le b + 0.5)$<br>
+                    • $P(a - 0.5 \le V \le b - 0.5)$<br>
+                    • $P(a - 0.5 \le V \le b + 0.5)$
+                  </td>
+                  <td>Standardize both corrected endpoints via $Z = \dfrac{V - np}{\sqrt{np(1-p)}}$</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3: INTERACTIVE 5-CASE CONTINUITY CORRECTION MINI-TRAINER -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">🧠 3. Interactive 5-Case Continuity Correction Quick Trainer</div>
+          <button class="btn btn-sm btn-gold" onclick="newCCTrainerQuestion()">🎲 New Challenge</button>
+        </div>
+
+        <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:0.85rem;">
+          Test your intuition on the 5 Continuity Correction cases! Given a discrete Binomial probability statement, select the correct continuity-corrected normal expression:
+        </p>
+
+        <div id="cc-trainer-box" style="background:#f8fafc; border:1px solid var(--border-color); border-radius:8px; padding:1.1rem;">
+          <!-- Populated by newCCTrainerQuestion() -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div><strong>Dr. LEE Kei Fung, Charles (PolyU)</strong> • AMA1110 Basic Mathematics I</div>
+    <div>Lecture Notes 11 Interactive Companion (Parts A &amp; B)</div>
+    <div>Consultation: Friday 08:30–10:20 (TU715)</div>
+  </footer>
+
+  <!-- =======================================================================
+       JAVASCRIPT ENGINE (100% Self-Contained & Complete)
+       ======================================================================= -->
+  <script>
+    /* -----------------------------------------------------------------------
+       1. UTILITIES & PROBABILITY FUNCTIONS
+       ----------------------------------------------------------------------- */
+    function setText(id, val) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = val;
+    }
+
+    function setHTML(id, html) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.innerHTML = html;
+        renderMath(el);
+      }
+    }
+
+    function renderMath(el = document.body) {
+      if (window.renderMathInElement && el) {
+        renderMathInElement(el, {
+          delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "$", right: "$", display: false}
+          ],
+          throwOnError: false
+        });
+      }
+    }
+
+    function normalPDF(x, mu = 0, sigma = 1) {
+      const z = (x - mu) / sigma;
+      return Math.exp(-0.5 * z * z) / (sigma * Math.sqrt(2 * Math.PI));
+    }
+
+    function normalCDF(z) {
+      if (z < -8.5) return 0;
+      if (z > 8.5) return 1;
+      const sign = z < 0 ? -1 : 1;
+      const x = Math.abs(z) / Math.sqrt(2);
+      const t = 1 / (1 + 0.3275911 * x);
+      const a1 = 0.254829592, a2 = -0.284496736, a3 = 1.421413741;
+      const a4 = -1.453152027, a5 = 1.061405429;
+      const erf = 1 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * Math.exp(-x * x);
+      return 0.5 * (1 + sign * erf);
+    }
+
+    function normalUpperTail(z) {
+      return 1 - normalCDF(z);
+    }
+
+    function polyUTableUpper(z) {
+      const z2 = Math.round(z * 100) / 100;
+      if (z2 >= 4.0) return 0;
+      if (z2 <= -4.0) return 1;
+      const raw = normalUpperTail(z2);
+      if (Math.abs(z2) >= 2.33) return parseFloat(raw.toFixed(5));
+      return parseFloat(raw.toFixed(4));
+    }
+
+    function polyUTableCDF(z) {
+      const z2 = Math.round(z * 100) / 100;
+      if (z2 >= 0) return parseFloat((1 - polyUTableUpper(z2)).toFixed(5));
+      return polyUTableUpper(-z2);
+    }
+
+    function fmtTableP(val) {
+      const v = Number(val);
+      if (v > 0 && v < 0.01) return v.toFixed(5);
+      return v.toFixed(4);
+    }
+
+    function lnFactorial(n) {
+      if (n <= 1) return 0;
+      let s = 0;
+      for (let i = 2; i <= n; i++) s += Math.log(i);
+      return s;
+    }
+
+    function binomialPMF(n, p, k) {
+      if (k < 0 || k > n) return 0;
+      if (p <= 0) return k === 0 ? 1 : 0;
+      if (p >= 1) return k === n ? 1 : 0;
+      const lnProb = lnFactorial(n) - lnFactorial(k) - lnFactorial(n - k)
+                     + k * Math.log(p) + (n - k) * Math.log(1 - p);
+      return Math.exp(lnProb);
+    }
+
+    function binomialIntervalProb(n, p, kMin, kMax) {
+      const lo = Math.max(0, Math.ceil(kMin));
+      const hi = Math.min(n, Math.floor(kMax));
+      if (lo > hi) return 0;
+      let s = 0;
+      for (let k = lo; k <= hi; k++) s += binomialPMF(n, p, k);
+      return Math.min(1, Math.max(0, s));
+    }
+
+    /* -----------------------------------------------------------------------
+       2. SECTION NAVIGATION & SCENARIO BRIDGES
+       ----------------------------------------------------------------------- */
+    function switchSection(secId, btnEl) {
+      document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+      const target = document.getElementById(secId);
+      if (target) {
+        target.classList.add('active');
+        renderMath(target);
+      }
+      if (btnEl) btnEl.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function openScenarioInNormLab(mu, sig, mode, a, b) {
+      switchSection('sec-partB-norm', document.querySelectorAll('.nav-tab')[1]);
+      setNormLabPreset(mu, sig, mode, a, b);
+    }
+
+    function openScenarioInCCStudio(n, p, mode, a, b) {
+      switchSection('sec-partB-cc', document.querySelectorAll('.nav-tab')[2]);
+      loadCCStudioPreset(n, p, mode, a, b);
+      document.getElementById('cc-studio-card').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    /* -----------------------------------------------------------------------
+       3. PART A: INTERACTIVE COMMUTE SCENARIO (EXAMPLE A4)
+       ----------------------------------------------------------------------- */
+    function updateCommuteScenario() {
+      const T = parseInt(document.getElementById('commute-t-slider').value, 10) || 35;
+      setText('commute-t-val', `${T} min`);
+
+      const zA = Math.round(((T - 28) / 6) * 100) / 100;
+      const zB = Math.round(((T - 31) / 2) * 100) / 100;
+      const lateA = 1 - polyUTableCDF(zA);
+      const lateB = 1 - polyUTableCDF(zB);
+
+      const winner = lateB < lateA
+        ? `Route B (Western Harbour) is safer (${(lateB*100).toFixed(2)}% vs ${(lateA*100).toFixed(2)}% late)!`
+        : `Route A (Cross-Harbour) gives a better chance (${(lateA*100).toFixed(2)}% vs ${(lateB*100).toFixed(2)}% late)!`;
+
+      setHTML('commute-result-box', `
+        <div>• <strong>Route A:</strong> $z_A = \\frac{${T}-28}{6} = ${zA >= 0 ? '+' : ''}${zA.toFixed(2)} \\implies P(X_A > ${T}) = \\mathbf{${(lateA*100).toFixed(2)}\\%}$</div>
+        <div>• <strong>Route B:</strong> $z_B = \\frac{${T}-31}{2} = ${zB >= 0 ? '+' : ''}${zB.toFixed(2)} \\implies P(X_B > ${T}) = \\mathbf{${(lateB*100).toFixed(2)}\\%}$</div>
+        <div style="margin-top:0.35rem; font-size:0.8rem; color:var(--blue-accent); font-weight:700;">💡 ${winner}</div>
+      `);
+    }
+
+    /* -----------------------------------------------------------------------
+       4. PART B1: NORMAL & STANDARDIZATION LAB + POLYU Z-TABLE
+       ----------------------------------------------------------------------- */
+    function setNormLabPreset(mu, sig, mode, a, b) {
+      document.getElementById('nlab-mu-slider').value = mu;
+      document.getElementById('nlab-sig-slider').value = sig;
+      document.getElementById('nlab-mode').value = mode;
+      const aSlider = document.getElementById('nlab-a-slider');
+      const bSlider = document.getElementById('nlab-b-slider');
+      aSlider.min = (mu - 4 * sig).toFixed(2);
+      aSlider.max = (mu + 4 * sig).toFixed(2);
+      bSlider.min = (mu - 4 * sig).toFixed(2);
+      bSlider.max = (mu + 4 * sig).toFixed(2);
+      aSlider.value = a;
+      bSlider.value = b;
+      updateNormLab();
+    }
+
+    function updateNormLab() {
+      const mu = parseFloat(document.getElementById('nlab-mu-slider').value) || 0;
+      const sig = parseFloat(document.getElementById('nlab-sig-slider').value) || 1;
+      const mode = document.getElementById('nlab-mode').value;
+
+      const aSlider = document.getElementById('nlab-a-slider');
+      const bSlider = document.getElementById('nlab-b-slider');
+      const minX = parseFloat((mu - 3.8 * sig).toFixed(2));
+      const maxX = parseFloat((mu + 3.8 * sig).toFixed(2));
+      aSlider.min = minX; aSlider.max = maxX;
+      bSlider.min = minX; bSlider.max = maxX;
+      aSlider.step = sig < 0.2 ? 0.005 : 0.05;
+      bSlider.step = sig < 0.2 ? 0.005 : 0.05;
+
+      let a = parseFloat(aSlider.value);
+      let b = parseFloat(bSlider.value);
+      if (a < minX || a > maxX) { a = parseFloat((mu - sig).toFixed(2)); aSlider.value = a; }
+      if (b < minX || b > maxX) { b = parseFloat((mu + sig).toFixed(2)); bSlider.value = b; }
+      if (mode === 'between' && b < a) { b = a; bSlider.value = b; }
+
+      document.getElementById('nlab-b-group').style.display = mode === 'between' ? 'block' : 'none';
+      setText('nlab-a-label', mode === 'between' ? 'Lower Bound (a):' : 'Cutoff Value (a):');
+
+      setText('nlab-mu-val', mu.toFixed(2));
+      setText('nlab-sig-val', sig.toFixed(2));
+      setText('nlab-a-val', a.toFixed(2));
+      setText('nlab-b-val', b.toFixed(2));
+      setText('nlab-stat-var', (sig * sig).toFixed(4).replace(/\.?0+$/, ''));
+
+      const za = (a - mu) / sig;
+      const zb = (b - mu) / sig;
+      const za2 = Math.round(za * 100) / 100;
+      const zb2 = Math.round(zb * 100) / 100;
+
+      setText('nlab-stat-za', (za2 >= 0 ? '+' : '') + za2.toFixed(2));
+      setText('nlab-stat-zb', mode === 'between' ? ((zb2 >= 0 ? '+' : '') + zb2.toFixed(2)) : '—');
+
+      let prob = 0;
+      let mathHtml = '';
+
+      if (mode === 'lt') {
+        prob = polyUTableCDF(za2);
+        const pUp = polyUTableUpper(Math.abs(za2));
+        const alg = za2 >= 0
+          ? `1 - P(Z > ${za2.toFixed(2)}) = 1 - ${fmtTableP(pUp)} = \\mathbf{${fmtTableP(prob)}}`
+          : `P(Z > ${Math.abs(za2).toFixed(2)}) = \\mathbf{${fmtTableP(prob)}} \\quad\\text{(by symmetry)}`;
+        mathHtml = `
+          <div>Let $Z = \\dfrac{X - (${mu})}{${sig}} \\sim N(0, 1)$. Then:</div>
+          $$P(X \\le ${a}) = P\\left(Z \\le \\frac{${a} - (${mu})}{${sig}}\\right) = P(Z \\le ${za2.toFixed(2)}) = ${alg}$$
+        `;
+      } else if (mode === 'gt') {
+        prob = 1 - polyUTableCDF(za2);
+        const pUp = polyUTableUpper(Math.abs(za2));
+        const alg = za2 >= 0
+          ? `P(Z \\ge ${za2.toFixed(2)}) = \\mathbf{${fmtTableP(prob)}}`
+          : `1 - P(Z > ${Math.abs(za2).toFixed(2)}) = 1 - ${fmtTableP(pUp)} = \\mathbf{${fmtTableP(prob)}}`;
+        mathHtml = `
+          <div>Let $Z = \\dfrac{X - (${mu})}{${sig}} \\sim N(0, 1)$. Then:</div>
+          $$P(X \\ge ${a}) = P\\left(Z \\ge \\frac{${a} - (${mu})}{${sig}}\\right) = P(Z \\ge ${za2.toFixed(2)}) = ${alg}$$
+        `;
+      } else {
+        prob = Math.max(0, polyUTableCDF(zb2) - polyUTableCDF(za2));
+        mathHtml = `
+          <div>Let $Z = \\dfrac{X - (${mu})}{${sig}} \\sim N(0, 1)$. Then:</div>
+          $$P(${a} \\le X \\le ${b}) = P\\left(\\frac{${a}-(${mu})}{${sig}} \\le Z \\le \\frac{${b}-(${mu})}{${sig}}\\right) = P(${za2.toFixed(2)} \\le Z \\le ${zb2.toFixed(2)}) = \\mathbf{${fmtTableP(prob)}}$$
+        `;
+      }
+
+      setText('nlab-stat-prob', fmtTableP(prob));
+      setHTML('nlab-math-readout', mathHtml);
+      drawNormLabSVG(mu, sig, mode, a, b);
+
+      // Also sync Z-table highlight to |za2|
+      const absZ = Math.min(3.09, Math.abs(za2));
+      document.getElementById('ztable-input').value = absZ.toFixed(2);
+      highlightZTableFromInput();
+    }
+
+    function drawNormLabSVG(mu, sig, mode, a, b) {
+      const svg = document.getElementById('nlab-svg');
+      const W = 600, H = 325;
+      const padL = 48, padR = 25, padT = 24, padB = 72;
+      const plotW = W - padL - padR;
+      const plotH = H - padT - padB;
+
+      const xMin = mu - 3.8 * sig;
+      const xMax = mu + 3.8 * sig;
+      const toX = x => padL + ((x - xMin) / (xMax - xMin)) * plotW;
+      const maxY = normalPDF(mu, mu, sig) * 1.15;
+      const toY = y => padT + plotH - (y / maxY) * plotH;
+
+      let html = '';
+
+      // Shaded Integral Area
+      const sLow = mode === 'gt' ? Math.max(xMin, a) : (mode === 'between' ? Math.max(xMin, a) : xMin);
+      const sHigh = mode === 'lt' ? Math.min(xMax, a) : (mode === 'between' ? Math.min(xMax, b) : xMax);
+
+      if (sHigh > sLow) {
+        let d = `M ${toX(sLow)} ${padT + plotH} `;
+        for (let i = 0; i <= 80; i++) {
+          const xv = sLow + (i / 80) * (sHigh - sLow);
+          d += `L ${toX(xv)} ${toY(normalPDF(xv, mu, sig))} `;
+        }
+        d += `L ${toX(sHigh)} ${padT + plotH} Z`;
+        html += `<path d="${d}" fill="rgba(158, 27, 50, 0.26)"/>`;
+      }
+
+      // Optional Slide 10 Reference Curves Overlay
+      if (document.getElementById('nlab-show-slide10')?.checked) {
+        const refs = [
+          { m: mu - 0.9 * sig, s: 1.25 * sig, col: '#ef4444' },
+          { m: mu + 0.8 * sig, s: 0.75 * sig, col: '#3b82f6' }
+        ];
+        refs.forEach(r => {
+          let rPts = '';
+          for (let i = 0; i <= 80; i++) {
+            const xv = xMin + (i / 80) * (xMax - xMin);
+            const yv = Math.min(maxY, normalPDF(xv, r.m, r.s));
+            rPts += `${toX(xv)},${toY(yv)} `;
+          }
+          html += `<polyline fill="none" stroke="${r.col}" stroke-width="1.6" stroke-dasharray="4,3" points="${rPts.trim()}"/>`;
+        });
+      }
+
+      // Symmetry Line at x = mu (Z = 0)
+      html += `<line x1="${toX(mu)}" y1="${padT}" x2="${toX(mu)}" y2="${padT + plotH}" stroke="#94a3b8" stroke-width="1.4" stroke-dasharray="4,4"/>`;
+
+      // Main Normal Curve
+      let pts = '';
+      for (let i = 0; i <= 100; i++) {
+        const xv = xMin + (i / 100) * (xMax - xMin);
+        pts += `${toX(xv)},${toY(normalPDF(xv, mu, sig))} `;
+      }
+      html += `<polyline fill="none" stroke="#9e1b32" stroke-width="2.6" points="${pts.trim()}"/>`;
+
+      // Boundary lines
+      const bounds = mode === 'between' ? [a, b] : [a];
+      bounds.forEach(val => {
+        if (val >= xMin && val <= xMax) {
+          const cx = toX(val);
+          const cy = toY(normalPDF(val, mu, sig));
+          html += `<line x1="${cx}" y1="${cy}" x2="${cx}" y2="${padT + plotH}" stroke="#9e1b32" stroke-width="2.2"/>`;
+        }
+      });
+
+      // Dual Axes: Top = X, Bottom = Z
+      const yAxis1 = padT + plotH;
+      const yAxis2 = padT + plotH + 36;
+      html += `<line x1="${padL}" y1="${yAxis1}" x2="${W - padR}" y2="${yAxis1}" stroke="#0f172a" stroke-width="1.5"/>`;
+      html += `<line x1="${padL}" y1="${yAxis2}" x2="${W - padR}" y2="${yAxis2}" stroke="#0284c7" stroke-width="1.5"/>`;
+
+      html += `<text x="${padL - 8}" y="${yAxis1 + 15}" text-anchor="end" font-size="11" font-weight="700" fill="#0f172a">X:</text>`;
+      html += `<text x="${padL - 8}" y="${yAxis2 + 15}" text-anchor="end" font-size="11" font-weight="700" fill="#0284c7">Z:</text>`;
+
+      for (let z = -3; z <= 3; z++) {
+        const xv = mu + z * sig;
+        const cx = toX(xv);
+        html += `<line x1="${cx}" y1="${yAxis1}" x2="${cx}" y2="${yAxis1 + 4}" stroke="#0f172a"/>`;
+        html += `<text x="${cx}" y="${yAxis1 + 16}" text-anchor="middle" font-size="11" fill="#0f172a">${Number(xv.toFixed(2))}</text>`;
+
+        html += `<line x1="${cx}" y1="${yAxis2}" x2="${cx}" y2="${yAxis2 + 4}" stroke="#0284c7"/>`;
+        html += `<text x="${cx}" y="${yAxis2 + 16}" text-anchor="middle" font-size="11" font-weight="700" fill="#0284c7">${z === 0 ? '0' : (z > 0 ? '+' + z : z)}</text>`;
+      }
+
+      svg.innerHTML = html;
+    }
+
+    // Build Interactive PolyU Upper-Tail Z-Table (rows 0.0 to 3.0, cols .00 to .09)
+    function buildPolyUZMatrix() {
+      const table = document.getElementById('polyu-z-matrix');
+      let html = '<thead><tr><th>z</th>';
+      for (let c = 0; c <= 9; c++) {
+        html += `<th id="zcol-h-${c}">.0${c}</th>`;
+      }
+      html += '</tr></thead><tbody>';
+
+      for (let r = 0; r <= 30; r++) {
+        const rowVal = (r / 10).toFixed(1);
+        html += `<tr><th id="zrow-h-${r}">${rowVal}</th>`;
+        for (let c = 0; c <= 9; c++) {
+          const z = parseFloat((r / 10 + c / 100).toFixed(2));
+          const p = polyUTableUpper(z);
+          html += `<td id="zcell-${r}-${c}" style="cursor:pointer;" onclick="selectZTableCell(${r}, ${c})">${fmtTableP(p)}</td>`;
+        }
+        html += '</tr>';
+      }
+      html += '</tbody>';
+      table.innerHTML = html;
+    }
+
+    function selectZTableCell(r, c) {
+      const z = (r / 10 + c / 100).toFixed(2);
+      document.getElementById('ztable-input').value = z;
+      highlightZTableFromInput();
+    }
+
+    function highlightZTableFromInput() {
+      let z = parseFloat(document.getElementById('ztable-input').value);
+      if (isNaN(z) || z < 0) z = 0;
+      if (z > 3.09) z = 3.09;
+      const z2 = Math.round(z * 100);
+      const r = Math.floor(z2 / 10);
+      const c = z2 % 10;
+
+      document.querySelectorAll('.z-cell-highlight').forEach(el => el.classList.remove('z-cell-highlight'));
+      document.querySelectorAll('.z-rowcol-highlight').forEach(el => el.classList.remove('z-rowcol-highlight'));
+
+      const cell = document.getElementById(`zcell-${r}-${c}`);
+      const rHead = document.getElementById(`zrow-h-${r}`);
+      const cHead = document.getElementById(`zcol-h-${c}`);
+      if (cell) cell.classList.add('z-cell-highlight');
+      if (rHead) rHead.classList.add('z-rowcol-highlight');
+      if (cHead) cHead.classList.add('z-rowcol-highlight');
+
+      const zVal = (z2 / 100).toFixed(2);
+      const pUp = polyUTableUpper(z2 / 100);
+      const pLow = parseFloat((1 - pUp).toFixed(5));
+
+      setHTML('ztable-live-explanation', `
+        <strong>Selected Table Entry ($z = ${zVal}$, Row <code>${(r/10).toFixed(1)}</code>, Column <code>.0${c}</code>):</strong><br>
+        • <strong>Right Tail (Direct Table Entry):</strong> $P(Z > ${zVal}) = \\mathbf{${fmtTableP(pUp)}}$<br>
+        • <strong>Left Tail (Complement, Slide 14 Ex 3.2):</strong> $P(Z < ${zVal}) = 1 - P(Z > ${zVal}) = 1 - ${fmtTableP(pUp)} = \\mathbf{${fmtTableP(pLow)}}$<br>
+        • <strong>Negative Cutoff (Symmetry, Slide 15 Ex 3.3):</strong> $P(Z < -${zVal}) = P(Z > ${zVal}) = \\mathbf{${fmtTableP(pUp)}}$ &nbsp;and&nbsp; $P(Z > -${zVal}) = \\mathbf{${fmtTableP(pLow)}}$
+      `);
+    }
+
+    /* -----------------------------------------------------------------------
+       5. PART B2 (1): SLIDES 21-22 BINOMIAL(80, p) ANIMATION PLAYER
+       ----------------------------------------------------------------------- */
+    let animTimer = null;
+
+    function toggleBinomAnimation() {
+      const btn = document.getElementById('anim-play-btn');
+      if (animTimer) {
+        clearInterval(animTimer);
+        animTimer = null;
+        btn.textContent = '▶ Play Animation';
+        return;
+      }
+      btn.textContent = '⏸ Pause Animation';
+      const slider = document.getElementById('anim-p-slider');
+      animTimer = setInterval(() => {
+        let p = parseFloat(slider.value) + 0.01;
+        if (p > 0.98) p = 0.02;
+        slider.value = p.toFixed(2);
+        updateAnimPlot();
+      }, 90);
+    }
+
+    function setAnimP(pVal) {
+      if (animTimer) toggleBinomAnimation();
+      document.getElementById('anim-p-slider').value = pVal;
+      updateAnimPlot();
+    }
+
+    function updateAnimPlot() {
+      const n = 80;
+      const p = parseFloat(document.getElementById('anim-p-slider').value) || 0.30;
+      const mu = n * p;
+      const variance = n * p * (1 - p);
+      const sigma = Math.sqrt(variance);
+
+      setText('anim-p-val', p.toFixed(2));
+      setText('anim-chart-title', `red dots: Binomial(80, ${p.toFixed(2)}); black line: N(${mu.toFixed(1)}, ${variance.toFixed(2)})`);
+
+      const condBox = document.getElementById('anim-condition-box');
+      if (mu > 5 && n * (1 - p) > 5) {
+        condBox.style.background = '#dcfce7';
+        condBox.style.color = '#15803d';
+        condBox.style.border = '1px solid #86efac';
+        condBox.innerHTML = `✅ Theorem 5.1 Holds: $np = ${mu.toFixed(1)} > 5$ and $n(1-p) = ${(n*(1-p)).toFixed(1)} > 5$. Notice how closely the black bell curve $N(${mu.toFixed(1)}, ${variance.toFixed(2)})$ tracks the red dots!`;
+      } else {
+        condBox.style.background = '#fef3c7';
+        condBox.style.color = '#b45309';
+        condBox.style.border = '1px solid #fde68a';
+        condBox.innerHTML = `⚠️ Boundary Skewness ($p$ too close to $0$ or $1$): Here $np = ${mu.toFixed(1)}$ and $n(1-p) = ${(n*(1-p)).toFixed(1)}$ (one is $\\le 5$), so $\\text{Binomial}(80, p)$ is skewed against the boundary.`;
+      }
+      renderMath(condBox);
+
+      const svg = document.getElementById('anim-svg');
+      const W = 580, H = 230;
+      const padL = 46, padR = 20, padT = 16, padB = 34;
+      const plotW = W - padL - padR;
+      const plotH = H - padT - padB;
+
+      const toX = k => padL + (k / n) * plotW;
+      let maxY = Math.max(0.12, normalPDF(mu, mu, Math.max(0.8, sigma)) * 1.12);
+      for (let k = 0; k <= n; k++) maxY = Math.max(maxY, binomialPMF(n, p, k) * 1.12);
+      const toY = y => padT + plotH - (y / maxY) * plotH;
+
+      let html = '';
+      // Blue vertical sticks & Red dots (matching Slide 22)
+      for (let k = 0; k <= n; k++) {
+        const pmf = binomialPMF(n, p, k);
+        const cx = toX(k);
+        const cy = toY(pmf);
+        if (pmf > 0.0005) {
+          html += `<line x1="${cx}" y1="${padT + plotH}" x2="${cx}" y2="${cy}" stroke="#818cf8" stroke-width="1.2"/>`;
+        }
+        html += `<circle cx="${cx}" cy="${cy}" r="2.6" fill="#dc2626"/>`;
+      }
+
+      // Black Normal Curve
+      if (sigma > 0.3) {
+        let pts = '';
+        for (let i = 0; i <= 160; i++) {
+          const xv = (i / 160) * n;
+          pts += `${toX(xv)},${toY(normalPDF(xv, mu, sigma))} `;
+        }
+        html += `<polyline fill="none" stroke="#0f172a" stroke-width="2.2" points="${pts.trim()}"/>`;
+      }
+
+      // Axes & Ticks
+      html += `<line x1="${padL}" y1="${padT + plotH}" x2="${W - padR}" y2="${padT + plotH}" stroke="#334155" stroke-width="1.4"/>`;
+      [0, 20, 40, 60, 80].forEach(k => {
+        const cx = toX(k);
+        html += `<text x="${cx}" y="${padT + plotH + 18}" text-anchor="middle" font-size="11" fill="#334155">${k}</text>`;
+      });
+
+      svg.innerHTML = html;
+    }
+
+    /* -----------------------------------------------------------------------
+       6. PART B2 (2): THE 5 CONTINUITY CORRECTION CASES INTERACTIVE STUDIO
+       ----------------------------------------------------------------------- */
+    let activeCCMode = 'eq'; // 'eq', 'ge_a', 'gt_a', 'ge_b', 'gt_b', 'interval'
+
+    function selectCCMode(mode) {
+      activeCCMode = mode;
+      ['eq', 'ge_a', 'gt_a', 'ge_b', 'gt_b', 'interval'].forEach(id => {
+        const btn = document.getElementById(`cc-btn-${id}`);
+        if (btn) btn.classList.toggle('active', id === mode);
+      });
+
+      const showTailSelector = (mode === 'ge_b' || mode === 'gt_b');
+      document.getElementById('cc-tail-dir-row').style.display = showTailSelector ? 'block' : 'none';
+      document.getElementById('cc-int-subtype-row').style.display = (mode === 'interval') ? 'block' : 'none';
+      document.getElementById('cc-b-group').style.display = (mode === 'interval') ? 'block' : 'none';
+
+      if (mode === 'ge_b' || mode === 'gt_b') {
+        setText('cc-a-label', 'Boundary Integer (b):');
+      } else if (mode === 'interval') {
+        setText('cc-a-label', 'Lower Integer (a):');
+      } else {
+        setText('cc-a-label', 'Boundary Integer (a):');
+      }
+      updateCCStudio();
+    }
+
+    function loadCCStudioPreset(n, p, presetType, a, b) {
+      document.getElementById('cc-n-slider').value = n;
+      document.getElementById('cc-p-slider').value = p;
+      document.getElementById('cc-a-slider').max = n;
+      document.getElementById('cc-b-slider').max = n;
+      document.getElementById('cc-a-slider').value = a;
+      document.getElementById('cc-b-slider').value = b;
+
+      if (presetType === 'le_b') {
+        document.getElementById('cc-tail-dir').value = 'lower';
+        selectCCMode('ge_b');
+      } else if (presetType === 'lt_b') {
+        document.getElementById('cc-tail-dir').value = 'lower';
+        selectCCMode('gt_b');
+      } else if (presetType.startsWith('int_')) {
+        document.getElementById('cc-int-subtype').value = presetType.replace('int_', '');
+        selectCCMode('interval');
+      } else {
+        document.getElementById('cc-tail-dir').value = 'upper';
+        selectCCMode(presetType);
+      }
+    }
+
+    function updateCCStudio() {
+      const n = parseInt(document.getElementById('cc-n-slider').value, 10) || 100;
+      const p = parseFloat(document.getElementById('cc-p-slider').value) || 0.36;
+      const q = 1 - p;
+      const mu = n * p;
+      const variance = n * p * q;
+      const sigma = Math.sqrt(variance);
+
+      const aSlider = document.getElementById('cc-a-slider');
+      const bSlider = document.getElementById('cc-b-slider');
+      const minK = Math.max(0, Math.floor(mu - 4 * sigma));
+      const maxK = Math.min(n, Math.ceil(mu + 4 * sigma));
+      aSlider.min = minK; aSlider.max = maxK;
+      bSlider.min = minK; bSlider.max = maxK;
+
+      let a = parseInt(aSlider.value, 10);
+      let b = parseInt(bSlider.value, 10);
+      if (a < minK || a > maxK) { a = Math.round(mu); aSlider.value = a; }
+      if (activeCCMode === 'interval' && b <= a) { b = Math.min(maxK, a + 6); bSlider.value = b; }
+
+      setText('cc-n-val', n);
+      setText('cc-p-val', p.toFixed(2));
+      setText('cc-a-val', a);
+      setText('cc-b-val', b);
+
+      const tailDir = document.getElementById('cc-tail-dir').value; // 'upper' or 'lower'
+
+      let kMin = 0, kMax = n;
+      let vLow = -Infinity, vHigh = Infinity;
+      let discreteNotation = '', ccNotation = '', reasonHtml = '', contrastHtml = '';
+      let barIncluded = true;
+
+      if (activeCCMode === 'eq') {
+        kMin = a; kMax = a;
+        vLow = a - 0.5; vHigh = a + 0.5;
+        discreteNotation = `P(X = ${a})`;
+        ccNotation = `P(${(a - 0.5).toFixed(1)} \\le V \\le ${(a + 0.5).toFixed(1)})`;
+        reasonHtml = `Without continuity correction, a continuous normal variable has $P(V = ${a}) = 0$. Because integer bar $a = ${a}$ occupies the unit interval $[${a} - 0.5,\\, ${a} + 0.5] = [${(a-0.5).toFixed(1)},\\, ${(a+0.5).toFixed(1)}]$, we integrate across that bar!`;
+        barIncluded = true;
+        setText('cc-active-badge', `Case 1: Exact Value P(X = ${a})`);
+      } else if (activeCCMode === 'ge_a') {
+        kMin = a; kMax = n;
+        vLow = a - 0.5; vHigh = Infinity;
+        discreteNotation = `P(${a} \\le X) \\;\\text{[i.e. } P(X \\ge ${a})\\text{]}`;
+        ccNotation = `P(V \\ge ${(a - 0.5).toFixed(1)})`;
+        reasonHtml = `Because the inequality $\\le$ is <strong>inclusive</strong>, the integer bar $a = ${a}$ <strong>IS INCLUDED</strong>. To capture the full bar $[${(a-0.5).toFixed(1)},\\, ${(a+0.5).toFixed(1)}]$ and everything to its right, we start at the <strong>left edge</strong> $a - 0.5 = ${(a-0.5).toFixed(1)}$.`;
+        contrastHtml = `Compare with strict $P(${a} < X)$: excluding bar ${a} starts at ${(a+0.5).toFixed(1)} instead.`;
+        barIncluded = true;
+        setText('cc-active-badge', `Case 2: P(${a} ≤ X)`);
+      } else if (activeCCMode === 'gt_a') {
+        kMin = a + 1; kMax = n;
+        vLow = a + 0.5; vHigh = Infinity;
+        discreteNotation = `P(${a} < X) \\;\\text{[i.e. } P(X > ${a})\\text{]}`;
+        ccNotation = `P(V \\ge ${(a + 0.5).toFixed(1)})`;
+        reasonHtml = `Because the inequality $<$ is <strong>strict</strong>, the integer bar $a = ${a}$ <strong>IS EXCLUDED</strong> (the first included integer is ${a + 1}). Thus we start at the <strong>right edge</strong> of bar ${a}: $a + 0.5 = ${(a+0.5).toFixed(1)}$.`;
+        contrastHtml = `Compare with inclusive $P(${a} \\le X)$: including bar ${a} starts at ${(a-0.5).toFixed(1)} instead.`;
+        barIncluded = false;
+        setText('cc-active-badge', `Case 3: P(${a} < X)`);
+      } else if (activeCCMode === 'ge_b') {
+        if (tailDir === 'upper') {
+          kMin = a; kMax = n;
+          vLow = a - 0.5; vHigh = Infinity;
+          discreteNotation = `P(X \\ge ${a})`;
+          ccNotation = `P(V \\ge ${(a - 0.5).toFixed(1)})`;
+          reasonHtml = `Bar $b = ${a}$ is <strong>INCLUDED</strong> in $X \\ge ${a}$. We start at its left edge $b - 0.5 = ${(a-0.5).toFixed(1)}$.`;
+          setText('cc-active-badge', `Case 4 (Upper): P(X ≥ ${a})`);
+        } else {
+          kMin = 0; kMax = a;
+          vLow = -Infinity; vHigh = a + 0.5;
+          discreteNotation = `P(X \\le ${a})`;
+          ccNotation = `P(V \\le ${(a + 0.5).toFixed(1)})`;
+          reasonHtml = `Bar $b = ${a}$ is <strong>INCLUDED</strong> in $X \\le ${a}$. To include the entire bar $[${(a-0.5).toFixed(1)},\\, ${(a+0.5).toFixed(1)}]$ and everything to its left, we go up to its <strong>right edge</strong> $b + 0.5 = ${(a+0.5).toFixed(1)}$.`;
+          setText('cc-active-badge', `Case 4 (Lower): P(X ≤ ${a})`);
+        }
+        barIncluded = true;
+      } else if (activeCCMode === 'gt_b') {
+        if (tailDir === 'upper') {
+          kMin = a + 1; kMax = n;
+          vLow = a + 0.5; vHigh = Infinity;
+          discreteNotation = `P(X > ${a})`;
+          ccNotation = `P(V \\ge ${(a + 0.5).toFixed(1)})`;
+          reasonHtml = `Bar $b = ${a}$ is <strong>EXCLUDED</strong> from $X > ${a}$. We start at its right edge $b + 0.5 = ${(a+0.5).toFixed(1)}$.`;
+          setText('cc-active-badge', `Case 5 (Upper): P(X > ${a})`);
+        } else {
+          kMin = 0; kMax = a - 1;
+          vLow = -Infinity; vHigh = a - 0.5;
+          discreteNotation = `P(X < ${a})`;
+          ccNotation = `P(V \\le ${(a - 0.5).toFixed(1)})`;
+          reasonHtml = `Bar $b = ${a}$ is <strong>EXCLUDED</strong> from $X < ${a}$ (last included integer is ${a - 1}). Thus we stop at the <strong>left edge</strong> of bar ${a}: $b - 0.5 = ${(a-0.5).toFixed(1)}$.`;
+          setText('cc-active-badge', `Case 5 (Lower): P(X < ${a})`);
+        }
+        barIncluded = false;
+      } else if (activeCCMode === 'interval') {
+        const sub = document.getElementById('cc-int-subtype').value;
+        if (sub === 'lt_lt') {
+          kMin = a + 1; kMax = b - 1;
+          vLow = a + 0.5; vHigh = b - 0.5;
+          discreteNotation = `P(${a} < X < ${b})`;
+          ccNotation = `P(${(a+0.5).toFixed(1)} \\le V \\le ${(b-0.5).toFixed(1)})`;
+          reasonHtml = `Both $a=${a}$ and $b=${b}$ are <strong>EXCLUDED</strong>: shrink inward to $[${a}+0.5,\\, ${b}-0.5] = [${(a+0.5).toFixed(1)},\\, ${(b-0.5).toFixed(1)}]$.`;
+          barIncluded = false;
+        } else if (sub === 'lt_le') {
+          kMin = a + 1; kMax = b;
+          vLow = a + 0.5; vHigh = b + 0.5;
+          discreteNotation = `P(${a} < X \\le ${b})`;
+          ccNotation = `P(${(a+0.5).toFixed(1)} \\le V \\le ${(b+0.5).toFixed(1)})`;
+          reasonHtml = `Lower $a=${a}$ is <strong>EXCLUDED</strong> ($${(a+0.5).toFixed(1)}$) and upper $b=${b}$ is <strong>INCLUDED</strong> ($${(b+0.5).toFixed(1)}$).`;
+          barIncluded = false;
+        } else if (sub === 'le_lt') {
+          kMin = a; kMax = b - 1;
+          vLow = a - 0.5; vHigh = b - 0.5;
+          discreteNotation = `P(${a} \\le X < ${b})`;
+          ccNotation = `P(${(a-0.5).toFixed(1)} \\le V \\le ${(b-0.5).toFixed(1)})`;
+          reasonHtml = `Lower $a=${a}$ is <strong>INCLUDED</strong> ($${(a-0.5).toFixed(1)}$) and upper $b=${b}$ is <strong>EXCLUDED</strong> ($${(b-0.5).toFixed(1)}$).`;
+          barIncluded = true;
+        } else {
+          kMin = a; kMax = b;
+          vLow = a - 0.5; vHigh = b + 0.5;
+          discreteNotation = `P(${a} \\le X \\le ${b})`;
+          ccNotation = `P(${(a-0.5).toFixed(1)} \\le V \\le ${(b+0.5).toFixed(1)})`;
+          reasonHtml = `Both $a=${a}$ and $b=${b}$ are <strong>INCLUDED</strong>: expand outward to $[${a}-0.5,\\, ${b}+0.5] = [${(a-0.5).toFixed(1)},\\, ${(b+0.5).toFixed(1)}]$.`;
+          barIncluded = true;
+        }
+        setText('cc-active-badge', `Interval: ${discreteNotation.replace(/\\/g, '')}`);
+      }
+
+      const pill = document.getElementById('cc-bar-pill');
+      if (barIncluded) {
+        pill.className = 'tab-badge badge-green';
+        pill.textContent = `Boundary Bar x = ${a} INCLUDED ✓`;
+      } else {
+        pill.className = 'tab-badge badge-red';
+        pill.textContent = `Boundary Bar x = ${a} EXCLUDED ✕`;
+      }
+
+      // Compute exact Binomial & Standardized Normal probability
+      const exactBin = binomialIntervalProb(n, p, kMin, kMax);
+      let zFormulaLatex = '';
+      let approxProb = 0;
+
+      if (vLow === -Infinity) {
+        const zH = Math.round(((vHigh - mu) / sigma) * 100) / 100;
+        approxProb = polyUTableCDF(zH);
+        zFormulaLatex = `$$= P\\left(\\frac{V - ${mu.toFixed(2)}}{\\sqrt{${variance.toFixed(2)}}} \\le \\frac{${vHigh.toFixed(1)} - ${mu.toFixed(2)}}{\\sqrt{${variance.toFixed(2)}}}\\right) = P(Z \\le ${zH.toFixed(2)}) = \\mathbf{${fmtTableP(approxProb)}}$$`;
+      } else if (vHigh === Infinity) {
+        const zL = Math.round(((vLow - mu) / sigma) * 100) / 100;
+        approxProb = 1 - polyUTableCDF(zL);
+        zFormulaLatex = `$$= P\\left(\\frac{V - ${mu.toFixed(2)}}{\\sqrt{${variance.toFixed(2)}}} \\ge \\frac{${vLow.toFixed(1)} - ${mu.toFixed(2)}}{\\sqrt{${variance.toFixed(2)}}}\\right) = P(Z \\ge ${zL.toFixed(2)}) = \\mathbf{${fmtTableP(approxProb)}}$$`;
+      } else {
+        const zL = Math.round(((vLow - mu) / sigma) * 100) / 100;
+        const zH = Math.round(((vHigh - mu) / sigma) * 100) / 100;
+        approxProb = Math.max(0, polyUTableCDF(zH) - polyUTableCDF(zL));
+        zFormulaLatex = `$$= P\\left(\\frac{${vLow.toFixed(1)} - ${mu.toFixed(2)}}{\\sqrt{${variance.toFixed(2)}}} \\le Z \\le \\frac{${vHigh.toFixed(1)} - ${mu.toFixed(2)}}{\\sqrt{${variance.toFixed(2)}}}\\right) = P(${zL.toFixed(2)} \\le Z \\le ${zH.toFixed(2)}) = \\mathbf{${fmtTableP(approxProb)}}$$`;
+      }
+
+      setHTML('cc-math-breakdown', `
+        <p style="margin-bottom:0.4rem;"><strong>1. Continuity Correction Logic:</strong> ${reasonHtml}</p>
+        <div style="background:#f8fafc; border:1px solid var(--border-color); border-radius:6px; padding:0.55rem 0.75rem; margin:0.45rem 0;">
+          $$${discreteNotation} \\xrightarrow{\\text{Continuity Correction}} ${ccNotation}$$
+          ${zFormulaLatex}
+        </div>
+        ${contrastHtml ? `<div style="font-size:0.82rem; color:var(--amber-accent); margin-bottom:0.35rem;">💡 <em>${contrastHtml}</em></div>` : ''}
+        <div style="display:flex; justify-content:space-between; flex-wrap:wrap; font-size:0.85rem; padding-top:0.35rem; border-top:1px dashed var(--border-color);">
+          <span>• <strong>Exact Binomial Sum:</strong> $\\mathbf{${exactBin.toFixed(4)}}$</span>
+          <span style="color:var(--blue-accent);">• <strong>Normal Approx (with CC):</strong> $\\mathbf{${fmtTableP(approxProb)}}$</span>
+        </div>
+      `);
+
+      drawCCStudioZoomSVG(n, p, mu, sigma, a, kMin, kMax, vLow, vHigh);
+      drawCCStudioGlobalSVG(n, p, mu, sigma, kMin, kMax, vLow, vHigh);
+    }
+
+    function drawCCStudioZoomSVG(n, p, mu, sigma, focusK, kMin, kMax, vLow, vHigh) {
+      const svg = document.getElementById('cc-zoom-svg');
+      const W = 580, H = 235;
+      const padL = 44, padR = 20, padT = 22, padB = 46;
+      const plotW = W - padL - padR;
+      const plotH = H - padT - padB;
+
+      const xStart = focusK - 2.6;
+      const xEnd = focusK + 2.6;
+      const toX = x => padL + ((x - xStart) / (xEnd - xStart)) * plotW;
+
+      let localMax = 0.005;
+      for (let k = Math.max(0, focusK - 3); k <= Math.min(n, focusK + 3); k++) {
+        localMax = Math.max(localMax, binomialPMF(n, p, k), normalPDF(k, mu, sigma));
+      }
+      const maxY = localMax * 1.22;
+      const toY = y => padT + plotH - (y / maxY) * plotH;
+
+      let html = '';
+
+      // Shaded Normal Area
+      const sStart = Math.max(xStart, vLow === -Infinity ? xStart : vLow);
+      const sEnd = Math.min(xEnd, vHigh === Infinity ? xEnd : vHigh);
+      if (sEnd > sStart) {
+        let d = `M ${toX(sStart)} ${padT + plotH} `;
+        for (let i = 0; i <= 60; i++) {
+          const xv = sStart + (i / 60) * (sEnd - sStart);
+          d += `L ${toX(xv)} ${toY(normalPDF(xv, mu, sigma))} `;
+        }
+        d += `L ${toX(sEnd)} ${padT + plotH} Z`;
+        html += `<path d="${d}" fill="rgba(2, 132, 199, 0.25)"/>`;
+      }
+
+      // Unit-width bars [k - 0.5, k + 0.5] (Slide 24 style)
+      for (let k = focusK - 2; k <= focusK + 2; k++) {
+        if (k < 0 || k > n) continue;
+        const pmf = binomialPMF(n, p, k);
+        const xL = toX(k - 0.5);
+        const xR = toX(k + 0.5);
+        const yTop = toY(pmf);
+        const bH = (padT + plotH) - yTop;
+        const isInc = (k >= kMin && k <= kMax);
+        const isFocus = (k === focusK);
+
+        const fill = isInc ? 'rgba(158, 27, 50, 0.30)' : 'rgba(203, 213, 225, 0.35)';
+        const stroke = isFocus ? '#9e1b32' : (isInc ? '#be123c' : '#94a3b8');
+        const sw = isFocus ? 2.2 : 1.3;
+
+        html += `<rect x="${xL}" y="${yTop}" width="${xR - xL}" height="${Math.max(1, bH)}" fill="${fill}" stroke="${stroke}" stroke-width="${sw}"/>`;
+
+        // Vertical stick at integer center k (Slide 24)
+        const cx = toX(k);
+        html += `<line x1="${cx}" y1="${padT + plotH}" x2="${cx}" y2="${yTop}" stroke="#6366f1" stroke-width="1.2" stroke-dasharray="2,2"/>`;
+        html += `<circle cx="${cx}" cy="${yTop}" r="3.2" fill="#0f172a"/>`;
+        html += `<text x="${cx}" y="${padT + plotH + 17}" text-anchor="middle" font-size="12" font-weight="${isFocus ? '800' : '600'}" fill="${isFocus ? '#9e1b32' : '#334155'}">${k}</text>`;
+      }
+
+      // Half-integer labels focusK - 0.5 and focusK + 0.5
+      html += `<text x="${toX(focusK - 0.5)}" y="${padT + plotH + 34}" text-anchor="middle" font-size="10.5" font-weight="700" fill="#0284c7">${(focusK - 0.5).toFixed(1)}</text>`;
+      html += `<text x="${toX(focusK + 0.5)}" y="${padT + plotH + 34}" text-anchor="middle" font-size="10.5" font-weight="700" fill="#0284c7">${(focusK + 0.5).toFixed(1)}</text>`;
+
+      // Normal Curve
+      let pts = '';
+      for (let i = 0; i <= 80; i++) {
+        const xv = xStart + (i / 80) * (xEnd - xStart);
+        pts += `${toX(xv)},${toY(normalPDF(xv, mu, sigma))} `;
+      }
+      html += `<polyline fill="none" stroke="#0f172a" stroke-width="2.2" points="${pts.trim()}"/>`;
+
+      // Active Continuity Correction Cutoff Line
+      [vLow, vHigh].forEach(vCut => {
+        if (vCut >= xStart && vCut <= xEnd) {
+          const cx = toX(vCut);
+          html += `<line x1="${cx}" y1="${padT + 4}" x2="${cx}" y2="${padT + plotH + 6}" stroke="#0284c7" stroke-width="2.6"/>`;
+          html += `<rect x="${cx - 34}" y="${padT}" width="68" height="18" rx="4" fill="#0284c7"/>`;
+          html += `<text x="${cx}" y="${padT + 13}" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">CC: ${vCut.toFixed(1)}</text>`;
+        }
+      });
+
+      html += `<line x1="${padL}" y1="${padT + plotH}" x2="${W - padR}" y2="${padT + plotH}" stroke="#334155" stroke-width="1.5"/>`;
+      svg.innerHTML = html;
+    }
+
+    function drawCCStudioGlobalSVG(n, p, mu, sigma, kMin, kMax, vLow, vHigh) {
+      const svg = document.getElementById('cc-global-svg');
+      const W = 580, H = 205;
+      const padL = 44, padR = 20, padT = 14, padB = 32;
+      const plotW = W - padL - padR;
+      const plotH = H - padT - padB;
+
+      const xMin = Math.max(0, Math.floor(mu - 3.8 * sigma));
+      const xMax = Math.min(n, Math.ceil(mu + 3.8 * sigma));
+      const span = Math.max(6, xMax - xMin);
+      const toX = x => padL + ((x - xMin) / span) * plotW;
+
+      const maxY = normalPDF(mu, mu, sigma) * 1.18;
+      const toY = y => padT + plotH - (y / maxY) * plotH;
+
+      let html = '';
+
+      const sStart = Math.max(xMin, vLow === -Infinity ? xMin : vLow);
+      const sEnd = Math.min(xMax, vHigh === Infinity ? xMax : vHigh);
+      if (sEnd > sStart) {
+        let d = `M ${toX(sStart)} ${padT + plotH} `;
+        for (let i = 0; i <= 70; i++) {
+          const xv = sStart + (i / 70) * (sEnd - sStart);
+          d += `L ${toX(xv)} ${toY(normalPDF(xv, mu, sigma))} `;
+        }
+        d += `L ${toX(sEnd)} ${padT + plotH} Z`;
+        html += `<path d="${d}" fill="rgba(2, 132, 199, 0.25)"/>`;
+      }
+
+      const stepK = span > 80 ? Math.ceil(span / 60) : 1;
+      for (let k = xMin; k <= xMax; k += stepK) {
+        const pmf = binomialPMF(n, p, k);
+        const xL = toX(k - 0.5 * stepK);
+        const xR = toX(k + 0.5 * stepK);
+        const yTop = toY(pmf);
+        const bH = (padT + plotH) - yTop;
+        const inc = (k >= kMin && k <= kMax);
+        html += `<rect x="${xL}" y="${yTop}" width="${Math.max(1.5, xR - xL - 0.5)}" height="${Math.max(1, bH)}" fill="${inc ? 'rgba(158, 27, 50, 0.42)' : 'rgba(203, 213, 225, 0.5)'}"/>`;
+      }
+
+      let pts = '';
+      for (let i = 0; i <= 100; i++) {
+        const xv = xMin + (i / 100) * span;
+        pts += `${toX(xv)},${toY(normalPDF(xv, mu, sigma))} `;
+      }
+      html += `<polyline fill="none" stroke="#0284c7" stroke-width="2.2" points="${pts.trim()}"/>`;
+
+      html += `<line x1="${padL}" y1="${padT + plotH}" x2="${W - padR}" y2="${padT + plotH}" stroke="#334155" stroke-width="1.5"/>`;
+      for (let t = -3; t <= 3; t++) {
+        const xv = Math.round(mu + t * sigma);
+        if (xv >= xMin && xv <= xMax) {
+          html += `<text x="${toX(xv)}" y="${padT + plotH + 18}" text-anchor="middle" font-size="11" fill="#475569">${xv}</text>`;
+        }
+      }
+      svg.innerHTML = html;
+    }
+
+    /* -----------------------------------------------------------------------
+       7. PART B2 (3): INTERACTIVE 5-CASE CONTINUITY CORRECTION MINI-TRAINER
+       ----------------------------------------------------------------------- */
+    function newCCTrainerQuestion() {
+      const k = [25, 36, 45, 51, 60, 160, 268][Math.floor(Math.random() * 7)];
+      const templates = [
+        {
+          q: `Suppose $X \\sim \\text{Binomial}(n, p)$ is approximated by $V \\sim N(np, np(1-p))$. How should you rewrite $\\mathbf{P(X = ${k})}$ with continuity correction?`,
+          ans: `P(${k - 0.5} \\le V \\le ${k + 0.5})`,
+          why: `Case 1 (Exact value): Bar ${k} spans $[${k}-0.5,\\, ${k}+0.5] = [${k - 0.5},\\, ${k + 0.5}]$.`,
+          choices: [
+            `P(${k - 0.5} \\le V \\le ${k + 0.5})`,
+            `P(V = ${k})`,
+            `P(V \\ge ${k - 0.5})`,
+            `P(${k} \\le V \\le ${k + 0.5})`
+          ]
+        },
+        {
+          q: `Suppose $X \\sim \\text{Binomial}(n, p)$ is approximated by $V \\sim N(np, np(1-p))$. How should you rewrite $\\mathbf{P(X \\ge ${k})}$ (or $P(${k} \\le X)$) with continuity correction?`,
+          ans: `P(V \\ge ${k - 0.5})`,
+          why: `Case 2/4 (At least ${k}): Since ${k} is INCLUDED, we start at the left edge of bar ${k}, which is $${k} - 0.5 = ${k - 0.5}$.`,
+          choices: [
+            `P(V \\ge ${k - 0.5})`,
+            `P(V \\ge ${k + 0.5})`,
+            `P(V \\le ${k - 0.5})`,
+            `P(V \\ge ${k})`
+          ]
+        },
+        {
+          q: `Suppose $X \\sim \\text{Binomial}(n, p)$ is approximated by $V \\sim N(np, np(1-p))$. How should you rewrite $\\mathbf{P(X > ${k})}$ (or $P(${k} < X)$) with continuity correction?`,
+          ans: `P(V \\ge ${k + 0.5})`,
+          why: `Case 3/5 (Strictly greater than ${k}): Since ${k} is EXCLUDED, we start at the right edge of bar ${k}, which is $${k} + 0.5 = ${k + 0.5}$.`,
+          choices: [
+            `P(V \\ge ${k + 0.5})`,
+            `P(V \\ge ${k - 0.5})`,
+            `P(V \\le ${k + 0.5})`,
+            `P(V > ${k})`
+          ]
+        },
+        {
+          q: `Suppose $X \\sim \\text{Binomial}(n, p)$ is approximated by $V \\sim N(np, np(1-p))$. How should you rewrite $\\mathbf{P(X \\le ${k})}$ with continuity correction?`,
+          ans: `P(V \\le ${k + 0.5})`,
+          why: `Case 4 (At most ${k}): Since ${k} is INCLUDED, we include the whole bar up to its right edge $${k} + 0.5 = ${k + 0.5}$.`,
+          choices: [
+            `P(V \\le ${k + 0.5})`,
+            `P(V \\le ${k - 0.5})`,
+            `P(V \\ge ${k + 0.5})`,
+            `P(V \\le ${k})`
+          ]
+        },
+        {
+          q: `Suppose $X \\sim \\text{Binomial}(n, p)$ is approximated by $V \\sim N(np, np(1-p))$. How should you rewrite $\\mathbf{P(X < ${k})}$ with continuity correction?`,
+          ans: `P(V \\le ${k - 0.5})`,
+          why: `Case 5 (Strictly less than ${k}): Since ${k} is EXCLUDED, we stop at the left edge of bar ${k}, which is $${k} - 0.5 = ${k - 0.5}$.`,
+          choices: [
+            `P(V \\le ${k - 0.5})`,
+            `P(V \\le ${k + 0.5})`,
+            `P(V \\ge ${k - 0.5})`,
+            `P(V < ${k})`
+          ]
+        }
+      ];
+
+      const item = templates[Math.floor(Math.random() * templates.length)];
+      const shuffled = [...item.choices].sort(() => Math.random() - 0.5);
+
+      let btnHtml = '<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:0.6rem; margin-top:0.75rem;">';
+      shuffled.forEach((ch, idx) => {
+        const isCorrect = (ch === item.ans);
+        btnHtml += `
+          <button class="btn btn-secondary" style="justify-content:flex-start; padding:0.65rem 0.9rem;"
+            onclick="checkCCTrainerAnswer(this, ${isCorrect}, '${item.why.replace(/'/g, "\\'")}')">
+            <span>(${String.fromCharCode(65 + idx)}) &nbsp; $${ch}$</span>
+          </button>
+        `;
+      });
+      btnHtml += '</div><div id="cc-trainer-feedback" style="margin-top:0.8rem; display:none; padding:0.75rem 0.95rem; border-radius:6px; font-size:0.9rem;"></div>';
+
+      setHTML('cc-trainer-box', `<div style="font-size:0.96rem;">${item.q}</div>${btnHtml}`);
+    }
+
+    function checkCCTrainerAnswer(btnEl, isCorrect, explanation) {
+      const fb = document.getElementById('cc-trainer-feedback');
+      fb.style.display = 'block';
+      if (isCorrect) {
+        fb.style.background = '#dcfce7';
+        fb.style.border = '1px solid #86efac';
+        fb.style.color = '#15803d';
+        fb.innerHTML = `<strong>✅ Spot On!</strong> ${explanation}`;
+      } else {
+        fb.style.background = '#ffe4e6';
+        fb.style.border = '1px solid #fda4af';
+        fb.style.color = '#9f1239';
+        fb.innerHTML = `<strong>❌ Not quite!</strong> Hint: Ask yourself whether the boundary bar is <em>included</em> or <em>excluded</em>. (${explanation})`;
+      }
+      renderMath(fb);
+    }
+
+    /* -----------------------------------------------------------------------
+       8. INITIALIZATION ON PAGE LOAD
+       ----------------------------------------------------------------------- */
+    window.addEventListener('DOMContentLoaded', () => {
+      buildPolyUZMatrix();
+      updateCommuteScenario();
+      updateNormLab();
+      updateAnimPlot();
+      updateCCStudio();
+      newCCTrainerQuestion();
+      renderMath(document.body);
+    });
+  </script>
+</body>
+</html>
